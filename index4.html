@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Andhalkar - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 40px;
+            height: 40px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            transform: perspective(1000px) rotateX(0deg);
+            transition: all 0.6s ease;
+            animation: heroSlideIn 1s ease-out;
+        }
+
+        .hero-content:hover {
+            transform: perspective(1000px) rotateX(5deg) translateZ(50px);
+        }
+
+        @keyframes heroSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #0066ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { filter: drop-shadow(0 0 10px #00d4ff); }
+            to { filter: drop-shadow(0 0 20px #0066ff); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+            transform: perspective(1000px) translateZ(0);
+        }
+
+        .cta-button:hover {
+            transform: perspective(1000px) translateZ(20px) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateX(0deg);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: perspective(1000px) rotateX(5deg) translateZ(30px) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+        }
+
+        .card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 102, 255, 0.1) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .skill-category h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 212, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Projects & Certifications */
+        .project-card, .cert-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 102, 255, 0.1) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .project-card:hover, .cert-card:hover {
+            transform: translateX(10px);
+            border-color: #00d4ff;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .project-card h4, .cert-card h4 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p, .cert-card p {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .attachment-info {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 0.8rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #00d4ff;
+            display: none;
+        }
+
+        .show-attachment {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .contact-item {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 102, 255, 0.1) 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .contact-item a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            border-radius: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 10, 0.9);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Aditya Andhalkar</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Aditya Andhalkar</h1>
+            <p>Full Stack Developer | AI Enthusiast | DevOps Engineer</p>
+            <p>Passionate Computer Engineering student with expertise in MERN stack, Machine Learning, and modern development practices</p>
+            <a href="#contact" class="cta-button">Let's Connect</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2>About Me</h2>
+        <div class="card">
+            <h3>Objective</h3>
+            <p>To secure an entry-level role in software engineering where I can apply my skills in full-stack development, artificial intelligence, DevOps, and data science. I aim to contribute to impactful real-world projects while continuously learning and growing in modern development environments.</p>
+        </div>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Education</h3>
+                <p><strong>B.E. in Computer Engineering</strong><br>New Horizon Institute of Technology and Management, Mumbai (Pursuing)</p>
+                <p><strong>HSC</strong> - KisanVeer Mahavidyalay, Wai (March 2022)</p>
+                <p><strong>SSC</strong> - SilverDale Highschool, Panchgani (March 2020)</p>
+            </div>
+            <div class="card">
+                <h3>Location</h3>
+                <p>📍 Kalyan (W), Maharashtra, India</p>
+                <p>📧 adi3182004@gmail.com</p>
+                <p>📱 +917887547146</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="section" id="experience">
+        <h2>Work Experience</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Backend Developer Intern</h3>
+                <p><strong>Young Thames, Noida</strong> (Current - 6 months)</p>
+                <p>Currently working on backend development projects with modern technologies and best practices.</p>
+            </div>
+            <div class="card">
+                <h3>Prompt Engineering Intern</h3>
+                <p><strong>Mirai School of Technology</strong> (6 weeks)</p>
+                <p>Specialized in AI prompt engineering and optimization techniques.</p>
+            </div>
+            <div class="card">
+                <h3>Data Science Intern</h3>
+                <p><strong>Prodigy InfoTech</strong> (June 2025 – July 2025)</p>
+                <p>Completed real-world projects in data science with focus on supervised learning and EDA. Worked with Python, Pandas, NumPy, and Matplotlib.</p>
+            </div>
+            <div class="card">
+                <h3>Full Stack Developer Intern</h3>
+                <p><strong>Hawkscode Softwares</strong> (September 2024 – October 2024)</p>
+                <p>Worked with React and Node.js to develop frontend and backend modules. Built a college video portal with HTML, CSS, PHP, and MySQL.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>Languages</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">C</span>
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">Bash</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Frontend</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Bootstrap</span>
+                    <span class="skill-tag">Tailwind</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Backend</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Express.js</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">PHP</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>DevOps & Tools</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">CI/CD</span>
+                    <span class="skill-tag">Firebase</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>ML/AI</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Pandas</span>
+                    <span class="skill-tag">NumPy</span>
+                    <span class="skill-tag">Scikit-learn</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">OpenCV</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Soft Skills</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Communication</span>
+                    <span class="skill-tag">Teamwork</span>
+                    <span class="skill-tag">Problem-Solving</span>
+                    <span class="skill-tag">Leadership</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <h2>Projects</h2>
+        <div class="project-card" onclick="toggleAttachment('project1')">
+            <h4>AI Chatbot</h4>
+            <p>Android chatbot using Dialogflow handling 10+ queries/session with natural language processing capabilities.</p>
+            <div id="project1" class="attachment-info">
+                <p><strong>Demo Video:</strong> <a href="#" style="color: #00d4ff;">project-demo-video.mp4</a></p>
+                <p><strong>GitHub:</strong> <a href="#" style="color: #00d4ff;">github.com/Adi3182004/ai-chatbot</a></p>
+                <p><strong>Technologies:</strong> Android Studio, Dialogflow, Java</p>
+            </div>
+        </div>
+
+        <div class="project-card" onclick="toggleAttachment('project2')">
+            <h4>Voice Assistant</h4>
+            <p>Python-based voice assistant automating desktop tasks with speech recognition and text-to-speech.</p>
+            <div id="project2" class="attachment-info">
+                <p><strong>Demo Video:</strong> <a href="#" style="color: #00d4ff;">voice-assistant-demo.mp4</a></p>
+                <p><strong>Source Code:</strong> <a href="#" style="color: #00d4ff;">github.com/Adi3182004/voice-assistant</a></p>
+                <p><strong>Technologies:</strong> Python, SpeechRecognition, pyttsx3</p>
+            </div>
+        </div>
+
+        <div class="project-card" onclick="toggleAttachment('project3')">
+            <h4>Gesture Input System</h4>
+            <p>Virtual hand gesture interface using OpenCV and Mediapipe for touchless computer interaction.</p>
+            <div id="project3" class="attachment-info">
+                <p><strong>Demo Video:</strong> <a href="#" style="color: #00d4ff;">gesture-system-demo.mp4</a></p>
+                <p><strong>GitHub:</strong> <a href="#" style="color: #00d4ff;">github.com/Adi3182004/gesture-input</a></p>
+                <p><strong>Technologies:</strong> Python, OpenCV, Mediapipe</p>
+            </div>
+        </div>
+
+        <div class="project-card" onclick="toggleAttachment('project4')">
+            <h4>Object Detector</h4>
+            <p>TensorFlow Lite model detecting objects in 500+ mobile images with high accuracy.</p>
+            <div id="project4" class="attachment-info">
+                <p><strong>Demo Images:</strong> <a href="#" style="color: #00d4ff;">object-detection-results.jpg</a></p>
+                <p><strong>Model File:</strong> <a href="#" style="color: #00d4ff;">object-detector-model.tflite</a></p>
+                <p><strong>Technologies:</strong> TensorFlow Lite, Python, Computer Vision</p>
+            </div>
+        </div>
+
+        <div class="project-card" onclick="toggleAttachment('project5')">
+            <h4>Management Systems</h4>
+            <p>Admin dashboards for library and blood bank management using PHP & MySQL with complete CRUD operations.</p>
+            <div id="project5" class="attachment-info">
+                <p><strong>Screenshots:</strong> <a href="#" style="color: #00d4ff;">management-system-ui.jpg</a></p>
+                <p><strong>Source Code:</strong> <a href="#" style="color: #00d4ff;">github.com/Adi3182004/management-systems</a></p>
+                <p><strong>Technologies:</strong> PHP, MySQL, HTML, CSS, JavaScript</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="section" id="certifications">
+        <h2>Certifications & Achievements</h2>
+        
+        <h3 style="color: #00d4ff; margin: 2rem 0 1rem 0;">Internships & Professional</h3>
+        <div class="cert-card" onclick="toggleAttachment('cert1')">
+            <h4>Data Science Internship Certificate</h4>
+            <p>Prodigy InfoTech (June 2025) - Outstanding performance recognition</p>
+            <div id="cert1" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">prodigy-infotech-certificate.pdf</a></p>
+                <p><strong>Letter of Recommendation:</strong> <a href="#" style="color: #00d4ff;">recommendation-letter.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert2')">
+            <h4>Full Stack Web Development - MERN Stack</h4>
+            <p>Hawkscode Softwares - Complete certification with internship</p>
+            <div id="cert2" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">hawkscode-mern-certificate.pdf</a></p>
+                <p><strong>Internship Certificate:</strong> <a href="#" style="color: #00d4ff;">hawkscode-internship.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert3')">
+            <h4>Contentstack Developer Onboarding</h4>
+            <p>Official Contentstack certification for headless CMS development</p>
+            <div id="cert3" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">contentstack-developer-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <h3 style="color: #00d4ff; margin: 2rem 0 1rem 0;">Hackathons & Competitions</h3>
+        <div class="cert-card" onclick="toggleAttachment('cert4')">
+            <h4>AI-Agent Hackathon - 4th Place 🏆</h4>
+            <p>Swafinix Technologies Pvt. Ltd. - National level AI hackathon</p>
+            <div id="cert4" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">swafinix-hackathon-4th-place.pdf</a></p>
+                <p><strong>Project Demo:</strong> <a href="#" style="color: #00d4ff;">ai-agent-project-demo.mp4</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert5')">
+            <h4>Web Development Hackathon</h4>
+            <p>TuteDudes - Participated in competitive web development challenge</p>
+            <div id="cert5" class="attachment-info">
+                <p><strong>Participation Certificate:</strong> <a href="#" style="color: #00d4ff;">tutedudes-hackathon.pdf</a></p>
+                <p><strong>Project Submission:</strong> <a href="#" style="color: #00d4ff;">hackathon-web-project.zip</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert6')">
+            <h4>College Drama Competition - 1st Winner 🥇</h4>
+            <p>Team victory in college cultural event - Drama category</p>
+            <div id="cert6" class="attachment-info">
+                <p><strong>Winner Certificate:</strong> <a href="#" style="color: #00d4ff;">drama-competition-winner.pdf</a></p>
+                <p><strong>Performance Photos:</strong> <a href="#" style="color: #00d4ff;">drama-performance-pics.jpg</a></p>
+            </div>
+        </div>
+
+        <h3 style="color: #00d4ff; margin: 2rem 0 1rem 0;">Great Learning Certifications</h3>
+        <div class="cert-card" onclick="toggleAttachment('cert7')">
+            <h4>AWS for Beginners</h4>
+            <p>Cloud computing fundamentals and AWS services</p>
+            <div id="cert7" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">aws-beginners-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert8')">
+            <h4>Artificial Intelligence with Python</h4>
+            <p>Comprehensive AI programming with Python</p>
+            <div id="cert8" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">ai-python-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert9')">
+            <h4>Android Application Development</h4>
+            <p>Mobile app development for Android platform</p>
+            <div id="cert9" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">android-dev-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert10')">
+            <h4>Additional Great Learning Certificates</h4>
+            <p>Best First Search in AI, AI Crash Course, Python Fundamentals, Front End Development, ReactJS Tutorial</p>
+            <div id="cert10" class="attachment-info">
+                <p><strong>All Certificates:</strong> <a href="#" style="color: #00d4ff;">great-learning-bundle.zip</a></p>
+            </div>
+        </div>
+
+        <h3 style="color: #00d4ff; margin: 2rem 0 1rem 0;">FreeCodeCamp Certifications</h3>
+        <div class="cert-card" onclick="toggleAttachment('cert11')">
+            <h4>Backend Development and APIs</h4>
+            <p>Comprehensive backend development with Node.js and Express</p>
+            <div id="cert11" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">backend-apis-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert12')">
+            <h4>Data Analysis with Python</h4>
+            <p>Statistical analysis and data manipulation using Python</p>
+            <div id="cert12" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">data-analysis-python-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert13')">
+            <h4>Data Visualization</h4>
+            <p>Creating interactive charts and graphs for data representation</p>
+            <div id="cert13" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">data-visualization-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert14')">
+            <h4>Foundational C# with Microsoft</h4>
+            <p>C# programming fundamentals and .NET framework</p>
+            <div id="cert14" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">csharp-microsoft-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert15')">
+            <h4>Machine Learning with Python</h4>
+            <p>40-hour comprehensive course on ML algorithms and implementation</p>
+            <div id="cert15" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">ml-python-40hr-cert.pdf</a></p>
+                <p><strong>Course Projects:</strong> <a href="#" style="color: #00d4ff;">ml-projects-portfolio.zip</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert16')">
+            <h4>Responsive Web Design</h4>
+            <p>Modern web design principles and responsive layouts</p>
+            <div id="cert16" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">responsive-web-design-cert.pdf</a></p>
+            </div>
+        </div>
+
+        <div class="cert-card" onclick="toggleAttachment('cert17')">
+            <h4>Legacy Front End Development</h4>
+            <p>Traditional frontend technologies and best practices</p>
+            <div id="cert17" class="attachment-info">
+                <p><strong>Certificate:</strong> <a href="#" style="color: #00d4ff;">legacy-frontend-cert.pdf</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <h2>Get In Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <h3>📧 Email</h3>
+                <a href="mailto:adi3182004@gmail.com">adi3182004@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <h3>📱 Phone</h3>
+                <a href="tel:+917887547146">+91 7887547146</a>
+            </div>
+            <div class="contact-item">
+                <h3>💼 LinkedIn</h3>
+                <a href="https://linkedin.com/in/adityaandhalkar" target="_blank">linkedin.com/in/adityaandhalkar</a>
+            </div>
+            <div class="contact-item">
+                <h3>💻 GitHub</h3>
+                <a href="https://github.com/Adi3182004" target="_blank">github.com/Adi3182004</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Aditya Andhalkar. All rights reserved. | Crafted with ❤️ and cutting-edge web technologies</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navigation background change on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+
+        // Toggle attachment information
+        function toggleAttachment(id) {
+            const attachment = document.getElementById(id);
+            if (attachment.classList.contains('show-attachment')) {
+                attachment.classList.remove('show-attachment');
+            } else {
+                // Hide all other attachments first
+                document.querySelectorAll('.attachment-info').forEach(el => {
+                    el.classList.remove('show-attachment');
+                });
+                // Show clicked attachment
+                attachment.classList.add('show-attachment');
+            }
+        }
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.card, .project-card, .cert-card, .skill-category').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add dynamic typing effect to hero
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', function() {
+            const heroSubtitle = document.querySelector('.hero p');
+            if (heroSubtitle) {
+                const originalText = heroSubtitle.textContent;
+                typeWriter(heroSubtitle, originalText, 50);
+            }
+        });
+
+        // Add particle effect on mouse move
+        document.addEventListener('mousemove', function(e) {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.left = e.clientX + 'px';
+            particle.style.top = e.clientY + 'px';
+            particle.style.width = '4px';
+            particle.style.height = '4px';
+            particle.style.background = 'linear-gradient(45deg, #00d4ff, #0066ff)';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '9999';
+            particle.style.opacity = '0.7';
+            
+            document.body.appendChild(particle);
+            
+            // Animate particle
+            let opacity = 0.7;
+            let size = 4;
+            const animate = setInterval(() => {
+                opacity -= 0.05;
+                size += 0.5;
+                particle.style.opacity = opacity;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.marginLeft = -(size/2) + 'px';
+                particle.style.marginTop = -(size/2) + 'px';
+                
+                if (opacity <= 0) {
+                    clearInterval(animate);
+                    document.body.removeChild(particle);
+                }
+            }, 50);
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            const loader = document.createElement('div');
+            loader.style.position = 'fixed';
+            loader.style.top = '0';
+            loader.style.left = '0';
+            loader.style.width = '100%';
+            loader.style.height = '100%';
+            loader.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)';
+            loader.style.zIndex = '10000';
+            loader.style.display = 'flex';
+            loader.style.alignItems = 'center';
+            loader.style.justifyContent = 'center';
+            loader.innerHTML = '<div style="color: #00d4ff; font-size: 2rem; animation: pulse 1s infinite;">Loading Portfolio...</div>';
+            
+            document.body.prepend(loader);
+            
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    document.body.removeChild(loader);
+                }, 500);
+            }, 1500);
+        });
+
+        // Add mobile menu toggle
+        const createMobileMenu = () => {
+            const navContainer = document.querySelector('.nav-container');
+            const menuToggle = document.createElement('div');
+            menuToggle.classList.add('mobile-menu-toggle');
+            menuToggle.innerHTML = '☰';
+            menuToggle.style.display = 'none';
+            menuToggle.style.fontSize = '1.5rem';
+            menuToggle.style.cursor = 'pointer';
+            menuToggle.style.color = '#00d4ff';
+            
+            navContainer.appendChild(menuToggle);
+            
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'rgba(10, 10, 10, 0.98)';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.padding = '1rem';
+            });
+            
+            // Show mobile menu on small screens
+            const checkScreenSize = () => {
+                if (window.innerWidth <= 768) {
+                    menuToggle.style.display = 'block';
+                    navLinks.style.display = 'none';
+                } else {
+                    menuToggle.style.display = 'none';
+                    navLinks.style.display = 'flex';
+                    navLinks.style.position = 'static';
+                    navLinks.style.flexDirection = 'row';
+                    navLinks.style.background = 'transparent';
+                }
+            };
+            
+            window.addEventListener('resize', checkScreenSize);
+            checkScreenSize();
+        };
+        
+        createMobileMenu();
+    </script>
+</body>
+</html>
