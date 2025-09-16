@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Andhalkar - Interactive 3D Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a5c7;
+            --accent-blue: #4cc9f0;
+            --accent-purple: #7209b7;
+            --glow-blue: rgba(76, 201, 240, 0.3);
+            --glow-purple: rgba(114, 9, 183, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            cursor: none;
+        }
+        
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 20px var(--glow-blue);
+        }
+        
+        .cursor.hover {
+            transform: scale(3);
+            background: var(--accent-purple);
+            box-shadow: 0 0 30px var(--glow-purple);
+        }
+        
+        /* 3D Canvas */
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        /* Content Overlay */
+        .content {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .content * {
+            pointer-events: auto;
+        }
+        
+        /* Navigation */
+        .nav-menu {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 200px;
+        }
+        
+        .nav-item {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+        
+        .nav-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            color: var(--text-primary);
+            background: rgba(76, 201, 240, 0.1);
+            border-left: 3px solid var(--accent-blue);
+            transform: translateX(5px);
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1001;
+            background: var(--accent-blue);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 50px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: clamp(4rem, 10vw, 12rem);
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px var(--glow-purple);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 30px var(--glow-blue)); }
+            100% { filter: drop-shadow(0 0 50px var(--glow-purple)); }
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(76, 201, 240, 0.4);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 150px 50px;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .about h2 {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: var(--accent-blue);
+        }
+        
+        .about p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+        
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .skill-item {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 30px rgba(76, 201, 240, 0.2);
+        }
+        
+        .skill-item h3 {
+            color: var(--accent-purple);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .tag {
+            background: rgba(76, 201, 240, 0.1);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            color: var(--accent-blue);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        /* Qualifications Section */
+        .qualifications {
+            padding: 150px 50px;
+        }
+        
+        .qualifications h2 {
+            font-size: 4rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--accent-purple);
+        }
+        
+        .qual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .qual-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+        }
+        
+        .qual-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 30px 60px rgba(76, 201, 240, 0.2);
+        }
+        
+        .qual-card h3 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .qual-card .year {
+            color: var(--accent-purple);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .qual-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Projects Section */
+        .projects {
+            padding: 150px 50px;
+        }
+        
+        .projects h2 {
+            font-size: 4rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--accent-purple);
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .project-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 30px 60px rgba(76, 201, 240, 0.2);
+        }
+        
+        .project-card h3 {
+            color: var(--accent-blue);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .project-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        /* Experience Section */
+        .experience {
+            padding: 150px 50px;
+        }
+        
+        .experience h2 {
+            font-size: 4rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--accent-blue);
+        }
+        
+        .exp-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .exp-item {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .exp-item:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 40px rgba(114, 9, 183, 0.2);
+        }
+        
+        .exp-item h3 {
+            color: var(--accent-purple);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .exp-item .company {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .exp-item p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 150px 50px;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: var(--accent-blue);
+        }
+        
+        .contact p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-link {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px 30px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        
+        .contact-link:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 30px rgba(114, 9, 183, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .contact-link h4 {
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            section {
+                padding: 80px 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body { cursor: auto; }
+            .cursor { display: none; }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                top: 90px;
+                right: 20px;
+                left: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .hero h1 {
+                font-size: clamp(2.5rem, 8vw, 4rem);
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .about h2, .projects h2, .contact h2, .qualifications h2, .experience h2 {
+                font-size: 2.5rem;
+            }
+            
+            .skills {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-grid, .qual-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-links {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 60px 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-menu {
+                padding: 15px;
+                min-width: auto;
+            }
+            
+            .nav-item {
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .hero h1 {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+            
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+            
+            .skill-item, .project-card, .qual-card, .exp-item {
+                padding: 25px;
+            }
+        }
+        
+        /* Blast Effect */
+        .blast-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px var(--glow-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    
+    <!-- 3D Canvas -->
+    <canvas id="canvas"></canvas>
+    
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    
+    <!-- Navigation -->
+    <nav class="nav-menu" id="navMenu">
+        <a href="#home" class="nav-item active">Home</a>
+        <a href="#about" class="nav-item">About Me</a>
+        <a href="#qualifications" class="nav-item">Qualifications</a>
+        <a href="#experience" class="nav-item">Experience</a>
+        <a href="#projects" class="nav-item">Projects</a>
+        <a href="#contact" class="nav-item">Contact</a>
+    </nav>
+    
+    <!-- Content -->
+    <div class="content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>ADITYA</h1>
+                <p>Full-Stack Developer & Creative Technologist crafting immersive digital experiences through innovative code and cutting-edge design.</p>
+                <button class="cta-button" onclick="scrollToSection('projects')">VIEW PROJECTS</button>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div>
+                        <h2>About Me</h2>
+                        <p>I'm a passionate full-stack developer and creative technologist based in Kalyan, Maharashtra. I specialize in building modern web applications, machine learning solutions, and interactive 3D experiences.</p>
+                        <p>Currently pursuing B.E. Computer Engineering at New Horizon Institute, with hands-on experience as a Backend Developer Intern at Young Thames.</p>
+                        <p>I bridge technical excellence with creative innovation, transforming ideas into immersive digital realities.</p>
+                    </div>
+                    <div class="skills">
+                        <div class="skill-item">
+                            <h3>Frontend</h3>
+                            <div class="skill-tags">
+                                <span class="tag">React</span>
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Three.js</span>
+                                <span class="tag">CSS3</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <h3>Backend</h3>
+                            <div class="skill-tags">
+                                <span class="tag">Node.js</span>
+                                <span class="tag">Python</span>
+                                <span class="tag">MongoDB</span>
+                                <span class="tag">MySQL</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <h3>AI/ML</h3>
+                            <div class="skill-tags">
+                                <span class="tag">TensorFlow</span>
+                                <span class="tag">OpenCV</span>
+                                <span class="tag">MediaPipe</span>
+                                <span class="tag">Dialogflow</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <h3>DevOps</h3>
+                            <div class="skill-tags">
+                                <span class="tag">Docker</span>
+                                <span class="tag">AWS</span>
+                                <span class="tag">Git</span>
+                                <span class="tag">CI/CD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Qualifications Section -->
+        <section id="qualifications" class="qualifications">
+            <div class="container">
+                <h2>Qualifications</h2>
+                <div class="qual-grid">
+                    <div class="qual-card">
+                        <h3>B.E. Computer Engineering</h3>
+                        <div class="year">2021 - 2025</div>
+                        <p>New Horizon Institute of Technology & Management, Kalyan. Currently pursuing with focus on full-stack development, machine learning, and software engineering principles.</p>
+                    </div>
+                    <div class="qual-card">
+                        <h3>Higher Secondary (HSC)</h3>
+                        <div class="year">2019 - 2021</div>
+                        <p>Completed with science stream focusing on Mathematics, Physics, and Chemistry. Built strong analytical and problem-solving foundation.</p>
+                    </div>
+                    <div class="qual-card">
+                        <h3>Secondary School (SSC)</h3>
+                        <div class="year">2019</div>
+                        <p>Strong academic foundation with excellent performance in Mathematics and Science subjects.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Experience Section -->
+        <section id="experience" class="experience">
+            <div class="container">
+                <h2>Experience</h2>
+                <div class="exp-timeline">
+                    <div class="exp-item">
+                        <h3>Backend Developer Intern</h3>
+                        <div class="company">Young Thames</div>
+                        <p>Worked on API development and system design. Gained hands-on experience with Node.js, database management, and server-side architecture. Collaborated with cross-functional teams to deliver scalable backend solutions.</p>
+                    </div>
+                    <div class="exp-item">
+                        <h3>Freelance Developer</h3>
+                        <div class="company">Various Clients</div>
+                        <p>Developed custom web applications, management systems, and AI-powered solutions for diverse clients. Specialized in full-stack development and creative technology implementations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2>Projects</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h3>AI Chatbot</h3>
+                        <p>Android conversational agent built with Dialogflow and production dialog flows for intelligent user interactions.</p>
+                        <div class="project-tech">
+                            <span class="tag">Dialogflow</span>
+                            <span class="tag">Android</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">Node.js</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Gesture Input System</h3>
+                        <p>Touchless input using OpenCV & MediaPipe — integrated as a desktop UX layer for accessibility and kiosks.</p>
+                        <div class="project-tech">
+                            <span class="tag">OpenCV</span>
+                            <span class="tag">MediaPipe</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Computer Vision</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Object Detection</h3>
+                        <p>TensorFlow Lite model tuned for mobile — fast inference and small footprint for real-time detection.</p>
+                        <div class="project-tech">
+                            <span class="tag">TensorFlow Lite</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Mobile ML</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>3D Interactive Portfolio</h3>
+                        <p>This immersive portfolio with Three.js 3D objects, smooth animations, and interactive functionality.</p>
+                        <div class="project-tech">
+                            <span class="tag">Three.js</span>
+                            <span class="tag">WebGL</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Management Systems</h3>
+                        <p>Admin panels for library and blood bank — CRUD operations, authentication and role-based access control.</p>
+                        <div class="project-tech">
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Bootstrap</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>3D Art Experiments</h3>
+                        <p>Interactive visuals and generative experiments inspired by creative technologists and modern web art.</p>
+                        <div class="project-tech">
+                            <span class="tag">Three.js</span>
+                            <span class="tag">GLSL</span>
+                            <span class="tag">WebGL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Contact</h2>
+                <p>Ready to create something amazing together? Let's connect and bring your vision to life.</p>
+                <div class="contact-links">
+                    <a href="mailto:adi3182004@gmail.com" class="contact-link">
+                        <h4>Email</h4>
+                        <p>adi3182004@gmail.com</p>
+                    </a>
+                    <a href="tel:+917887547146" class="contact-link">
+                        <h4>Phone</h4>
+                        <p>+91 7887547146</p>
+                    </a>
+                    <a href="https://github.com/Adi3182004" target="_blank" class="contact-link">
+                        <h4>GitHub</h4>
+                        <p>github.com/Adi3182004</p>
+                    </a>
+                    <a href="https://linkedin.com/in/adityaandhalkar" target="_blank" class="contact-link">
+                        <h4>LinkedIn</h4>
+                        <p>linkedin.com/in/adityaandhalkar</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js Scene
+        let scene, camera, renderer, orb, particles = [];
+        let mouseX = 0, mouseY = 0;
+        let targetRotationX = 0, targetRotationY = 0;
+        let isExploded = false;
+        let originalScale = 1;
+        let explosionParticles = [];
+        
+        function initThree() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('canvas'), 
+                alpha: true, 
+                antialias: true 
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            // Create orb
+            const geometry = new THREE.IcosahedronGeometry(1.5, 2);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x4cc9f0,
+                transparent: true,
+                opacity: 0.8,
+                wireframe: false
+            });
+            
+            orb = new THREE.Mesh(geometry, material);
+            scene.add(orb);
+            
+            // Add wireframe overlay
+            const wireframeGeometry = geometry.clone();
+            const wireframeMaterial = new THREE.MeshBasicMaterial({
+                color: 0x7209b7,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3
+            });
+            const wireframe = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
+            wireframe.scale.multiplyScalar(1.01);
+            orb.add(wireframe);
+            
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+            scene.add(ambientLight);
+            
+            const pointLight1 = new THREE.PointLight(0x4cc9f0, 2, 50);
+            pointLight1.position.set(10, 10, 10);
+            scene.add(pointLight1);
+            
+            const pointLight2 = new THREE.PointLight(0x7209b7, 1.5, 30);
+            pointLight2.position.set(-10, -10, -5);
+            scene.add(pointLight2);
+            
+            camera.position.z = 5;
+            
+            animate();
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Smooth mouse following
+            targetRotationY = (mouseX / window.innerWidth) * Math.PI;
+            targetRotationX = (mouseY / window.innerHeight) * Math.PI;
+            
+            if (orb) {
+                // Smooth mouse following
+                orb.rotation.y += (targetRotationY - orb.rotation.y) * 0.05;
+                orb.rotation.x += (targetRotationX - orb.rotation.x) * 0.05;
+                orb.rotation.z += 0.005;
+                
+                // Breathing effect when not exploded
+                if (!isExploded) {
+                    const scale = originalScale + Math.sin(Date.now() * 0.001) * 0.1;
+                    orb.scale.set(scale, scale, scale);
+                }
+            }
+            
+            // Update particles
+            particles.forEach((particle, index) => {
+                particle.position.add(particle.velocity);
+                particle.material.opacity -= 0.02;
+                
+                if (particle.material.opacity <= 0) {
+                    scene.remove(particle);
+                    particles.splice(index, 1);
+                }
+            });
+            
+            // Update explosion particles
+            explosionParticles.forEach((particle, index) => {
+                particle.position.add(particle.velocity);
+                particle.velocity.multiplyScalar(0.98); // Friction
+                particle.material.opacity -= 0.015;
+                
+                if (particle.material.opacity <= 0) {
+                    scene.remove(particle);
+                    explosionParticles.splice(index, 1);
+                }
+            });
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Mouse tracking
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+            
+            // Update custom cursor
+            const cursor = document.querySelector('.cursor');
+            if (cursor) {
+                cursor.style.left = event.clientX + 'px';
+                cursor.style.top = event.clientY + 'px';
+            }
+        });
+        
+        // Click blast effect
+        document.addEventListener('click', (event) => {
+            // Only explode orb if clicking on canvas (not on UI elements)
+            if (event.target.id === 'canvas') {
+                explodeOrb();
+            }
+            createBlast(event.clientX, event.clientY);
+        });
+        
+        // Orb explosion effect
+        function explodeOrb() {
+            if (!orb || isExploded) return;
+            
+            isExploded = true;
+            
+            // Enlarge orb with elastic effect
+            const targetScale = 2.5;
+            let currentScale = originalScale;
+            
+            const explodeAnimation = () => {
+                currentScale += (targetScale - currentScale) * 0.15;
+                orb.scale.set(currentScale, currentScale, currentScale);
+                
+                // Change color to explosion color
+                orb.material.color.setHex(0xff6b6b);
+                orb.children[0].material.color.setHex(0xffffff);
+                
+                if (Math.abs(targetScale - currentScale) > 0.01) {
+                    requestAnimationFrame(explodeAnimation);
+                } else {
+                    // Create explosion particles
+                    createExplosionParticles();
+                    
+                    // Return to normal after delay
+                    setTimeout(() => {
+                        returnToNormal();
+                    }, 1500);
+                }
+            };
+            
+            explodeAnimation();
+        }
+        
+        // Return orb to normal state
+        function returnToNormal() {
+            if (!orb) return;
+            
+            const targetScale = originalScale;
+            let currentScale = orb.scale.x;
+            
+            const returnAnimation = () => {
+                currentScale += (targetScale - currentScale) * 0.1;
+                orb.scale.set(currentScale, currentScale, currentScale);
+                
+                // Return to original colors
+                orb.material.color.setHex(0x4cc9f0);
+                orb.children[0].material.color.setHex(0x7209b7);
+                
+                if (Math.abs(targetScale - currentScale) > 0.01) {
+                    requestAnimationFrame(returnAnimation);
+                } else {
+                    isExploded = false;
+                }
+            };
+            
+            returnAnimation();
+        }
+        
+        function createBlast(x, y) {
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'blast-particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                const angle = (i / 12) * Math.PI * 2;
+                const velocity = 100 + Math.random() * 50;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                particle.style.setProperty('--vx', vx + 'px');
+                particle.style.setProperty('--vy', vy + 'px');
+                particle.style.animation = 'blastMove 0.8s ease-out forwards';
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 800);
+            }
+        }
+        
+        function createExplosionParticles() {
+            for (let i = 0; i < 50; i++) {
+                const geometry = new THREE.SphereGeometry(0.03, 8, 8);
+                const material = new THREE.MeshBasicMaterial({
+                    color: Math.random() > 0.5 ? 0xff6b6b : 0xffffff,
+                    transparent: true,
+                    opacity: 1
+                });
+                
+                const particle = new THREE.Mesh(geometry, material);
+                particle.position.copy(orb.position);
+                
+                // Random explosion direction
+                const velocity = new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.3,
+                    (Math.random() - 0.5) * 0.3,
+                    (Math.random() - 0.5) * 0.3
+                );
+                particle.velocity = velocity;
+                
+                scene.add(particle);
+                explosionParticles.push(particle);
+            }
+        }
+        
+        function createParticles() {
+            for (let i = 0; i < 20; i++) {
+                const geometry = new THREE.SphereGeometry(0.02, 8, 8);
+                const material = new THREE.MeshBasicMaterial({
+                    color: Math.random() > 0.5 ? 0x4cc9f0 : 0x7209b7,
+                    transparent: true,
+                    opacity: 1
+                });
+                
+                const particle = new THREE.Mesh(geometry, material);
+                particle.position.copy(orb.position);
+                
+                const velocity = new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.2,
+                    (Math.random() - 0.5) * 0.2,
+                    (Math.random() - 0.5) * 0.2
+                );
+                particle.velocity = velocity;
+                
+                scene.add(particle);
+                particles.push(particle);
+            }
+        }
+        
+        // Navigation
+        function initNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('section');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = item.getAttribute('href').substring(1);
+                    scrollToSection(targetId);
+                });
+            });
+            
+            // Update active nav on scroll
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY + window.innerHeight / 2;
+                
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                        navItems.forEach(item => item.classList.remove('active'));
+                        navItems[index].classList.add('active');
+                        
+                        // Change orb color based on section
+                        if (orb && !isExploded) {
+                            const colors = [0x4cc9f0, 0x7209b7, 0xff6b6b, 0x00ff88, 0xffd700, 0xff1493];
+                            orb.material.color.setHex(colors[index] || 0x4cc9f0);
+                        }
+                    }
+                });
+            });
+        }
+        
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Mobile menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    document.getElementById('navMenu').classList.remove('active');
+                }
+            });
+        });
+        
+        // Hover effects
+        function initHoverEffects() {
+            const hoverElements = document.querySelectorAll('.cta-button, .project-card, .contact-link, .skill-item, .qual-card, .exp-item, .nav-item');
+            const cursor = document.querySelector('.cursor');
+            
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    if (cursor) cursor.classList.add('hover');
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    if (cursor) cursor.classList.remove('hover');
+                });
+            });
+        }
+        
+        // Resize handler
+        window.addEventListener('resize', () => {
+            if (camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        });
+        
+        // Initialize everything
+        window.addEventListener('load', () => {
+            initThree();
+            initNavigation();
+            initHoverEffects();
+        });
+        
+        // Add CSS animation for blast particles
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes blastMove {
+                    0% {
+                        transform: translate(0, 0) scale(1);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translate(var(--vx), var(--vy)) scale(0);
+                        opacity: 0;
+                    }
+                }
+            </style>
+        `);
+    </script>
+</body>
+</html>
