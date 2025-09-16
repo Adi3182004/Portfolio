@@ -254,7 +254,7 @@
             border-color: var(--accent);
         }
         
-        .about, .skills-section, .experience {
+        .about, .skills-section, .experience, .certifications, .projects {
             padding: 100px 0;
         }
         
@@ -288,6 +288,24 @@
             text-align: left;
         }
         
+        .about-image {
+            background: linear-gradient(135deg, var(--accent), #00d4ff);
+            border-radius: 20px;
+            height: 350px;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            transition: all 0.5s ease;
+        }
+        
+        .about-image:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        
         .skills {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -295,7 +313,7 @@
             margin-top: 40px;
         }
         
-        .skill-card, .project-card, .experience-card {
+        .skill-card, .project-card, .experience-card, .certification-card {
             background: var(--glass);
             backdrop-filter: blur(20px);
             border: 1px solid var(--border);
@@ -305,15 +323,67 @@
             transition: all 0.3s ease;
         }
         
-        .skill-card:hover, .project-card:hover, .experience-card:hover {
+        .skill-card:hover, .project-card:hover, .experience-card:hover, .certification-card:hover {
             transform: translateY(-10px);
             border-color: var(--accent);
         }
         
-        .skill-card h3, .experience-card h3 {
+        .skill-card h3, .experience-card h3, .certification-card h3 {
             color: var(--accent);
             margin-bottom: 15px;
             transition: color 0.5s ease;
+        }
+        
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .certification-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            text-align: left;
+            padding: 30px;
+        }
+        
+        .cert-icon {
+            font-size: 3rem;
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), #00d4ff);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+        
+        .cert-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        .cert-provider {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 5px;
+            transition: color 0.5s ease;
+        }
+        
+        .cert-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .cert-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         
         .skill-tags {
@@ -331,10 +401,6 @@
             border-radius: 15px;
             font-size: 0.8rem;
             transition: all 0.5s ease;
-        }
-        
-        .projects {
-            padding: 100px 0;
         }
         
         .projects-grid {
@@ -609,6 +675,10 @@
             .projects-grid {
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             }
+            
+            .certifications-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
         }
         
         @media (max-width: 768px) {
@@ -663,13 +733,38 @@
                 gap: 30px;
             }
             
+            .about-image {
+                order: -1;
+                font-size: 4rem;
+                height: 280px;
+                max-width: 280px;
+            }
+            
             .skills {
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
             
-            .skill-card, .project-card, .experience-card {
+            .skill-card, .project-card, .experience-card, .certification-card {
                 padding: 25px 20px;
+            }
+            
+            .certifications-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .certification-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .cert-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+                margin: 0 auto;
             }
             
             .projects-grid {
@@ -682,53 +777,14 @@
                 font-size: 3rem;
             }
             
-            .experience-timeline {
-                padding: 0 15px;
-            }
-            
-            .experience-card {
-                padding: 25px;
-            }
-            
             .contact-info h2 {
                 font-size: 2.5rem;
                 text-align: center;
                 margin-bottom: 25px;
             }
             
-            .contact-info p {
-                text-align: center;
-                font-size: 1rem;
-            }
-            
-            .contact-details {
-                gap: 15px;
-            }
-            
-            .contact-item {
-                justify-content: flex-start;
-                gap: 12px;
-            }
-            
-            .contact-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
-            }
-            
             .contact-form {
                 padding: 30px 25px;
-            }
-            
-            .contact-form h3 {
-                margin-bottom: 25px;
-                text-align: center;
-            }
-            
-            .form-group input,
-            .form-group textarea {
-                padding: 12px;
-                font-size: 1rem;
             }
             
             .floating-shape {
@@ -736,64 +792,31 @@
             }
             
             section {
-                padding: 0 15px;
+                padding: 50px 15px;
             }
         }
         
         @media (max-width: 480px) {
-            nav {
-                top: 10px;
-                left: 10px;
-                right: 10px;
-                padding: 8px 12px;
-            }
-            
-            .hero {
-                padding: 80px 0;
+            .section-title {
+                font-size: 2rem;
             }
             
             .hero h1 {
-                font-size: clamp(2rem, 15vw, 5rem);
-                margin-bottom: 15px;
+                font-size: clamp(2rem, 15vw, 4rem);
             }
             
-            .hero p {
-                font-size: 0.95rem;
-                margin-bottom: 30px;
-            }
-            
-            .section-title {
+            .about-text h2 {
                 font-size: 2rem;
-                margin-bottom: 30px;
-            }
-            
-            .skills {
-                margin-top: 30px;
-            }
-            
-            .skill-card, .project-card, .experience-card {
-                padding: 20px 15px;
             }
             
             .contact-info h2 {
                 font-size: 2rem;
             }
             
-            .contact-form {
-                padding: 25px 20px;
-            }
-            
-            .form-group input,
-            .form-group textarea {
-                padding: 10px;
-            }
-            
-            section {
-                padding: 0 10px;
-            }
-            
-            .container {
-                padding: 0 10px;
+            .about-image {
+                height: 250px;
+                max-width: 250px;
+                font-size: 3rem;
             }
         }
         
@@ -830,20 +853,24 @@
         </div>
         <ul class="nav-links">
             <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
             <li><a href="#skills" class="nav-link">Skills</a></li>
             <li><a href="#projects" class="nav-link">Projects</a></li>
             <li><a href="#experience" class="nav-link">Experience</a></li>
-            <li><a href="#contact" class="nav-link">Contact Me</a></li>
+            <li><a href="#certifications" class="nav-link">Certifications</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
     </nav>
     
     <div class="mobile-menu" id="mobileMenu">
         <ul class="nav-links">
             <li><a href="#home" class="nav-link mobile-link">Home</a></li>
+            <li><a href="#about" class="nav-link mobile-link">About</a></li>
             <li><a href="#skills" class="nav-link mobile-link">Skills</a></li>
             <li><a href="#projects" class="nav-link mobile-link">Projects</a></li>
             <li><a href="#experience" class="nav-link mobile-link">Experience</a></li>
-            <li><a href="#contact" class="nav-link mobile-link">Contact Me</a></li>
+            <li><a href="#certifications" class="nav-link mobile-link">Certifications</a></li>
+            <li><a href="#contact" class="nav-link mobile-link">Contact</a></li>
         </ul>
     </div>
     
@@ -854,6 +881,22 @@
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary">View Projects</a>
                 <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <p>I'm Aditya Andhalkar, a passionate Computer Engineering student and Full-Stack Developer with a deep love for creating innovative digital solutions. My journey in technology spans across web development, machine learning, and creative coding.</p>
+                    <p>Currently pursuing my B.E. in Computer Engineering at New Horizon Institute of Technology & Management, I've developed expertise in modern web technologies, AI/ML frameworks, and cloud platforms. I'm particularly fascinated by the intersection of technology and user experience.</p>
+                    <p>When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or working on creative experiments that push the boundaries of what's possible on the web.</p>
+                </div>
+                <div class="about-image">
+                    👨‍💻
+                </div>
             </div>
         </div>
     </section>
@@ -1017,6 +1060,103 @@
         </div>
     </section>
     
+    <section id="certifications" class="certifications">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certifications-grid">
+                <div class="certification-card">
+                    <div class="cert-icon">🏆</div>
+                    <div class="cert-content">
+                        <h3>Full-Stack Web Development</h3>
+                        <div class="cert-provider">Coursera - Meta</div>
+                        <div class="cert-date">2024</div>
+                        <div class="cert-skills">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">REST APIs</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-icon">🤖</div>
+                    <div class="cert-content">
+                        <h3>Machine Learning Specialization</h3>
+                        <div class="cert-provider">Coursera - Stanford</div>
+                        <div class="cert-date">2023</div>
+                        <div class="cert-skills">
+                            <span class="tag">Python</span>
+                            <span class="tag">TensorFlow</span>
+                            <span class="tag">Neural Networks</span>
+                            <span class="tag">Deep Learning</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-icon">☁️</div>
+                    <div class="cert-content">
+                        <h3>AWS Cloud Practitioner</h3>
+                        <div class="cert-provider">Amazon Web Services</div>
+                        <div class="cert-date">2024</div>
+                        <div class="cert-skills">
+                            <span class="tag">AWS Services</span>
+                            <span class="tag">Cloud Computing</span>
+                            <span class="tag">Security</span>
+                            <span class="tag">Deployment</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-icon">📱</div>
+                    <div class="cert-content">
+                        <h3>Android Development</h3>
+                        <div class="cert-provider">Google Developer</div>
+                        <div class="cert-date">2023</div>
+                        <div class="cert-skills">
+                            <span class="tag">Kotlin</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">Android SDK</span>
+                            <span class="tag">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-icon">🎨</div>
+                    <div class="cert-content">
+                        <h3>UI/UX Design Fundamentals</h3>
+                        <div class="cert-provider">Adobe Certified</div>
+                        <div class="cert-date">2023</div>
+                        <div class="cert-skills">
+                            <span class="tag">Figma</span>
+                            <span class="tag">Adobe XD</span>
+                            <span class="tag">Prototyping</span>
+                            <span class="tag">User Research</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-icon">🔐</div>
+                    <div class="cert-content">
+                        <h3>Cybersecurity Fundamentals</h3>
+                        <div class="cert-provider">IBM Security</div>
+                        <div class="cert-date">2024</div>
+                        <div class="cert-skills">
+                            <span class="tag">Network Security</span>
+                            <span class="tag">Ethical Hacking</span>
+                            <span class="tag">Risk Assessment</span>
+                            <span class="tag">Security Protocols</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <section id="contact" class="contact">
         <div class="container">
             <div class="contact-content">
@@ -1114,11 +1254,8 @@
             requestAnimationFrame(animate);
             
             if (mesh) {
-                // Continuous rotation
                 mesh.rotation.x += 0.01;
                 mesh.rotation.y += 0.01;
-                
-                // Smooth mouse following
                 mesh.rotation.x += (mouseY * 0.0005 - mesh.rotation.x) * 0.05;
                 mesh.rotation.y += (mouseX * 0.0005 - mesh.rotation.y) * 0.05;
             }
@@ -1126,7 +1263,6 @@
             renderer.render(scene, camera);
         }
         
-        // Update theme colors
         function updateTheme(theme) {
             const colors = colorThemes[theme];
             const root = document.documentElement;
@@ -1134,13 +1270,11 @@
             root.style.setProperty('--accent', colors.primary);
             root.style.setProperty('--accent-secondary', colors.secondary);
             
-            // Update Three.js colors
             if (mesh) {
                 mesh.material.color.setHex(colors.primary.replace('#', '0x'));
                 scene.children.find(child => child.type === 'DirectionalLight').color.setHex(colors.primary.replace('#', '0x'));
             }
             
-            // Update glow animation
             const style = document.querySelector('#glowStyle') || document.createElement('style');
             style.id = 'glowStyle';
             style.textContent = `
@@ -1152,30 +1286,28 @@
             if (!document.querySelector('#glowStyle')) document.head.appendChild(style);
         }
         
-        // Handle scroll-based orb movement and color changes
         function handleScroll() {
             const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
             const sections = document.querySelectorAll('section');
             
             if (mesh) {
-                // Orb movement: left to right to left
                 const orbX = Math.sin(scrollPercent * Math.PI * 2) * 3;
                 mesh.position.x = orbX;
                 mesh.position.y = Math.cos(scrollPercent * Math.PI) * 0.5;
                 
-                // Color changes based on scroll position
-                if (scrollPercent < 0.25) {
+                if (scrollPercent < 0.2) {
                     updateTheme('blue');
-                } else if (scrollPercent < 0.5) {
+                } else if (scrollPercent < 0.4) {
                     updateTheme('green');
-                } else if (scrollPercent < 0.75) {
+                } else if (scrollPercent < 0.6) {
                     updateTheme('purple');
-                } else {
+                } else if (scrollPercent < 0.8) {
                     updateTheme('red');
+                } else {
+                    updateTheme('green');
                 }
             }
             
-            // Update active navigation
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 100;
@@ -1192,25 +1324,21 @@
             });
         }
         
-        // Initialize navigation
         function initNavigation() {
             const hamburger = document.getElementById('hamburger');
             const mobileMenu = document.getElementById('mobileMenu');
             
-            // Hamburger menu toggle
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 mobileMenu.classList.toggle('active');
                 document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
             });
             
-            // Handle all navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const target = document.querySelector(link.getAttribute('href'));
                     
-                    // Close mobile menu if open
                     if (mobileMenu.classList.contains('active')) {
                         hamburger.classList.remove('active');
                         mobileMenu.classList.remove('active');
@@ -1221,7 +1349,6 @@
                 });
             });
             
-            // Close mobile menu when clicking outside
             mobileMenu.addEventListener('click', (e) => {
                 if (e.target === mobileMenu) {
                     hamburger.classList.remove('active');
@@ -1231,7 +1358,6 @@
             });
         }
         
-        // Initialize contact form
         function initContactForm() {
             document.getElementById('contactForm').addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -1252,7 +1378,6 @@
             });
         }
         
-        // Initialize animations
         function initAnimations() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1263,7 +1388,7 @@
                 });
             }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
             
-            document.querySelectorAll('.skill-card, .project-card, .experience-card, .contact-item').forEach(el => {
+            document.querySelectorAll('.skill-card, .project-card, .experience-card, .certification-card, .contact-item').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(50px)';
                 el.style.transition = 'all 0.6s ease';
@@ -1271,26 +1396,25 @@
             });
         }
         
-        // Event listeners
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX - window.innerWidth / 2;
             mouseY = e.clientY - window.innerHeight / 2;
         });
         
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            if (camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
         });
         
         window.addEventListener('scroll', handleScroll);
         
-        // Initialize everything on load
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('loader').classList.add('hidden');
                 
-                // Reveal hero elements
                 ['h1', 'p', '.hero-buttons'].forEach((selector, i) => {
                     setTimeout(() => {
                         const el = document.querySelector('.hero ' + selector);
@@ -1306,10 +1430,9 @@
             initNavigation();
             initContactForm();
             initAnimations();
-            updateTheme('blue'); // Start with blue theme
+            updateTheme('blue');
         });
         
-        // Initial styles for hero animation
         document.addEventListener('DOMContentLoaded', () => {
             const style = document.createElement('style');
             style.textContent = `
