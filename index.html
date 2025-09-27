@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aditya Andhalkar - 3D Developer Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Controls intentionally commented out; JS is null-safe -->
+    <!--
+    <div class="animation-controls">
+      <h4>🎮 Sphere Animation</h4>
+      <button class="control-btn" id="scatterBtn">💥 Scatter</button>
+      <button class="control-btn" id="reconstructBtn">🔄 Reconstruct</button>
+      <button class="control-btn" id="resetBtn">⚡ Reset</button>
+      <button class="control-btn" id="autoBtn">🔁 Auto Mode</button>
+      <div class="status-display" id="statusDisplay">Ready</div>
+    </div>
+
+    <div class="interaction-hint">
+      🎯 Use controls or double-click sphere for animations
+    </div>
+    -->
+
+    <canvas id="canvas"></canvas>
+
+    <nav class="glass">
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#hackathons" class="nav-link">Hackathons</a></li>
+        <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link mobile-link">Home</a></li>
+        <li><a href="#about" class="nav-link mobile-link">About</a></li>
+        <li><a href="#skills" class="nav-link mobile-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link mobile-link">Projects</a></li>
+        <li>
+          <a href="#experience" class="nav-link mobile-link">Experience</a>
+        </li>
+        <li>
+          <a href="#hackathons" class="nav-link mobile-link">Hackathons</a>
+        </li>
+        <li>
+          <a href="#certifications" class="nav-link mobile-link"
+            >Certifications</a
+          >
+        </li>
+        <li><a href="#contact" class="nav-link mobile-link">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Hero -->
+    <section id="home" class="hero section-padding">
+      <div class="container-custom">
+        <div class="animate-fade-in-up">
+          <h1 class="gradient-text animate-glow">ADITYA</h1>
+          <p>
+            Full-Stack Developer & Creative Technologist crafting immersive
+            digital experiences through code, design, and innovation.
+          </p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn-hero">View Projects</a>
+            <a href="#contact" class="btn-hero-outline">Get In Touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2>About Me</h2>
+            <p>
+              I'm Aditya Andhalkar, a passionate Computer Engineering student
+              and Full-Stack Developer with a deep love for creating innovative
+              digital solutions. My journey in technology spans across web
+              development, machine learning, and creative coding.
+            </p>
+            <p>
+              Currently pursuing my B.E. in Computer Engineering at New Horizon
+              Institute of Technology & Management, I've developed expertise in
+              modern web technologies, AI/ML frameworks, and cloud platforms.
+              I'm particularly fascinated by the intersection of technology and
+              user experience.
+            </p>
+            <p>
+              When I'm not coding, you'll find me exploring new technologies,
+              contributing to open-source projects, or working on creative
+              experiments that push the boundaries of what's possible on the
+              web.
+            </p>
+          </div>
+          <div class="about-image">👨‍💻</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="skills-section">
+      <div class="container">
+        <h2 class="section-title">Skills & Technologies</h2>
+        <div class="skills">
+          <div class="skill-card">
+            <h3>Frontend</h3>
+            <div class="skill-tags">
+              <span class="tag">React</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">Three.js</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h3>Backend</h3>
+            <div class="skill-tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express</span>
+              <span class="tag">Python</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">MySQL</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h3>AI/ML</h3>
+            <div class="skill-tags">
+              <span class="tag">TensorFlow</span>
+              <span class="tag">OpenCV</span>
+              <span class="tag">MediaPipe</span>
+              <span class="tag">Dialogflow</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h3>DevOps</h3>
+            <div class="skill-tags">
+              <span class="tag">Docker</span>
+              <span class="tag">AWS</span>
+              <span class="tag">Git</span>
+              <span class="tag">CI/CD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-image">🤖</div>
+            <div class="project-content">
+              <h3>AI Chatbot</h3>
+              <p>
+                Android conversational agent built with Dialogflow and
+                production dialog flows for intelligent user interactions.
+              </p>
+              <div class="tech-stack">
+                <span class="tag">Dialogflow</span>
+                <span class="tag">Android</span>
+                <span class="tag">Java</span>
+                <span class="tag">Node.js</span>
+              </div>
+              <div class="project-links">
+                <a href="#">Live Demo</a>
+                <a href="#">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">👋</div>
+            <div class="project-content">
+              <h3>Gesture Input System</h3>
+              <p>
+                Touchless input using OpenCV & MediaPipe — integrated as a
+                desktop UX layer for accessibility and kiosks.
+              </p>
+              <div class="tech-stack">
+                <span class="tag">OpenCV</span>
+                <span class="tag">MediaPipe</span>
+                <span class="tag">Python</span>
+                <span class="tag">Computer Vision</span>
+              </div>
+              <div class="project-links">
+                <a href="#">Live Demo</a>
+                <a href="#">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">🎯</div>
+            <div class="project-content">
+              <h3>Object Detection</h3>
+              <p>
+                TensorFlow Lite model tuned for mobile — fast inference and
+                small footprint for real-time detection.
+              </p>
+              <div class="tech-stack">
+                <span class="tag">TensorFlow Lite</span>
+                <span class="tag">Python</span>
+                <span class="tag">Mobile ML</span>
+                <span class="tag">Computer Vision</span>
+              </div>
+              <div class="project-links">
+                <a href="#">Live Demo</a>
+                <a href="#">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">🌐</div>
+            <div class="project-content">
+              <h3>3D Interactive Portfolio</h3>
+              <p>
+                This immersive portfolio with Three.js 3D objects, smooth
+                animations, and interactive functionality.
+              </p>
+              <div class="tech-stack">
+                <span class="tag">Three.js</span>
+                <span class="tag">WebGL</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">CSS3</span>
+              </div>
+              <div class="project-links">
+                <a href="#">Live Demo</a>
+                <a href="#">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="experience">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="experience-timeline">
+          <div class="experience-card">
+            <div class="experience-date">2025 - Present</div>
+            <div class="experience-company">Young Thames</div>
+            <div class="experience-role">Backend Developer Intern</div>
+            <div class="experience-description">
+              Developing robust API architectures and optimizing backend
+              systems. Working with Node.js, Express, and cloud technologies to
+              build scalable solutions for enterprise clients.
+            </div>
+          </div>
+
+          <div class="experience-card">
+            <div class="experience-date">2022 - 2027</div>
+            <div class="experience-company">
+              New Horizon Institute of Technology & Management
+            </div>
+            <div class="experience-role">B.E. Computer Engineering Student</div>
+            <div class="experience-description">
+              Pursuing Bachelor's degree in Computer Engineering with focus on
+              full-stack development, machine learning, and software engineering
+              principles. Active in coding competitions and technical projects.
+            </div>
+          </div>
+
+          <div class="experience-card">
+            <div class="experience-date">2023</div>
+            <div class="experience-company">Freelance Projects</div>
+            <div class="experience-role">Full-Stack Developer</div>
+            <div class="experience-description">
+              Delivered multiple web applications for real-world usage including
+              inventory management systems, e-commerce platforms, and custom
+              automation tools.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hackathons -->
+    <section id="hackathons" class="hackathons">
+      <div class="container">
+        <h2 class="section-title">Hackathons</h2>
+        <div class="hackathons-grid">
+          <div class="hackathon-card">
+            <div class="hackathon-icon">🏅</div>
+            <div class="hackathon-content">
+              <h3>AI Agents Hackathon</h3>
+              <div class="hackathon-organizer">
+                Swafinix Technologies Pvt. Ltd.
+              </div>
+              <div class="hackathon-position">4th Place Winner</div>
+              <div class="hackathon-skills">
+                <span class="tag">AI/ML</span>
+                <span class="tag">Python</span>
+                <span class="tag">Agent Framework</span>
+                <span class="tag">API Integration</span>
+              </div>
+              <div class="hackathon-links">
+                <a href="#" target="_blank">Project Demo</a>
+                <a href="#" target="_blank">Certificate</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="hackathon-card">
+            <div class="hackathon-icon">💻</div>
+            <div class="hackathon-content">
+              <h3>Web Development Hackathon</h3>
+              <div class="hackathon-organizer">TuteDude</div>
+              <div class="hackathon-position">Participant</div>
+              <div class="hackathon-skills">
+                <span class="tag">React</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Full Stack</span>
+                <span class="tag">UI/UX</span>
+              </div>
+              <div class="hackathon-links">
+                <a href="#" target="_blank">Project Demo</a>
+                <a href="#" target="_blank">Certificate</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="hackathon-card">
+            <div class="hackathon-icon">🚀</div>
+            <div class="hackathon-content">
+              <h3>DE3CODE 2025 India Edition</h3>
+              <div class="hackathon-organizer">DE3CODE</div>
+              <div class="hackathon-position">Participant</div>
+              <div class="hackathon-skills">
+                <span class="tag">Problem Solving</span>
+                <span class="tag">Algorithms</span>
+                <span class="tag">Data Structures</span>
+                <span class="tag">Competitive Programming</span>
+              </div>
+              <div class="hackathon-links">
+                <a href="#" target="_blank">Project Demo</a>
+                <a href="#" target="_blank">Certificate</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications" class="certifications">
+      <div class="container">
+        <h2 class="section-title">Certifications</h2>
+        <div class="certifications-grid">
+          <div class="certification-card">
+            <div class="cert-icon">🏆</div>
+            <div class="cert-content">
+              <h3>Full-Stack Web Development</h3>
+              <div class="cert-provider">Easy-Siksha</div>
+              <div class="cert-date">2024</div>
+              <div class="cert-skills">
+                <span class="tag">React</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">MongoDB</span>
+                <span class="tag">REST APIs</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="certification-card">
+            <div class="cert-icon">🤖</div>
+            <div class="cert-content">
+              <h3>Machine Learning Specialization</h3>
+              <div class="cert-provider">FreeCodeCamp</div>
+              <div class="cert-date">2023</div>
+              <div class="cert-skills">
+                <span class="tag">Python</span>
+                <span class="tag">TensorFlow</span>
+                <span class="tag">Neural Networks</span>
+                <span class="tag">Deep Learning</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="certification-card">
+            <div class="cert-icon">☁️</div>
+            <div class="cert-content">
+              <h3>AWS Cloud Practitioner</h3>
+              <div class="cert-provider">Amazon Web Services</div>
+              <div class="cert-date">2024</div>
+              <div class="cert-skills">
+                <span class="tag">AWS Services</span>
+                <span class="tag">Cloud Computing</span>
+                <span class="tag">Security</span>
+                <span class="tag">Deployment</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="certification-card">
+            <div class="cert-icon">📱</div>
+            <div class="cert-content">
+              <h3>Android Development</h3>
+              <div class="cert-provider">Google Developer</div>
+              <div class="cert-date">2023</div>
+              <div class="cert-skills">
+                <span class="tag">Kotlin</span>
+                <span class="tag">Java</span>
+                <span class="tag">Android SDK</span>
+                <span class="tag">Firebase</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="certification-card">
+            <div class="cert-icon">🎨</div>
+            <div class="cert-content">
+              <h3>UI/UX Design Fundamentals</h3>
+              <div class="cert-provider">Adobe Certified</div>
+              <div class="cert-date">2023</div>
+              <div class="cert-skills">
+                <span class="tag">Figma</span>
+                <span class="tag">Adobe XD</span>
+                <span class="tag">Prototyping</span>
+                <span class="tag">User Research</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="certification-card">
+            <div class="cert-icon">🔐</div>
+            <div class="cert-content">
+              <h3>Cybersecurity Fundamentals</h3>
+              <div class="cert-provider">IBM Security</div>
+              <div class="cert-date">2024</div>
+              <div class="cert-skills">
+                <span class="tag">Network Security</span>
+                <span class="tag">Ethical Hacking</span>
+                <span class="tag">Risk Assessment</span>
+                <span class="tag">Security Protocols</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-content">
+          <div class="contact-info">
+            <h2 class="section-title">Let's Connect</h2>
+            <p>
+              Ready to bring your next project to life? I'm always excited to
+              work on innovative projects and collaborate with creative teams.
+            </p>
+
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <a href="mailto:adi3182004@gmail.com">adi3182004@gmail.com</a>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <a href="tel:+917887547146">+91 7887547146</a>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <span>Kalyan, Maharashtra, India</span>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">🔗</div>
+                <a href="https://github.com/Adi3182004" target="_blank"
+                  >GitHub</a
+                >
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">💼</div>
+                <a
+                  href="https://linkedin.com/in/adityaandhalkar"
+                  target="_blank"
+                  >LinkedIn</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contactForm">
+            <h3>Send Message</h3>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn-hero">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Polished Footer -->
+    <footer
+      class="relative bg-background-secondary border-t border-border"
+      style="overflow: hidden"
+    >
+      <!-- Background rings -->
+      <div
+        class="bg-gradient-primary"
+        style="
+          position: absolute;
+          top: -160px;
+          right: -160px;
+          width: 320px;
+          height: 320px;
+          opacity: 0.1;
+          border-radius: 9999px;
+          filter: blur(60px);
+        "
+      ></div>
+      <div
+        class="bg-gradient-accent"
+        style="
+          position: absolute;
+          bottom: -160px;
+          left: -160px;
+          width: 320px;
+          height: 320px;
+          opacity: 0.1;
+          border-radius: 9999px;
+          filter: blur(60px);
+        "
+      ></div>
+
+      <div class="container-custom" style="position: relative; padding: 64px 0">
+        <div
+          style="
+            display: grid;
+            gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            align-items: start;
+            margin-bottom: 48px;
+          "
+        >
+          <!-- Brand -->
+          <div style="grid-column: span 2">
+            <h3
+              class="gradient-text"
+              style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px"
+            >
+              Aditya Andhalkar
+            </h3>
+            <p class="text-muted-foreground" style="max-width: 520px">
+              Full-stack developer passionate about creating innovative web
+              experiences with modern technologies. Specializing in React,
+              Three.js, and the MERN stack.
+            </p>
+          </div>
+
+          <!-- Quick links -->
+          <div>
+            <h4
+              class="text-foreground"
+              style="font-weight: 700; margin-bottom: 12px"
+            >
+              Quick Links
+            </h4>
+            <ul style="display: flex; flex-direction: column; gap: 10px">
+              <li>
+                <a
+                  href="#home"
+                  class="text-muted-foreground"
+                  onclick="event.preventDefault(); document.querySelector('#home').scrollIntoView({behavior:'smooth'});"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#about"
+                  class="text-muted-foreground"
+                  onclick="event.preventDefault(); document.querySelector('#about').scrollIntoView({behavior:'smooth'});"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#projects"
+                  class="text-muted-foreground"
+                  onclick="event.preventDefault(); document.querySelector('#projects').scrollIntoView({behavior:'smooth'});"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#skills"
+                  class="text-muted-foreground"
+                  onclick="event.preventDefault(); document.querySelector('#skills').scrollIntoView({behavior:'smooth'});"
+                  >Skills</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  class="text-muted-foreground"
+                  onclick="event.preventDefault(); document.querySelector('#contact').scrollIntoView({behavior:'smooth'});"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Connect -->
+          <div>
+            <h4
+              class="text-foreground"
+              style="font-weight: 700; margin-bottom: 12px"
+            >
+              Connect
+            </h4>
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <a
+                href="https://github.com/Adi3182004"
+                target="_blank"
+                class="text-muted-foreground"
+                >GitHub</a
+              >
+              <a
+                href="https://linkedin.com/in/adityaandhalkar"
+                target="_blank"
+                class="text-muted-foreground"
+                >LinkedIn</a
+              >
+              <a
+                href="mailto:adi3182004@gmail.com"
+                class="text-muted-foreground"
+                >Email</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-border"
+          style="
+            padding-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+          "
+        >
+          <p class="text-muted-foreground" style="font-size: 0.9rem">
+            © 2025 Aditya. Made with ❤️ and lots of ☕
+          </p>
+          <button
+            class="btn-hero-outline"
+            onclick="window.scrollTo({top:0, behavior:'smooth'})"
+          >
+            Back to Top
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      // ===== SPHERE ANIMATION CLASS =====
+      class SphereAnimation {
+        constructor(scene, currentColor) {
+          this.scene = scene;
+          this.currentColor = currentColor;
+
+          // Animation parameters
+          this.PARTICLE_COUNT = 1500;
+          this.SPHERE_RADIUS = 1.2;
+          this.SCATTER_DISTANCE = 8;
+          this.ANIMATION_DURATION = 3000;
+          this.RECONSTRUCTION_DURATION = 4000;
+          this.AUTO_CYCLE_DELAY = 2000;
+
+          // Animation state
+          this.isAnimating = false;
+          this.animationPhase = "idle";
+          this.autoMode = false;
+          this.autoTimer = null;
+
+          // Particle data
+          this.particles = [];
+          this.originalPositions = [];
+          this.particleSystem = null;
+          this.lineSystem = null;
+
+          this.initializeParticles();
+          this.createLineSystem();
+        }
+
+        initializeParticles() {
+          const particleGeometry = new THREE.BufferGeometry();
+          const positions = new Float32Array(this.PARTICLE_COUNT * 3);
+          const colors = new Float32Array(this.PARTICLE_COUNT * 3);
+
+          for (let i = 0; i < this.PARTICLE_COUNT; i++) {
+            const phi = Math.acos(-1 + (2 * i) / this.PARTICLE_COUNT);
+            const theta = Math.sqrt(this.PARTICLE_COUNT * Math.PI) * phi;
+
+            const x = this.SPHERE_RADIUS * Math.cos(theta) * Math.sin(phi);
+            const y = this.SPHERE_RADIUS * Math.sin(theta) * Math.sin(phi);
+            const z = this.SPHERE_RADIUS * Math.cos(phi);
+
+            positions[i * 3] = x;
+            positions[i * 3 + 1] = y;
+            positions[i * 3 + 2] = z;
+
+            this.originalPositions.push({ x, y, z });
+
+            const particle = {
+              originalPosition: { x, y, z },
+              scatteredPosition: {
+                x: x + (Math.random() - 0.5) * this.SCATTER_DISTANCE * 2,
+                y: y + (Math.random() - 0.5) * this.SCATTER_DISTANCE * 2,
+                z: z + (Math.random() - 0.5) * this.SCATTER_DISTANCE * 2,
+              },
+              currentPosition: { x, y, z },
+              velocity: { x: 0, y: 0, z: 0 },
+              phase: 0,
+            };
+            this.particles.push(particle);
+
+            const color = new THREE.Color(this.currentColor);
+            colors[i * 3] = color.r;
+            colors[i * 3 + 1] = color.g;
+            colors[i * 3 + 2] = color.b;
+          }
+
+          particleGeometry.setAttribute(
+            "position",
+            new THREE.BufferAttribute(positions, 3)
+          );
+          particleGeometry.setAttribute(
+            "color",
+            new THREE.BufferAttribute(colors, 3)
+          );
+
+          const particleMaterial = new THREE.PointsMaterial({
+            size: 0.04,
+            transparent: true,
+            opacity: 0.8,
+            sizeAttenuation: true,
+            vertexColors: true,
+            blending: THREE.AdditiveBlending,
+          });
+
+          this.particleSystem = new THREE.Points(
+            particleGeometry,
+            particleMaterial
+          );
+          this.scene.add(this.particleSystem);
+        }
+
+        createLineSystem() {
+          const lineGeometry = new THREE.BufferGeometry();
+          const maxConnections = 200;
+          const positions = new Float32Array(maxConnections * 6);
+          lineGeometry.setAttribute(
+            "position",
+            new THREE.BufferAttribute(positions, 3)
+          );
+
+          const lineMaterial = new THREE.LineBasicMaterial({
+            color: this.currentColor,
+            transparent: true,
+            opacity: 0,
+            linewidth: 1,
+          });
+
+          this.lineSystem = new THREE.LineSegments(lineGeometry, lineMaterial);
+          this.lineSystem.visible = false;
+          this.scene.add(this.lineSystem);
+        }
+
+        updateLineConnections() {
+          if (!this.lineSystem.visible || this.particles.length === 0) return;
+
+          const linePositions =
+            this.lineSystem.geometry.attributes.position.array;
+          const maxConnections = Math.min(
+            100,
+            Math.floor(linePositions.length / 6)
+          );
+          let lineIndex = 0;
+
+          for (
+            let i = 0;
+            i < this.particles.length && lineIndex < maxConnections;
+            i += 3
+          ) {
+            for (
+              let j = i + 1;
+              j < this.particles.length && lineIndex < maxConnections;
+              j += 3
+            ) {
+              const p1 = this.particles[i].currentPosition;
+              const p2 = this.particles[j].currentPosition;
+
+              const dx = p1.x - p2.x;
+              const dy = p1.y - p2.y;
+              const dz = p1.z - p2.z;
+              const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+              if (dist < 0.8) {
+                const baseIndex = lineIndex * 6;
+                linePositions[baseIndex] = p1.x;
+                linePositions[baseIndex + 1] = p1.y;
+                linePositions[baseIndex + 2] = p1.z;
+                linePositions[baseIndex + 3] = p2.x;
+                linePositions[baseIndex + 4] = p2.y;
+                linePositions[baseIndex + 5] = p2.z;
+                lineIndex++;
+              }
+            }
+          }
+
+          for (let i = lineIndex * 6; i < linePositions.length; i++) {
+            linePositions[i] = 0;
+          }
+
+          this.lineSystem.geometry.attributes.position.needsUpdate = true;
+        }
+
+        startScatterAnimation() {
+          if (this.isAnimating) return;
+          this.isAnimating = true;
+          this.animationPhase = "scattering";
+          this.updateStatus();
+
+          const startTime = Date.now();
+
+          const scatterStep = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / this.ANIMATION_DURATION, 1);
+            const easedProgress = this.easeOutCubic(progress);
+
+            const positions =
+              this.particleSystem.geometry.attributes.position.array;
+            const colors = this.particleSystem.geometry.attributes.color.array;
+
+            this.particles.forEach((particle, index) => {
+              const original = particle.originalPosition;
+              const scattered = particle.scatteredPosition;
+
+              particle.currentPosition.x =
+                original.x + (scattered.x - original.x) * easedProgress;
+              particle.currentPosition.y =
+                original.y + (scattered.y - original.y) * easedProgress;
+              particle.currentPosition.z =
+                original.z + (scattered.z - original.z) * easedProgress;
+
+              positions[index * 3] = particle.currentPosition.x;
+              positions[index * 3 + 1] = particle.currentPosition.y;
+              positions[index * 3 + 2] = particle.currentPosition.z;
+
+              const hue =
+                (0.6 + Math.sin(elapsed * 0.002 + index * 0.01) * 0.2) % 1;
+              const color = new THREE.Color().setHSL(hue, 0.8, 0.6);
+              colors[index * 3] = color.r;
+              colors[index * 3 + 1] = color.g;
+              colors[index * 3 + 2] = color.b;
+            });
+
+            this.particleSystem.geometry.attributes.position.needsUpdate = true;
+            this.particleSystem.geometry.attributes.color.needsUpdate = true;
+            this.particleSystem.material.opacity = 0.9 - easedProgress * 0.3;
+
+            if (progress < 1) {
+              requestAnimationFrame(scatterStep);
+            } else {
+              this.isAnimating = false;
+              this.animationPhase = "scattered";
+              this.updateStatus();
+
+              if (this.autoMode) {
+                this.autoTimer = setTimeout(() => {
+                  this.startReconstructAnimation();
+                }, this.AUTO_CYCLE_DELAY);
+              }
+            }
+          };
+
+          scatterStep();
+        }
+
+        startReconstructAnimation() {
+          if (this.isAnimating) return;
+          this.isAnimating = true;
+          this.animationPhase = "reconstructing";
+          this.updateStatus();
+
+          const startTime = Date.now();
+
+          const reconstructStep = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(
+              elapsed / this.RECONSTRUCTION_DURATION,
+              1
+            );
+            const easedProgress = this.easeInOutCubic(progress);
+
+            const positions =
+              this.particleSystem.geometry.attributes.position.array;
+            const colors = this.particleSystem.geometry.attributes.color.array;
+
+            this.particles.forEach((particle, index) => {
+              const original = particle.originalPosition;
+              const scattered = particle.scatteredPosition;
+
+              particle.currentPosition.x =
+                scattered.x + (original.x - scattered.x) * easedProgress;
+              particle.currentPosition.y =
+                scattered.y + (original.y - scattered.y) * easedProgress;
+              particle.currentPosition.z =
+                scattered.z + (original.z - scattered.z) * easedProgress;
+
+              const spiralFactor = (1 - easedProgress) * 0.2;
+              const angle = elapsed * 0.003 + index * 0.1;
+              particle.currentPosition.x += Math.cos(angle) * spiralFactor;
+              particle.currentPosition.z += Math.sin(angle) * spiralFactor;
+
+              positions[index * 3] = particle.currentPosition.x;
+              positions[index * 3 + 1] = particle.currentPosition.y;
+              positions[index * 3 + 2] = particle.currentPosition.z;
+
+              const targetColor = new THREE.Color(this.currentColor);
+              const currentColor = new THREE.Color(
+                colors[index * 3],
+                colors[index * 3 + 1],
+                colors[index * 3 + 2]
+              );
+              currentColor.lerp(targetColor, easedProgress * 0.1);
+              colors[index * 3] = currentColor.r;
+              colors[index * 3 + 1] = currentColor.g;
+              colors[index * 3 + 2] = currentColor.b;
+            });
+
+            this.particleSystem.geometry.attributes.position.needsUpdate = true;
+            this.particleSystem.geometry.attributes.color.needsUpdate = true;
+            this.particleSystem.material.opacity = 0.6 + easedProgress * 0.3;
+
+            if (progress > 0.3) {
+              this.lineSystem.visible = true;
+              const lineOpacity = Math.min(0.6, (progress - 0.3) * 2);
+              this.lineSystem.material.opacity = lineOpacity;
+              this.updateLineConnections();
+            }
+
+            if (progress < 1) {
+              requestAnimationFrame(reconstructStep);
+            } else {
+              this.isAnimating = false;
+              this.animationPhase = "complete";
+              this.updateStatus();
+
+              this.particles.forEach((particle, index) => {
+                const original = particle.originalPosition;
+                particle.currentPosition.x = original.x;
+                particle.currentPosition.y = original.y;
+                particle.currentPosition.z = original.z;
+                positions[index * 3] = original.x;
+                positions[index * 3 + 1] = original.y;
+                positions[index * 3 + 2] = original.z;
+              });
+
+              this.particleSystem.geometry.attributes.position.needsUpdate = true;
+              this.particleSystem.material.opacity = 0.9;
+
+              setTimeout(() => {
+                this.lineSystem.visible = false;
+                this.lineSystem.material.opacity = 0;
+              }, 1000);
+
+              if (this.autoMode) {
+                this.autoTimer = setTimeout(() => {
+                  this.startScatterAnimation();
+                }, this.AUTO_CYCLE_DELAY);
+              }
+            }
+          };
+
+          reconstructStep();
+        }
+
+        resetSphere() {
+          if (this.autoMode) this.toggleAutoMode();
+          this.isAnimating = false;
+          this.animationPhase = "idle";
+          this.updateStatus();
+
+          const positions =
+            this.particleSystem.geometry.attributes.position.array;
+          const colors = this.particleSystem.geometry.attributes.color.array;
+
+          this.particles.forEach((particle, index) => {
+            const original = particle.originalPosition;
+            particle.currentPosition.x = original.x;
+            particle.currentPosition.y = original.y;
+            particle.currentPosition.z = original.z;
+
+            positions[index * 3] = original.x;
+            positions[index * 3 + 1] = original.y;
+            positions[index * 3 + 2] = original.z;
+
+            const color = new THREE.Color(this.currentColor);
+            colors[index * 3] = color.r;
+            colors[index * 3 + 1] = color.g;
+            colors[index * 3 + 2] = color.b;
+          });
+
+          this.particleSystem.geometry.attributes.position.needsUpdate = true;
+          this.particleSystem.geometry.attributes.color.needsUpdate = true;
+          this.particleSystem.material.opacity = 0.9;
+
+          this.lineSystem.visible = false;
+          this.lineSystem.material.opacity = 0;
+        }
+
+        toggleAutoMode() {
+          this.autoMode = !this.autoMode;
+          this.updateStatus();
+
+          const autoBtn = document.getElementById("autoBtn");
+          if (autoBtn) autoBtn.classList.toggle("active", this.autoMode);
+
+          if (this.autoMode && !this.isAnimating) {
+            if (
+              this.animationPhase === "complete" ||
+              this.animationPhase === "idle"
+            ) {
+              setTimeout(() => this.startScatterAnimation(), 500);
+            } else if (this.animationPhase === "scattered") {
+              setTimeout(() => this.startReconstructAnimation(), 500);
+            }
+          } else if (!this.autoMode && this.autoTimer) {
+            clearTimeout(this.autoTimer);
+            this.autoTimer = null;
+          }
+        }
+
+        updateColor(newColor) {
+          this.currentColor = newColor;
+
+          if (this.particleSystem) {
+            const colors = this.particleSystem.geometry.attributes.color.array;
+            const color = new THREE.Color(newColor);
+            for (let i = 0; i < colors.length; i += 3) {
+              colors[i] = color.r;
+              colors[i + 1] = color.g;
+              colors[i + 2] = color.b;
+            }
+            this.particleSystem.geometry.attributes.color.needsUpdate = true;
+          }
+
+          if (this.lineSystem) {
+            this.lineSystem.material.color.setHex(newColor);
+          }
+        }
+
+        updateStatus() {
+          const statusDisplay = document.getElementById("statusDisplay");
+          const buttons = {
+            scatter: document.getElementById("scatterBtn"),
+            reconstruct: document.getElementById("reconstructBtn"),
+            reset: document.getElementById("resetBtn"),
+            auto: document.getElementById("autoBtn"),
+          };
+
+          let statusText = "";
+          switch (this.animationPhase) {
+            case "idle":
+              statusText = "Ready";
+              break;
+            case "scattering":
+              statusText = "Scattering...";
+              break;
+            case "scattered":
+              statusText = "Scattered";
+              break;
+            case "reconstructing":
+              statusText = "Reconstructing...";
+              break;
+            case "complete":
+              statusText = "Complete";
+              break;
+          }
+          if (this.autoMode) statusText += " (Auto)";
+
+          if (statusDisplay) statusDisplay.textContent = statusText;
+
+          if (buttons.scatter)
+            buttons.scatter.disabled =
+              this.isAnimating || this.animationPhase === "scattering";
+          if (buttons.reconstruct)
+            buttons.reconstruct.disabled =
+              this.isAnimating || this.animationPhase === "reconstructing";
+          if (buttons.reset) buttons.reset.disabled = this.isAnimating;
+        }
+
+        easeOutCubic(t) {
+          return 1 - Math.pow(1 - t, 3);
+        }
+
+        easeInOutCubic(t) {
+          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        getStatus() {
+          return {
+            phase: this.animationPhase,
+            isAnimating: this.isAnimating,
+            autoMode: this.autoMode,
+            particleCount: this.particles.length,
+          };
+        }
+
+        dispose() {
+          if (this.particleSystem) {
+            this.scene.remove(this.particleSystem);
+            this.particleSystem.geometry.dispose();
+            this.particleSystem.material.dispose();
+          }
+          if (this.lineSystem) {
+            this.scene.remove(this.lineSystem);
+            this.lineSystem.geometry.dispose();
+            this.lineSystem.material.dispose();
+          }
+          if (this.autoTimer) {
+            clearTimeout(this.autoTimer);
+          }
+        }
+      }
+
+      // ===== MAIN THREE.JS SETUP =====
+      let scene,
+        camera,
+        renderer,
+        mesh,
+        raycaster,
+        mouse,
+        mouseX = 0,
+        mouseY = 0,
+        lastMouseX = 0,
+        lastMouseY = 0,
+        isHovering = false,
+        currentColor = 0x0080ff,
+        sphereAnimation;
+
+      const autoRotation = { x: 0.01, y: 0.015, z: 0.005 };
+
+      const colorThemes = {
+        blue: {
+          primary: "#0080ff",
+          secondary: "#00d4ff",
+          glow: "rgba(0,128,255,0.5)",
+        },
+        purple: {
+          primary: "#8000ff",
+          secondary: "#d400ff",
+          glow: "rgba(128,0,255,0.5)",
+        },
+        red: {
+          primary: "#ff4757",
+          secondary: "#ff6b6b",
+          glow: "rgba(255,71,87,0.5)",
+        },
+        green: {
+          primary: "#00ff88",
+          secondary: "#00d4ff",
+          glow: "rgba(0,255,136,0.5)",
+        },
+        orange: {
+          primary: "#ff9500",
+          secondary: "#ffb347",
+          glow: "rgba(255,149,0,0.5)",
+        },
+      };
+
+      function initThree() {
+        scene = new THREE.Scene();
+
+        camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+
+        renderer = new THREE.WebGLRenderer({
+          canvas: document.getElementById("canvas"),
+          alpha: true,
+          antialias: true,
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        raycaster = new THREE.Raycaster();
+        mouse = new THREE.Vector2();
+
+        const geometry = new THREE.IcosahedronGeometry(1, 1);
+        const material = new THREE.MeshPhongMaterial({
+          color: currentColor,
+          wireframe: true,
+          transparent: true,
+          opacity: 0,
+        });
+        mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        sphereAnimation = new SphereAnimation(scene, currentColor);
+
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+        const directionalLight = new THREE.DirectionalLight(currentColor, 1);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(ambientLight, directionalLight);
+
+        camera.position.z = 5;
+
+        document.addEventListener("dblclick", onDoubleClick);
+        document.addEventListener("mousemove", onMouseMove);
+
+        document.getElementById("scatterBtn")?.addEventListener("click", () => {
+          sphereAnimation.startScatterAnimation();
+        });
+        document
+          .getElementById("reconstructBtn")
+          ?.addEventListener("click", () => {
+            sphereAnimation.startReconstructAnimation();
+          });
+        document.getElementById("resetBtn")?.addEventListener("click", () => {
+          sphereAnimation.resetSphere();
+        });
+        document.getElementById("autoBtn")?.addEventListener("click", () => {
+          sphereAnimation.toggleAutoMode();
+        });
+
+        animate();
+      }
+
+      function checkHover() {
+        if (
+          sphereAnimation &&
+          sphereAnimation.particleSystem &&
+          !sphereAnimation.isAnimating
+        ) {
+          raycaster.setFromCamera(mouse, camera);
+          const intersects = raycaster.intersectObject(
+            sphereAnimation.particleSystem
+          );
+          isHovering = intersects.length > 0;
+          document.getElementById("canvas").style.cursor = isHovering
+            ? "grab"
+            : "pointer";
+        }
+      }
+
+      function onMouseMove(event) {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        lastMouseX = mouseX;
+        lastMouseY = mouseY;
+        mouseX = event.clientX - window.innerWidth / 2;
+        mouseY = event.clientY - window.innerHeight / 2;
+
+        checkHover();
+      }
+
+      function onDoubleClick(event) {
+        if (sphereAnimation && !sphereAnimation.isAnimating) {
+          mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+          mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera);
+
+          if (sphereAnimation.particleSystem) {
+            const intersects = raycaster.intersectObject(
+              sphereAnimation.particleSystem
+            );
+            if (intersects.length > 0) {
+              if (
+                sphereAnimation.animationPhase === "idle" ||
+                sphereAnimation.animationPhase === "complete"
+              ) {
+                sphereAnimation.startScatterAnimation();
+              } else if (sphereAnimation.animationPhase === "scattered") {
+                sphereAnimation.startReconstructAnimation();
+              }
+            }
+          }
+        }
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        if (sphereAnimation && sphereAnimation.particleSystem) {
+          if (isHovering && !sphereAnimation.isAnimating) {
+            const mouseDeltaX = mouseX - lastMouseX;
+            const mouseDeltaY = mouseY - lastMouseY;
+
+            sphereAnimation.particleSystem.rotation.y += mouseDeltaX * 0.005;
+            sphereAnimation.particleSystem.rotation.x += mouseDeltaY * 0.005;
+
+            if (sphereAnimation.lineSystem) {
+              sphereAnimation.lineSystem.rotation.copy(
+                sphereAnimation.particleSystem.rotation
+              );
+            }
+          } else if (!sphereAnimation.isAnimating) {
+            sphereAnimation.particleSystem.rotation.x += autoRotation.x;
+            sphereAnimation.particleSystem.rotation.y += autoRotation.y;
+            sphereAnimation.particleSystem.rotation.z += autoRotation.z;
+
+            if (sphereAnimation.lineSystem) {
+              sphereAnimation.lineSystem.rotation.copy(
+                sphereAnimation.particleSystem.rotation
+              );
+            }
+          }
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      function updateTheme(theme) {
+        const colors = colorThemes[theme];
+        const root = document.documentElement;
+        currentColor = parseInt(colors.primary.replace("#", "0x"));
+        root.style.setProperty("--accent", colors.primary);
+
+        if (mesh) {
+          mesh.material.color.setHex(currentColor);
+          const dirLight = scene.children.find(
+            (child) => child.type === "DirectionalLight"
+          );
+          if (dirLight) dirLight.color.setHex(currentColor);
+        }
+        if (sphereAnimation) {
+          sphereAnimation.updateColor(currentColor);
+        }
+      }
+
+      function handleScroll() {
+        const scrollPercent =
+          window.scrollY /
+          (document.documentElement.scrollHeight - window.innerHeight);
+
+        if (sphereAnimation && sphereAnimation.particleSystem) {
+          const orbX = Math.sin(scrollPercent * Math.PI * 2) * 3;
+          sphereAnimation.particleSystem.position.x = orbX;
+          sphereAnimation.particleSystem.position.y =
+            Math.cos(scrollPercent * Math.PI) * 0.5;
+
+          if (sphereAnimation.lineSystem) {
+            sphereAnimation.lineSystem.position.copy(
+              sphereAnimation.particleSystem.position
+            );
+          }
+
+          if (scrollPercent < 0.12) updateTheme("blue");
+          else if (scrollPercent < 0.25) updateTheme("green");
+          else if (scrollPercent < 0.38) updateTheme("purple");
+          else if (scrollPercent < 0.5) updateTheme("red");
+          else if (scrollPercent < 0.62) updateTheme("orange");
+          else if (scrollPercent < 0.75) updateTheme("green");
+          else if (scrollPercent < 0.88) updateTheme("blue");
+          else updateTheme("purple");
+        }
+
+        let current = "";
+        const sections = document.querySelectorAll("section");
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop - 100;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${current}`) {
+            link.classList.add("active");
+          }
+        });
+      }
+
+      function initNavigation() {
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          mobileMenu.classList.toggle("active");
+          document.body.style.overflow = mobileMenu.classList.contains("active")
+            ? "hidden"
+            : "";
+        });
+
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute("href"));
+
+            if (mobileMenu.classList.contains("active")) {
+              hamburger.classList.remove("active");
+              mobileMenu.classList.remove("active");
+              document.body.style.overflow = "";
+            }
+            target.scrollIntoView({ behavior: "smooth" });
+          });
+        });
+
+        mobileMenu.addEventListener("click", (e) => {
+          if (e.target === mobileMenu) {
+            hamburger.classList.remove("active");
+            mobileMenu.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+        });
+      }
+
+      function initContactForm() {
+        document
+          .getElementById("contactForm")
+          .addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const btn = e.target.querySelector("button");
+            const originalText = btn.textContent;
+            btn.textContent = "Sending...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+              btn.textContent = "Message Sent!";
+              setTimeout(() => {
+                e.target.reset();
+                btn.textContent = originalText;
+                btn.disabled = false;
+              }, 2000);
+            }, 1500);
+          });
+      }
+
+      function initAnimations() {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+        );
+
+        document
+          .querySelectorAll(
+            ".skill-card, .project-card, .experience-card, .hackathon-card, .certification-card"
+          )
+          .forEach((el) => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(50px)";
+            el.style.transition = "all 0.6s ease";
+            observer.observe(el);
+          });
+      }
+
+      window.addEventListener("resize", () => {
+        if (camera && renderer) {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+      });
+
+      window.addEventListener("scroll", handleScroll);
+
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("loader").classList.add("hidden");
+          ["h1", "p", ".hero-buttons"].forEach((selector, i) => {
+            setTimeout(() => {
+              const el = document.querySelector(".hero " + selector);
+              if (el) {
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0)";
+              }
+            }, 200 * i);
+          });
+        }, 1000);
+
+        initThree();
+        initNavigation();
+        initContactForm();
+        initAnimations();
+        updateTheme("blue");
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const style = document.createElement("style");
+        style.textContent = `
+        .hero h1, .hero p, .hero-buttons {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.8s ease;
+        }
+      `;
+        document.head.appendChild(style);
+      });
+    </script>
+  </body>
+</html>
