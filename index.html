@@ -1,723 +1,769 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Aditya Andhalkar - 3D Developer Portfolio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { inter: ["Inter", "system-ui", "sans-serif"] },
+            colors: {
+              bg: { primary: "#0D0D0D", secondary: "#1A1A1A" },
+              text: { primary: "#FFFFFF", secondary: "#A0A0A0" },
+              brand: {
+                accent: "#00FF88",
+                blue: "#0080FF",
+                purple: "#8000FF",
+                red: "#FF4757",
+                orange: "#FF9500",
+                pink: "#FF006E",
+              },
+            },
+            boxShadow: {
+              glass: "0 8px 32px rgba(0,0,0,.30)",
+              btn: "0 10px 25px rgba(0, 255, 136, 0.35)",
+            },
+          },
+        },
+      };
+    </script>
+
     <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      defer
+    ></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+      :root {
+        --accent: #00ff88;
+        --accent-blue: #0080ff;
+        --accent-purple: #8000ff;
+        --accent-red: #ff4757;
+        --accent-orange: #ff9500;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0d0d0d;
+        color: #fff;
+        overflow-x: hidden;
+      }
+
+      .loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0d0d0d;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+      .loader.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .spinner {
+        width: 60px;
+        height: 60px;
+        border: 2px solid rgba(0, 255, 136, 0.3);
+        border-top: 2px solid var(--accent);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      #canvas {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        pointer-events: auto;
+        cursor: pointer;
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      @keyframes glow {
+        from {
+          filter: drop-shadow(0 0 20px rgba(128, 0, 255, 0.4));
+        }
+        to {
+          filter: drop-shadow(0 0 30px rgba(128, 0, 255, 0.6));
+        }
+      }
+      .animate-glow {
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      .glass {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.12),
+          rgba(255, 255, 255, 0.06)
+        );
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-hero {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 9999px;
+        font-weight: 600;
+        background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+        color: #0d0d0d;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .btn-hero:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 255, 136, 0.35);
+      }
+
+      .btn-hero-outline {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        border-radius: 9999px;
+        font-weight: 600;
+        background: transparent;
+        color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      .btn-hero-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      .social-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #a0a0a0;
+        transition: all 0.3s ease;
+        width: 44px;
+        height: 44px;
+      }
+      .social-pill:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        transition: all 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent);
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 6vw, 3rem);
+        text-align: center;
+        margin-bottom: 60px;
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .container-custom {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 clamp(15px, 4vw, 20px);
+      }
+      .section-padding {
+        padding: clamp(60px, 10vh, 120px) 0;
+      }
+
+      .nav-link.active {
+        color: #fff !important;
+      }
+      .input {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        font-family: inherit;
+        transition: all 0.3s ease;
+      }
+      .input:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #a0a0a0;
+      }
+
+      @media (max-width: 768px) {
+        #canvas {
+          pointer-events: none;
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <div class="loader" id="loader">
-      <div class="spinner"></div>
-    </div>
-
-    <!-- Controls intentionally commented out; JS is null-safe -->
-    <!--
-    <div class="animation-controls">
-      <h4>🎮 Sphere Animation</h4>
-      <button class="control-btn" id="scatterBtn">💥 Scatter</button>
-      <button class="control-btn" id="reconstructBtn">🔄 Reconstruct</button>
-      <button class="control-btn" id="resetBtn">⚡ Reset</button>
-      <button class="control-btn" id="autoBtn">🔁 Auto Mode</button>
-      <div class="status-display" id="statusDisplay">Ready</div>
-    </div>
-
-    <div class="interaction-hint">
-      🎯 Use controls or double-click sphere for animations
-    </div>
-    -->
-
+    <div id="loader" class="loader"><div class="spinner"></div></div>
     <canvas id="canvas"></canvas>
 
-    <nav class="glass">
-      <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
+    <aside
+      class="flex fixed right-2 sm:right-3 lg:right-6 top-1/2 -translate-y-1/2 z-[60] flex-col gap-2 sm:gap-3"
+    >
+      <button
+        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[var(--accent)] scale-110 transition-all hover:scale-125 active:scale-150"
+        data-target="#home"
+        aria-label="Navigate to Home"
+      ></button>
+      <button
+        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
+        data-target="#about"
+        aria-label="Navigate to About"
+      ></button>
+      <button
+        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
+        data-target="#skills"
+        aria-label="Navigate to Skills"
+      ></button>
+      <button
+        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
+        data-target="#projects"
+        aria-label="Navigate to Projects"
+      ></button>
+      <button
+        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
+        data-target="#experience"
+        aria-label="Navigate to Experience"
+      ></button>
+      <button
+        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
+        data-target="#contact"
+        aria-label="Navigate to Contact"
+      ></button>
+    </aside>
+
+    <nav
+      id="topNav"
+      class="fixed left-1/2 -translate-x-1/2 top-4 z-50 px-4 sm:px-6 py-2 rounded-full glass max-w-[95vw]"
+    >
+      <div class="flex items-center gap-4">
+        <a href="#home" class="text-sm sm:text-base font-bold gradient-text"
+          >Aditya Andhalkar</a
+        >
+        <ul class="hidden md:flex items-center gap-4 lg:gap-6 ml-4">
+          <li>
+            <a
+              href="#home"
+              class="nav-link text-white hover:text-white transition"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="#about"
+              class="nav-link text-gray-400 hover:text-white transition"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              href="#projects"
+              class="nav-link text-gray-400 hover:text-white transition"
+              >Projects</a
+            >
+          </li>
+          <li>
+            <a
+              href="#skills"
+              class="nav-link text-gray-400 hover:text-white transition"
+              >Skills</a
+            >
+          </li>
+          <li>
+            <a
+              href="#experience"
+              class="nav-link text-gray-400 hover:text-white transition"
+              >Experience</a
+            >
+          </li>
+          <li>
+            <a
+              href="#contact"
+              class="nav-link text-gray-400 hover:text-white transition"
+              >Contact</a
+            >
+          </li>
+        </ul>
+        <div class="ml-auto flex items-center gap-2">
+          <a href="#contact" class="hidden md:inline-flex btn-hero text-sm"
+            >Let's Talk</a
+          >
+          <button
+            id="hamburger"
+            class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 glass"
+          >
+            <svg
+              id="icon-open"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M4 6h16M4 12h16M4 18h16"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            <svg
+              id="icon-close"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 hidden"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M6 18L18 6M6 6l12 12"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
-      <ul class="nav-links">
-        <li><a href="#home" class="nav-link active">Home</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#skills" class="nav-link">Skills</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#experience" class="nav-link">Experience</a></li>
-        <li><a href="#hackathons" class="nav-link">Hackathons</a></li>
-        <li><a href="#certifications" class="nav-link">Certifications</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
     </nav>
 
-    <div class="mobile-menu" id="mobileMenu">
-      <ul class="nav-links">
-        <li><a href="#home" class="nav-link mobile-link">Home</a></li>
-        <li><a href="#about" class="nav-link mobile-link">About</a></li>
-        <li><a href="#skills" class="nav-link mobile-link">Skills</a></li>
-        <li><a href="#projects" class="nav-link mobile-link">Projects</a></li>
-        <li>
-          <a href="#experience" class="nav-link mobile-link">Experience</a>
-        </li>
-        <li>
-          <a href="#hackathons" class="nav-link mobile-link">Hackathons</a>
-        </li>
-        <li>
-          <a href="#certifications" class="nav-link mobile-link"
-            >Certifications</a
-          >
-        </li>
-        <li><a href="#contact" class="nav-link mobile-link">Contact</a></li>
-      </ul>
+    <div id="mobileMenu" class="fixed inset-0 z-40 hidden">
+      <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
+      <div
+        class="relative mt-20 mx-4 p-6 rounded-2xl glass border border-white/10"
+      >
+        <ul class="flex flex-col gap-4 text-lg">
+          <li><a class="mobile-link" href="#home">Home</a></li>
+          <li><a class="mobile-link" href="#about">About</a></li>
+          <li><a class="mobile-link" href="#projects">Projects</a></li>
+          <li><a class="mobile-link" href="#skills">Skills</a></li>
+          <li><a class="mobile-link" href="#experience">Experience</a></li>
+          <li><a class="mobile-link" href="#contact">Contact</a></li>
+        </ul>
+        <a
+          href="#contact"
+          class="btn-hero w-full mt-6 inline-flex justify-center"
+          >Let's Talk</a
+        >
+      </div>
     </div>
 
-    <!-- Hero -->
-    <section id="home" class="hero section-padding">
-      <div class="container-custom">
-        <div class="animate-fade-in-up">
-          <h1 class="gradient-text animate-glow">ADITYA</h1>
-          <p>
-            Full-Stack Developer & Creative Technologist crafting immersive
-            digital experiences through code, design, and innovation.
+    <section
+      id="home"
+      class="relative min-h-[100svh] flex items-center justify-center"
+    >
+      <div class="container-custom text-center">
+        <div class="mx-auto max-w-5xl">
+          <h1
+            class="text-4xl sm:text-6xl lg:text-8xl font-extrabold mb-6 gradient-text animate-glow"
+          >
+            Hi, I'm Aditya Andhalkar
+          </h1>
+          <h2 class="text-xl sm:text-2xl font-semibold mb-6 text-white">
+            Full-Stack Developer & 3D Enthusiast
+          </h2>
+          <p
+            class="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed"
+          >
+            I create stunning web experiences with cutting-edge technologies
+            like React, Three.js, and Node.js.
           </p>
-          <div class="hero-buttons">
-            <a href="#projects" class="btn-hero">View Projects</a>
-            <a href="#contact" class="btn-hero-outline">Get In Touch</a>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8"
+          >
+            <a href="#projects" class="btn-hero">View My Work</a>
+            <a
+              href="https://drive.google.com/file/d/1WU-nBXUlY82vUnZKUT4hsBF4auiRKYfu/view?usp=drive_link"
+              target="_blank"
+              class="btn-hero-outline"
+              >Download CV</a
+            >
+          </div>
+          <div class="flex items-center justify-center gap-4">
+            <a
+              href="https://github.com/Adi3182004"
+              target="_blank"
+              class="social-pill"
+              ><i data-lucide="github" class="w-4 h-4"></i
+            ></a>
+            <a
+              href="https://linkedin.com/in/adityaandhalkar"
+              target="_blank"
+              class="social-pill"
+              ><i data-lucide="linkedin" class="w-4 h-4"></i
+            ></a>
+            <a href="mailto:adi3182004@gmail.com" class="social-pill"
+              ><i data-lucide="mail" class="w-4 h-4"></i
+            ></a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- About -->
-    <section id="about" class="about">
-      <div class="container">
-        <div class="about-content">
-          <div class="about-text">
-            <h2>About Me</h2>
-            <p>
-              I'm Aditya Andhalkar, a passionate Computer Engineering student
-              and Full-Stack Developer with a deep love for creating innovative
-              digital solutions. My journey in technology spans across web
-              development, machine learning, and creative coding.
-            </p>
-            <p>
-              Currently pursuing my B.E. in Computer Engineering at New Horizon
-              Institute of Technology & Management, I've developed expertise in
-              modern web technologies, AI/ML frameworks, and cloud platforms.
-              I'm particularly fascinated by the intersection of technology and
-              user experience.
-            </p>
-            <p>
-              When I'm not coding, you'll find me exploring new technologies,
-              contributing to open-source projects, or working on creative
-              experiments that push the boundaries of what's possible on the
-              web.
+    <section id="about" class="section-padding">
+      <div class="container-custom">
+        <h2 class="section-title">About Me</h2>
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+          <div class="space-y-6">
+            <h3 class="text-2xl font-bold text-white">Personal Description</h3>
+            <p class="text-gray-400 text-lg leading-relaxed">
+              I'm a passionate full-stack developer with expertise creating
+              scalable, high-performance web applications. I specialize in the
+              MERN stack and love bringing creative ideas to life through code
+              and interactive 3D experiences.
             </p>
           </div>
-          <div class="about-image">👨‍💻</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills -->
-    <section id="skills" class="skills-section">
-      <div class="container">
-        <h2 class="section-title">Skills & Technologies</h2>
-        <div class="skills">
-          <div class="skill-card">
-            <h3>Frontend</h3>
-            <div class="skill-tags">
-              <span class="tag">React</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">HTML5</span>
-              <span class="tag">CSS3</span>
-              <span class="tag">Three.js</span>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="card glass p-6 text-center">
+              <div class="text-3xl mb-2">🎓</div>
+              <div class="font-semibold">Education</div>
+              <div class="text-sm text-gray-400">B.E. Computer Engineering</div>
             </div>
-          </div>
-          <div class="skill-card">
-            <h3>Backend</h3>
-            <div class="skill-tags">
-              <span class="tag">Node.js</span>
-              <span class="tag">Express</span>
-              <span class="tag">Python</span>
-              <span class="tag">MongoDB</span>
-              <span class="tag">MySQL</span>
+            <div class="card glass p-6 text-center">
+              <div class="text-3xl mb-2">📍</div>
+              <div class="font-semibold">Location</div>
+              <div class="text-sm text-gray-400">Maharashtra, India</div>
             </div>
-          </div>
-          <div class="skill-card">
-            <h3>AI/ML</h3>
-            <div class="skill-tags">
-              <span class="tag">TensorFlow</span>
-              <span class="tag">OpenCV</span>
-              <span class="tag">MediaPipe</span>
-              <span class="tag">Dialogflow</span>
+            <div class="card glass p-6 text-center">
+              <div class="text-3xl mb-2">💼</div>
+              <div class="font-semibold">Experience</div>
+              <div class="text-sm text-gray-400">Multiple Projects</div>
             </div>
-          </div>
-          <div class="skill-card">
-            <h3>DevOps</h3>
-            <div class="skill-tags">
-              <span class="tag">Docker</span>
-              <span class="tag">AWS</span>
-              <span class="tag">Git</span>
-              <span class="tag">CI/CD</span>
+            <div class="card glass p-6 text-center">
+              <div class="text-3xl mb-2">🚀</div>
+              <div class="font-semibold">Projects</div>
+              <div class="text-sm text-gray-400">20+ Completed</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Projects -->
-    <section id="projects" class="projects">
-      <div class="container">
+    <section id="skills" class="section-padding">
+      <div class="container-custom">
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="card glass p-6">
+            <div
+              class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold mb-4"
+            >
+              F
+            </div>
+            <h4 class="font-semibold mb-2">Frontend Development</h4>
+            <div class="flex flex-wrap gap-2 text-sm text-gray-400">
+              <span>React</span><span>Next.js</span><span>Three.js</span>
+            </div>
+          </div>
+          <div class="card glass p-6">
+            <div
+              class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold mb-4"
+            >
+              B
+            </div>
+            <h4 class="font-semibold mb-2">Backend Development</h4>
+            <div class="flex flex-wrap gap-2 text-sm text-gray-400">
+              <span>Node.js</span><span>Express</span><span>MongoDB</span>
+            </div>
+          </div>
+          <div class="card glass p-6">
+            <div
+              class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold mb-4"
+            >
+              U
+            </div>
+            <h4 class="font-semibold mb-2">UI/UX Design</h4>
+            <div class="flex flex-wrap gap-2 text-sm text-gray-400">
+              <span>Figma</span><span>Responsive Design</span>
+            </div>
+          </div>
+          <div class="card glass p-6">
+            <div
+              class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold mb-4"
+            >
+              3D
+            </div>
+            <h4 class="font-semibold mb-2">3D Development</h4>
+            <div class="flex flex-wrap gap-2 text-sm text-gray-400">
+              <span>Three.js</span><span>WebGL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section-padding">
+      <div class="container-custom">
         <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-grid">
-          <div class="project-card">
-            <div class="project-image">🤖</div>
-            <div class="project-content">
-              <h3>AI Chatbot</h3>
-              <p>
-                Android conversational agent built with Dialogflow and
-                production dialog flows for intelligent user interactions.
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <article
+            class="project-card glass rounded-2xl overflow-hidden border border-white/10"
+          >
+            <div
+              class="h-40 bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-5xl"
+            >
+              🤖
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-semibold mb-2">AI Chatbot</h3>
+              <p class="text-gray-400 mb-4">
+                Conversational agent with Dialogflow integration.
               </p>
-              <div class="tech-stack">
-                <span class="tag">Dialogflow</span>
-                <span class="tag">Android</span>
-                <span class="tag">Java</span>
-                <span class="tag">Node.js</span>
-              </div>
-              <div class="project-links">
-                <a href="#">Live Demo</a>
-                <a href="#">GitHub</a>
+              <div class="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
+                <span class="tag">Dialogflow</span
+                ><span class="tag">Android</span
+                ><span class="tag">Node.js</span>
               </div>
             </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-image">👋</div>
-            <div class="project-content">
-              <h3>Gesture Input System</h3>
-              <p>
-                Touchless input using OpenCV & MediaPipe — integrated as a
-                desktop UX layer for accessibility and kiosks.
+          </article>
+          <article
+            class="project-card glass rounded-2xl overflow-hidden border border-white/10"
+          >
+            <div
+              class="h-40 bg-gradient-to-br from-sky-300 to-cyan-400 flex items-center justify-center text-5xl"
+            >
+              👋
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-semibold mb-2">Gesture Input System</h3>
+              <p class="text-gray-400 mb-4">
+                Touchless input using OpenCV & MediaPipe.
               </p>
-              <div class="tech-stack">
-                <span class="tag">OpenCV</span>
-                <span class="tag">MediaPipe</span>
-                <span class="tag">Python</span>
-                <span class="tag">Computer Vision</span>
-              </div>
-              <div class="project-links">
-                <a href="#">Live Demo</a>
-                <a href="#">GitHub</a>
+              <div class="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
+                <span class="tag">OpenCV</span><span class="tag">MediaPipe</span
+                ><span class="tag">Python</span>
               </div>
             </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-image">🎯</div>
-            <div class="project-content">
-              <h3>Object Detection</h3>
-              <p>
-                TensorFlow Lite model tuned for mobile — fast inference and
-                small footprint for real-time detection.
+          </article>
+          <article
+            class="project-card glass rounded-2xl overflow-hidden border border-white/10"
+          >
+            <div
+              class="h-40 bg-gradient-to-br from-fuchsia-400 to-purple-500 flex items-center justify-center text-5xl"
+            >
+              🎯
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-semibold mb-2">Object Detection</h3>
+              <p class="text-gray-400 mb-4">
+                TensorFlow Lite model for real-time detection.
               </p>
-              <div class="tech-stack">
-                <span class="tag">TensorFlow Lite</span>
-                <span class="tag">Python</span>
-                <span class="tag">Mobile ML</span>
-                <span class="tag">Computer Vision</span>
-              </div>
-              <div class="project-links">
-                <a href="#">Live Demo</a>
-                <a href="#">GitHub</a>
+              <div class="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
+                <span class="tag">TensorFlow</span
+                ><span class="tag">Python</span
+                ><span class="tag">Mobile ML</span>
               </div>
             </div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-image">🌐</div>
-            <div class="project-content">
-              <h3>3D Interactive Portfolio</h3>
-              <p>
-                This immersive portfolio with Three.js 3D objects, smooth
-                animations, and interactive functionality.
-              </p>
-              <div class="tech-stack">
-                <span class="tag">Three.js</span>
-                <span class="tag">WebGL</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">CSS3</span>
-              </div>
-              <div class="project-links">
-                <a href="#">Live Demo</a>
-                <a href="#">GitHub</a>
-              </div>
-            </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Experience -->
-    <section id="experience" class="experience">
-      <div class="container">
+    <section id="experience" class="section-padding">
+      <div class="container-custom">
         <h2 class="section-title">Experience</h2>
-        <div class="experience-timeline">
-          <div class="experience-card">
-            <div class="experience-date">2025 - Present</div>
-            <div class="experience-company">Young Thames</div>
-            <div class="experience-role">Backend Developer Intern</div>
-            <div class="experience-description">
-              Developing robust API architectures and optimizing backend
-              systems. Working with Node.js, Express, and cloud technologies to
-              build scalable solutions for enterprise clients.
-            </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="card glass p-6">
+            <div class="text-sm text-gray-400 mb-1">2025 - Present</div>
+            <div class="font-semibold">Young Thames</div>
+            <div class="text-gray-400">Backend Developer Intern</div>
           </div>
-
-          <div class="experience-card">
-            <div class="experience-date">2022 - 2027</div>
-            <div class="experience-company">
-              New Horizon Institute of Technology & Management
-            </div>
-            <div class="experience-role">B.E. Computer Engineering Student</div>
-            <div class="experience-description">
-              Pursuing Bachelor's degree in Computer Engineering with focus on
-              full-stack development, machine learning, and software engineering
-              principles. Active in coding competitions and technical projects.
-            </div>
+          <div class="card glass p-6">
+            <div class="text-sm text-gray-400 mb-1">2022 - 2027</div>
+            <div class="font-semibold">NHITM</div>
+            <div class="text-gray-400">Computer Engineering Student</div>
           </div>
-
-          <div class="experience-card">
-            <div class="experience-date">2023</div>
-            <div class="experience-company">Freelance Projects</div>
-            <div class="experience-role">Full-Stack Developer</div>
-            <div class="experience-description">
-              Delivered multiple web applications for real-world usage including
-              inventory management systems, e-commerce platforms, and custom
-              automation tools.
-            </div>
+          <div class="card glass p-6">
+            <div class="text-sm text-gray-400 mb-1">2023</div>
+            <div class="font-semibold">Freelance</div>
+            <div class="text-gray-400">Full-Stack Developer</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Hackathons -->
-    <section id="hackathons" class="hackathons">
-      <div class="container">
-        <h2 class="section-title">Hackathons</h2>
-        <div class="hackathons-grid">
-          <div class="hackathon-card">
-            <div class="hackathon-icon">🏅</div>
-            <div class="hackathon-content">
-              <h3>AI Agents Hackathon</h3>
-              <div class="hackathon-organizer">
-                Swafinix Technologies Pvt. Ltd.
-              </div>
-              <div class="hackathon-position">4th Place Winner</div>
-              <div class="hackathon-skills">
-                <span class="tag">AI/ML</span>
-                <span class="tag">Python</span>
-                <span class="tag">Agent Framework</span>
-                <span class="tag">API Integration</span>
-              </div>
-              <div class="hackathon-links">
-                <a href="#" target="_blank">Project Demo</a>
-                <a href="#" target="_blank">Certificate</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="hackathon-card">
-            <div class="hackathon-icon">💻</div>
-            <div class="hackathon-content">
-              <h3>Web Development Hackathon</h3>
-              <div class="hackathon-organizer">TuteDude</div>
-              <div class="hackathon-position">Participant</div>
-              <div class="hackathon-skills">
-                <span class="tag">React</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">Full Stack</span>
-                <span class="tag">UI/UX</span>
-              </div>
-              <div class="hackathon-links">
-                <a href="#" target="_blank">Project Demo</a>
-                <a href="#" target="_blank">Certificate</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="hackathon-card">
-            <div class="hackathon-icon">🚀</div>
-            <div class="hackathon-content">
-              <h3>DE3CODE 2025 India Edition</h3>
-              <div class="hackathon-organizer">DE3CODE</div>
-              <div class="hackathon-position">Participant</div>
-              <div class="hackathon-skills">
-                <span class="tag">Problem Solving</span>
-                <span class="tag">Algorithms</span>
-                <span class="tag">Data Structures</span>
-                <span class="tag">Competitive Programming</span>
-              </div>
-              <div class="hackathon-links">
-                <a href="#" target="_blank">Project Demo</a>
-                <a href="#" target="_blank">Certificate</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Certifications -->
-    <section id="certifications" class="certifications">
-      <div class="container">
-        <h2 class="section-title">Certifications</h2>
-        <div class="certifications-grid">
-          <div class="certification-card">
-            <div class="cert-icon">🏆</div>
-            <div class="cert-content">
-              <h3>Full-Stack Web Development</h3>
-              <div class="cert-provider">Easy-Siksha</div>
-              <div class="cert-date">2024</div>
-              <div class="cert-skills">
-                <span class="tag">React</span>
-                <span class="tag">Node.js</span>
-                <span class="tag">MongoDB</span>
-                <span class="tag">REST APIs</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="certification-card">
-            <div class="cert-icon">🤖</div>
-            <div class="cert-content">
-              <h3>Machine Learning Specialization</h3>
-              <div class="cert-provider">FreeCodeCamp</div>
-              <div class="cert-date">2023</div>
-              <div class="cert-skills">
-                <span class="tag">Python</span>
-                <span class="tag">TensorFlow</span>
-                <span class="tag">Neural Networks</span>
-                <span class="tag">Deep Learning</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="certification-card">
-            <div class="cert-icon">☁️</div>
-            <div class="cert-content">
-              <h3>AWS Cloud Practitioner</h3>
-              <div class="cert-provider">Amazon Web Services</div>
-              <div class="cert-date">2024</div>
-              <div class="cert-skills">
-                <span class="tag">AWS Services</span>
-                <span class="tag">Cloud Computing</span>
-                <span class="tag">Security</span>
-                <span class="tag">Deployment</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="certification-card">
-            <div class="cert-icon">📱</div>
-            <div class="cert-content">
-              <h3>Android Development</h3>
-              <div class="cert-provider">Google Developer</div>
-              <div class="cert-date">2023</div>
-              <div class="cert-skills">
-                <span class="tag">Kotlin</span>
-                <span class="tag">Java</span>
-                <span class="tag">Android SDK</span>
-                <span class="tag">Firebase</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="certification-card">
-            <div class="cert-icon">🎨</div>
-            <div class="cert-content">
-              <h3>UI/UX Design Fundamentals</h3>
-              <div class="cert-provider">Adobe Certified</div>
-              <div class="cert-date">2023</div>
-              <div class="cert-skills">
-                <span class="tag">Figma</span>
-                <span class="tag">Adobe XD</span>
-                <span class="tag">Prototyping</span>
-                <span class="tag">User Research</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="certification-card">
-            <div class="cert-icon">🔐</div>
-            <div class="cert-content">
-              <h3>Cybersecurity Fundamentals</h3>
-              <div class="cert-provider">IBM Security</div>
-              <div class="cert-date">2024</div>
-              <div class="cert-skills">
-                <span class="tag">Network Security</span>
-                <span class="tag">Ethical Hacking</span>
-                <span class="tag">Risk Assessment</span>
-                <span class="tag">Security Protocols</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="contact">
-      <div class="container">
-        <div class="contact-content">
-          <div class="contact-info">
-            <h2 class="section-title">Let's Connect</h2>
-            <p>
-              Ready to bring your next project to life? I'm always excited to
-              work on innovative projects and collaborate with creative teams.
-            </p>
-
-            <div class="contact-details">
-              <div class="contact-item">
-                <div class="contact-icon">✉️</div>
-                <a href="mailto:adi3182004@gmail.com">adi3182004@gmail.com</a>
-              </div>
-              <div class="contact-item">
-                <div class="contact-icon">📱</div>
-                <a href="tel:+917887547146">+91 7887547146</a>
-              </div>
-              <div class="contact-item">
-                <div class="contact-icon">📍</div>
-                <span>Kalyan, Maharashtra, India</span>
-              </div>
-              <div class="contact-item">
-                <div class="contact-icon">🔗</div>
-                <a href="https://github.com/Adi3182004" target="_blank"
-                  >GitHub</a
+    <section id="contact" class="section-padding">
+      <div class="container-custom">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div class="space-y-4">
+            <div class="glass rounded-2xl p-5 border border-white/10">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"
                 >
+                  ✉️
+                </div>
+                <div>
+                  <div class="font-semibold">Email</div>
+                  <a href="mailto:adi3182004@gmail.com" class="text-gray-400"
+                    >adi3182004@gmail.com</a
+                  >
+                </div>
               </div>
-              <div class="contact-item">
-                <div class="contact-icon">💼</div>
-                <a
-                  href="https://linkedin.com/in/adityaandhalkar"
-                  target="_blank"
-                  >LinkedIn</a
+            </div>
+            <div class="glass rounded-2xl p-5 border border-white/10">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"
                 >
+                  📱
+                </div>
+                <div>
+                  <div class="font-semibold">Phone</div>
+                  <a href="tel:+917887547146" class="text-gray-400"
+                    >+91 7887547146</a
+                  >
+                </div>
               </div>
             </div>
           </div>
-
-          <form class="contact-form" id="contactForm">
-            <h3>Send Message</h3>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" required />
+          <form
+            id="contactForm"
+            class="glass rounded-2xl p-6 md:p-8 border border-white/10"
+          >
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm text-gray-400 mb-1">Name *</label
+                ><input
+                  id="name"
+                  type="text"
+                  required
+                  class="input"
+                  placeholder="Your name"
+                />
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-1">Email *</label
+                ><input
+                  id="email"
+                  type="email"
+                  required
+                  class="input"
+                  placeholder="you@email.com"
+                />
+              </div>
             </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required />
+            <div class="mt-4">
+              <label class="block text-sm text-gray-400 mb-1">Subject *</label
+              ><input
+                id="subject"
+                type="text"
+                required
+                class="input"
+                placeholder="Project inquiry"
+              />
             </div>
-            <div class="form-group">
-              <label for="subject">Subject</label>
-              <input type="text" id="subject" name="subject" required />
+            <div class="mt-4">
+              <label class="block text-sm text-gray-400 mb-1">Message *</label
+              ><textarea
+                id="message"
+                required
+                class="input min-h-[120px]"
+                placeholder="Tell me about your project..."
+              ></textarea>
             </div>
-            <div class="form-group">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" required></textarea>
-            </div>
-            <button type="submit" class="btn-hero">Send Message</button>
+            <button type="submit" class="btn-hero w-full mt-6">
+              Send Message
+            </button>
           </form>
         </div>
       </div>
     </section>
 
-    <!-- Polished Footer -->
-    <footer
-      class="relative bg-background-secondary border-t border-border"
-      style="overflow: hidden"
-    >
-      <!-- Background rings -->
-      <div
-        class="bg-gradient-primary"
-        style="
-          position: absolute;
-          top: -160px;
-          right: -160px;
-          width: 320px;
-          height: 320px;
-          opacity: 0.1;
-          border-radius: 9999px;
-          filter: blur(60px);
-        "
-      ></div>
-      <div
-        class="bg-gradient-accent"
-        style="
-          position: absolute;
-          bottom: -160px;
-          left: -160px;
-          width: 320px;
-          height: 320px;
-          opacity: 0.1;
-          border-radius: 9999px;
-          filter: blur(60px);
-        "
-      ></div>
-
-      <div class="container-custom" style="position: relative; padding: 64px 0">
-        <div
-          style="
-            display: grid;
-            gap: 32px;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            align-items: start;
-            margin-bottom: 48px;
-          "
-        >
-          <!-- Brand -->
-          <div style="grid-column: span 2">
-            <h3
-              class="gradient-text"
-              style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px"
-            >
-              Aditya Andhalkar
-            </h3>
-            <p class="text-muted-foreground" style="max-width: 520px">
-              Full-stack developer passionate about creating innovative web
-              experiences with modern technologies. Specializing in React,
-              Three.js, and the MERN stack.
-            </p>
-          </div>
-
-          <!-- Quick links -->
-          <div>
-            <h4
-              class="text-foreground"
-              style="font-weight: 700; margin-bottom: 12px"
-            >
-              Quick Links
-            </h4>
-            <ul style="display: flex; flex-direction: column; gap: 10px">
-              <li>
-                <a
-                  href="#home"
-                  class="text-muted-foreground"
-                  onclick="event.preventDefault(); document.querySelector('#home').scrollIntoView({behavior:'smooth'});"
-                  >Home</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#about"
-                  class="text-muted-foreground"
-                  onclick="event.preventDefault(); document.querySelector('#about').scrollIntoView({behavior:'smooth'});"
-                  >About</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#projects"
-                  class="text-muted-foreground"
-                  onclick="event.preventDefault(); document.querySelector('#projects').scrollIntoView({behavior:'smooth'});"
-                  >Projects</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#skills"
-                  class="text-muted-foreground"
-                  onclick="event.preventDefault(); document.querySelector('#skills').scrollIntoView({behavior:'smooth'});"
-                  >Skills</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  class="text-muted-foreground"
-                  onclick="event.preventDefault(); document.querySelector('#contact').scrollIntoView({behavior:'smooth'});"
-                  >Contact</a
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- Connect -->
-          <div>
-            <h4
-              class="text-foreground"
-              style="font-weight: 700; margin-bottom: 12px"
-            >
-              Connect
-            </h4>
-            <div style="display: flex; flex-direction: column; gap: 10px">
-              <a
-                href="https://github.com/Adi3182004"
-                target="_blank"
-                class="text-muted-foreground"
-                >GitHub</a
-              >
-              <a
-                href="https://linkedin.com/in/adityaandhalkar"
-                target="_blank"
-                class="text-muted-foreground"
-                >LinkedIn</a
-              >
-              <a
-                href="mailto:adi3182004@gmail.com"
-                class="text-muted-foreground"
-                >Email</a
-              >
-            </div>
-          </div>
-        </div>
-
-        <div
-          class="border-t border-border"
-          style="
-            padding-top: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
-          "
-        >
-          <p class="text-muted-foreground" style="font-size: 0.9rem">
+    <footer class="relative overflow-hidden bg-gray-900">
+      <div class="container-custom py-12">
+        <div class="text-center">
+          <h3 class="text-2xl font-bold gradient-text mb-3">
+            Aditya Andhalkar
+          </h3>
+          <p class="text-gray-400 mb-6">
+            Full‑stack developer passionate about creating innovative web
+            experiences.
+          </p>
+          <p class="text-gray-400 text-sm">
             © 2025 Aditya. Made with ❤️ and lots of ☕
           </p>
-          <button
-            class="btn-hero-outline"
-            onclick="window.scrollTo({top:0, behavior:'smooth'})"
-          >
-            Back to Top
-          </button>
         </div>
       </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-      // ===== SPHERE ANIMATION CLASS =====
+      // Sphere Animation Class
       class SphereAnimation {
         constructor(scene, currentColor) {
           this.scene = scene;
           this.currentColor = currentColor;
-
-          // Animation parameters
           this.PARTICLE_COUNT = 1500;
           this.SPHERE_RADIUS = 1.2;
           this.SCATTER_DISTANCE = 8;
           this.ANIMATION_DURATION = 3000;
           this.RECONSTRUCTION_DURATION = 4000;
           this.AUTO_CYCLE_DELAY = 2000;
-
-          // Animation state
           this.isAnimating = false;
           this.animationPhase = "idle";
           this.autoMode = false;
           this.autoTimer = null;
-
-          // Particle data
           this.particles = [];
           this.originalPositions = [];
           this.particleSystem = null;
           this.lineSystem = null;
-
           this.initializeParticles();
           this.createLineSystem();
         }
@@ -730,7 +776,6 @@
           for (let i = 0; i < this.PARTICLE_COUNT; i++) {
             const phi = Math.acos(-1 + (2 * i) / this.PARTICLE_COUNT);
             const theta = Math.sqrt(this.PARTICLE_COUNT * Math.PI) * phi;
-
             const x = this.SPHERE_RADIUS * Math.cos(theta) * Math.sin(phi);
             const y = this.SPHERE_RADIUS * Math.sin(theta) * Math.sin(phi);
             const z = this.SPHERE_RADIUS * Math.cos(phi);
@@ -806,275 +851,8 @@
           this.scene.add(this.lineSystem);
         }
 
-        updateLineConnections() {
-          if (!this.lineSystem.visible || this.particles.length === 0) return;
-
-          const linePositions =
-            this.lineSystem.geometry.attributes.position.array;
-          const maxConnections = Math.min(
-            100,
-            Math.floor(linePositions.length / 6)
-          );
-          let lineIndex = 0;
-
-          for (
-            let i = 0;
-            i < this.particles.length && lineIndex < maxConnections;
-            i += 3
-          ) {
-            for (
-              let j = i + 1;
-              j < this.particles.length && lineIndex < maxConnections;
-              j += 3
-            ) {
-              const p1 = this.particles[i].currentPosition;
-              const p2 = this.particles[j].currentPosition;
-
-              const dx = p1.x - p2.x;
-              const dy = p1.y - p2.y;
-              const dz = p1.z - p2.z;
-              const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-              if (dist < 0.8) {
-                const baseIndex = lineIndex * 6;
-                linePositions[baseIndex] = p1.x;
-                linePositions[baseIndex + 1] = p1.y;
-                linePositions[baseIndex + 2] = p1.z;
-                linePositions[baseIndex + 3] = p2.x;
-                linePositions[baseIndex + 4] = p2.y;
-                linePositions[baseIndex + 5] = p2.z;
-                lineIndex++;
-              }
-            }
-          }
-
-          for (let i = lineIndex * 6; i < linePositions.length; i++) {
-            linePositions[i] = 0;
-          }
-
-          this.lineSystem.geometry.attributes.position.needsUpdate = true;
-        }
-
-        startScatterAnimation() {
-          if (this.isAnimating) return;
-          this.isAnimating = true;
-          this.animationPhase = "scattering";
-          this.updateStatus();
-
-          const startTime = Date.now();
-
-          const scatterStep = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / this.ANIMATION_DURATION, 1);
-            const easedProgress = this.easeOutCubic(progress);
-
-            const positions =
-              this.particleSystem.geometry.attributes.position.array;
-            const colors = this.particleSystem.geometry.attributes.color.array;
-
-            this.particles.forEach((particle, index) => {
-              const original = particle.originalPosition;
-              const scattered = particle.scatteredPosition;
-
-              particle.currentPosition.x =
-                original.x + (scattered.x - original.x) * easedProgress;
-              particle.currentPosition.y =
-                original.y + (scattered.y - original.y) * easedProgress;
-              particle.currentPosition.z =
-                original.z + (scattered.z - original.z) * easedProgress;
-
-              positions[index * 3] = particle.currentPosition.x;
-              positions[index * 3 + 1] = particle.currentPosition.y;
-              positions[index * 3 + 2] = particle.currentPosition.z;
-
-              const hue =
-                (0.6 + Math.sin(elapsed * 0.002 + index * 0.01) * 0.2) % 1;
-              const color = new THREE.Color().setHSL(hue, 0.8, 0.6);
-              colors[index * 3] = color.r;
-              colors[index * 3 + 1] = color.g;
-              colors[index * 3 + 2] = color.b;
-            });
-
-            this.particleSystem.geometry.attributes.position.needsUpdate = true;
-            this.particleSystem.geometry.attributes.color.needsUpdate = true;
-            this.particleSystem.material.opacity = 0.9 - easedProgress * 0.3;
-
-            if (progress < 1) {
-              requestAnimationFrame(scatterStep);
-            } else {
-              this.isAnimating = false;
-              this.animationPhase = "scattered";
-              this.updateStatus();
-
-              if (this.autoMode) {
-                this.autoTimer = setTimeout(() => {
-                  this.startReconstructAnimation();
-                }, this.AUTO_CYCLE_DELAY);
-              }
-            }
-          };
-
-          scatterStep();
-        }
-
-        startReconstructAnimation() {
-          if (this.isAnimating) return;
-          this.isAnimating = true;
-          this.animationPhase = "reconstructing";
-          this.updateStatus();
-
-          const startTime = Date.now();
-
-          const reconstructStep = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(
-              elapsed / this.RECONSTRUCTION_DURATION,
-              1
-            );
-            const easedProgress = this.easeInOutCubic(progress);
-
-            const positions =
-              this.particleSystem.geometry.attributes.position.array;
-            const colors = this.particleSystem.geometry.attributes.color.array;
-
-            this.particles.forEach((particle, index) => {
-              const original = particle.originalPosition;
-              const scattered = particle.scatteredPosition;
-
-              particle.currentPosition.x =
-                scattered.x + (original.x - scattered.x) * easedProgress;
-              particle.currentPosition.y =
-                scattered.y + (original.y - scattered.y) * easedProgress;
-              particle.currentPosition.z =
-                scattered.z + (original.z - scattered.z) * easedProgress;
-
-              const spiralFactor = (1 - easedProgress) * 0.2;
-              const angle = elapsed * 0.003 + index * 0.1;
-              particle.currentPosition.x += Math.cos(angle) * spiralFactor;
-              particle.currentPosition.z += Math.sin(angle) * spiralFactor;
-
-              positions[index * 3] = particle.currentPosition.x;
-              positions[index * 3 + 1] = particle.currentPosition.y;
-              positions[index * 3 + 2] = particle.currentPosition.z;
-
-              const targetColor = new THREE.Color(this.currentColor);
-              const currentColor = new THREE.Color(
-                colors[index * 3],
-                colors[index * 3 + 1],
-                colors[index * 3 + 2]
-              );
-              currentColor.lerp(targetColor, easedProgress * 0.1);
-              colors[index * 3] = currentColor.r;
-              colors[index * 3 + 1] = currentColor.g;
-              colors[index * 3 + 2] = currentColor.b;
-            });
-
-            this.particleSystem.geometry.attributes.position.needsUpdate = true;
-            this.particleSystem.geometry.attributes.color.needsUpdate = true;
-            this.particleSystem.material.opacity = 0.6 + easedProgress * 0.3;
-
-            if (progress > 0.3) {
-              this.lineSystem.visible = true;
-              const lineOpacity = Math.min(0.6, (progress - 0.3) * 2);
-              this.lineSystem.material.opacity = lineOpacity;
-              this.updateLineConnections();
-            }
-
-            if (progress < 1) {
-              requestAnimationFrame(reconstructStep);
-            } else {
-              this.isAnimating = false;
-              this.animationPhase = "complete";
-              this.updateStatus();
-
-              this.particles.forEach((particle, index) => {
-                const original = particle.originalPosition;
-                particle.currentPosition.x = original.x;
-                particle.currentPosition.y = original.y;
-                particle.currentPosition.z = original.z;
-                positions[index * 3] = original.x;
-                positions[index * 3 + 1] = original.y;
-                positions[index * 3 + 2] = original.z;
-              });
-
-              this.particleSystem.geometry.attributes.position.needsUpdate = true;
-              this.particleSystem.material.opacity = 0.9;
-
-              setTimeout(() => {
-                this.lineSystem.visible = false;
-                this.lineSystem.material.opacity = 0;
-              }, 1000);
-
-              if (this.autoMode) {
-                this.autoTimer = setTimeout(() => {
-                  this.startScatterAnimation();
-                }, this.AUTO_CYCLE_DELAY);
-              }
-            }
-          };
-
-          reconstructStep();
-        }
-
-        resetSphere() {
-          if (this.autoMode) this.toggleAutoMode();
-          this.isAnimating = false;
-          this.animationPhase = "idle";
-          this.updateStatus();
-
-          const positions =
-            this.particleSystem.geometry.attributes.position.array;
-          const colors = this.particleSystem.geometry.attributes.color.array;
-
-          this.particles.forEach((particle, index) => {
-            const original = particle.originalPosition;
-            particle.currentPosition.x = original.x;
-            particle.currentPosition.y = original.y;
-            particle.currentPosition.z = original.z;
-
-            positions[index * 3] = original.x;
-            positions[index * 3 + 1] = original.y;
-            positions[index * 3 + 2] = original.z;
-
-            const color = new THREE.Color(this.currentColor);
-            colors[index * 3] = color.r;
-            colors[index * 3 + 1] = color.g;
-            colors[index * 3 + 2] = color.b;
-          });
-
-          this.particleSystem.geometry.attributes.position.needsUpdate = true;
-          this.particleSystem.geometry.attributes.color.needsUpdate = true;
-          this.particleSystem.material.opacity = 0.9;
-
-          this.lineSystem.visible = false;
-          this.lineSystem.material.opacity = 0;
-        }
-
-        toggleAutoMode() {
-          this.autoMode = !this.autoMode;
-          this.updateStatus();
-
-          const autoBtn = document.getElementById("autoBtn");
-          if (autoBtn) autoBtn.classList.toggle("active", this.autoMode);
-
-          if (this.autoMode && !this.isAnimating) {
-            if (
-              this.animationPhase === "complete" ||
-              this.animationPhase === "idle"
-            ) {
-              setTimeout(() => this.startScatterAnimation(), 500);
-            } else if (this.animationPhase === "scattered") {
-              setTimeout(() => this.startReconstructAnimation(), 500);
-            }
-          } else if (!this.autoMode && this.autoTimer) {
-            clearTimeout(this.autoTimer);
-            this.autoTimer = null;
-          }
-        }
-
         updateColor(newColor) {
           this.currentColor = newColor;
-
           if (this.particleSystem) {
             const colors = this.particleSystem.geometry.attributes.color.array;
             const color = new THREE.Color(newColor);
@@ -1085,134 +863,41 @@
             }
             this.particleSystem.geometry.attributes.color.needsUpdate = true;
           }
-
           if (this.lineSystem) {
             this.lineSystem.material.color.setHex(newColor);
           }
         }
 
-        updateStatus() {
-          const statusDisplay = document.getElementById("statusDisplay");
-          const buttons = {
-            scatter: document.getElementById("scatterBtn"),
-            reconstruct: document.getElementById("reconstructBtn"),
-            reset: document.getElementById("resetBtn"),
-            auto: document.getElementById("autoBtn"),
-          };
-
-          let statusText = "";
-          switch (this.animationPhase) {
-            case "idle":
-              statusText = "Ready";
-              break;
-            case "scattering":
-              statusText = "Scattering...";
-              break;
-            case "scattered":
-              statusText = "Scattered";
-              break;
-            case "reconstructing":
-              statusText = "Reconstructing...";
-              break;
-            case "complete":
-              statusText = "Complete";
-              break;
-          }
-          if (this.autoMode) statusText += " (Auto)";
-
-          if (statusDisplay) statusDisplay.textContent = statusText;
-
-          if (buttons.scatter)
-            buttons.scatter.disabled =
-              this.isAnimating || this.animationPhase === "scattering";
-          if (buttons.reconstruct)
-            buttons.reconstruct.disabled =
-              this.isAnimating || this.animationPhase === "reconstructing";
-          if (buttons.reset) buttons.reset.disabled = this.isAnimating;
-        }
-
         easeOutCubic(t) {
           return 1 - Math.pow(1 - t, 3);
         }
-
         easeInOutCubic(t) {
           return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         }
-
-        getStatus() {
-          return {
-            phase: this.animationPhase,
-            isAnimating: this.isAnimating,
-            autoMode: this.autoMode,
-            particleCount: this.particles.length,
-          };
-        }
-
-        dispose() {
-          if (this.particleSystem) {
-            this.scene.remove(this.particleSystem);
-            this.particleSystem.geometry.dispose();
-            this.particleSystem.material.dispose();
-          }
-          if (this.lineSystem) {
-            this.scene.remove(this.lineSystem);
-            this.lineSystem.geometry.dispose();
-            this.lineSystem.material.dispose();
-          }
-          if (this.autoTimer) {
-            clearTimeout(this.autoTimer);
-          }
-        }
       }
 
-      // ===== MAIN THREE.JS SETUP =====
-      let scene,
-        camera,
-        renderer,
-        mesh,
-        raycaster,
-        mouse,
-        mouseX = 0,
+      // Main Three.js Setup
+      let scene, camera, renderer, sphereAnimation, raycaster, mouse;
+      let mouseX = 0,
         mouseY = 0,
         lastMouseX = 0,
         lastMouseY = 0,
-        isHovering = false,
-        currentColor = 0x0080ff,
-        sphereAnimation;
-
+        isHovering = false;
+      let currentColor = 0x8000ff;
       const autoRotation = { x: 0.01, y: 0.015, z: 0.005 };
 
       const colorThemes = {
-        blue: {
-          primary: "#0080ff",
-          secondary: "#00d4ff",
-          glow: "rgba(0,128,255,0.5)",
-        },
-        purple: {
-          primary: "#8000ff",
-          secondary: "#d400ff",
-          glow: "rgba(128,0,255,0.5)",
-        },
-        red: {
-          primary: "#ff4757",
-          secondary: "#ff6b6b",
-          glow: "rgba(255,71,87,0.5)",
-        },
-        green: {
-          primary: "#00ff88",
-          secondary: "#00d4ff",
-          glow: "rgba(0,255,136,0.5)",
-        },
-        orange: {
-          primary: "#ff9500",
-          secondary: "#ffb347",
-          glow: "rgba(255,149,0,0.5)",
-        },
+        blue: { primary: "#0080ff", secondary: "#00d4ff" },
+        purple: { primary: "#8000ff", secondary: "#d400ff" },
+        red: { primary: "#ff4757", secondary: "#ff6b6b" },
+        green: { primary: "#00ff88", secondary: "#00d4ff" },
+        orange: { primary: "#ff9500", secondary: "#ffb347" },
       };
 
       function initThree() {
-        scene = new THREE.Scene();
+        if (!window.THREE) return;
 
+        scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(
           75,
           window.innerWidth / window.innerHeight,
@@ -1231,16 +916,6 @@
         raycaster = new THREE.Raycaster();
         mouse = new THREE.Vector2();
 
-        const geometry = new THREE.IcosahedronGeometry(1, 1);
-        const material = new THREE.MeshPhongMaterial({
-          color: currentColor,
-          wireframe: true,
-          transparent: true,
-          opacity: 0,
-        });
-        mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
         sphereAnimation = new SphereAnimation(scene, currentColor);
 
         const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
@@ -1252,21 +927,6 @@
 
         document.addEventListener("dblclick", onDoubleClick);
         document.addEventListener("mousemove", onMouseMove);
-
-        document.getElementById("scatterBtn")?.addEventListener("click", () => {
-          sphereAnimation.startScatterAnimation();
-        });
-        document
-          .getElementById("reconstructBtn")
-          ?.addEventListener("click", () => {
-            sphereAnimation.startReconstructAnimation();
-          });
-        document.getElementById("resetBtn")?.addEventListener("click", () => {
-          sphereAnimation.resetSphere();
-        });
-        document.getElementById("autoBtn")?.addEventListener("click", () => {
-          sphereAnimation.toggleAutoMode();
-        });
 
         animate();
       }
@@ -1282,9 +942,8 @@
             sphereAnimation.particleSystem
           );
           isHovering = intersects.length > 0;
-          document.getElementById("canvas").style.cursor = isHovering
-            ? "grab"
-            : "pointer";
+          const canvas = document.getElementById("canvas");
+          if (canvas) canvas.style.cursor = isHovering ? "grab" : "pointer";
         }
       }
 
@@ -1301,24 +960,27 @@
       }
 
       function onDoubleClick(event) {
-        if (sphereAnimation && !sphereAnimation.isAnimating) {
+        if (
+          sphereAnimation &&
+          !sphereAnimation.isAnimating &&
+          sphereAnimation.particleSystem
+        ) {
           mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
           mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
           raycaster.setFromCamera(mouse, camera);
 
-          if (sphereAnimation.particleSystem) {
-            const intersects = raycaster.intersectObject(
-              sphereAnimation.particleSystem
-            );
-            if (intersects.length > 0) {
-              if (
-                sphereAnimation.animationPhase === "idle" ||
-                sphereAnimation.animationPhase === "complete"
-              ) {
-                sphereAnimation.startScatterAnimation();
-              } else if (sphereAnimation.animationPhase === "scattered") {
-                sphereAnimation.startReconstructAnimation();
-              }
+          const intersects = raycaster.intersectObject(
+            sphereAnimation.particleSystem
+          );
+          if (intersects.length > 0) {
+            // Trigger scatter/reconstruct animation on double click
+            if (
+              sphereAnimation.animationPhase === "idle" ||
+              sphereAnimation.animationPhase === "complete"
+            ) {
+              sphereAnimation.startScatterAnimation();
+            } else if (sphereAnimation.animationPhase === "scattered") {
+              sphereAnimation.startReconstructAnimation();
             }
           }
         }
@@ -1358,20 +1020,17 @@
 
       function updateTheme(theme) {
         const colors = colorThemes[theme];
-        const root = document.documentElement;
         currentColor = parseInt(colors.primary.replace("#", "0x"));
-        root.style.setProperty("--accent", colors.primary);
+        document.documentElement.style.setProperty("--accent", colors.primary);
 
-        if (mesh) {
-          mesh.material.color.setHex(currentColor);
-          const dirLight = scene.children.find(
-            (child) => child.type === "DirectionalLight"
-          );
-          if (dirLight) dirLight.color.setHex(currentColor);
-        }
         if (sphereAnimation) {
           sphereAnimation.updateColor(currentColor);
         }
+
+        const dirLight = scene.children.find(
+          (child) => child.type === "DirectionalLight"
+        );
+        if (dirLight) dirLight.color.setHex(currentColor);
       }
 
       function handleScroll() {
@@ -1391,114 +1050,142 @@
             );
           }
 
-          if (scrollPercent < 0.12) updateTheme("blue");
-          else if (scrollPercent < 0.25) updateTheme("green");
-          else if (scrollPercent < 0.38) updateTheme("purple");
-          else if (scrollPercent < 0.5) updateTheme("red");
-          else if (scrollPercent < 0.62) updateTheme("orange");
-          else if (scrollPercent < 0.75) updateTheme("green");
-          else if (scrollPercent < 0.88) updateTheme("blue");
+          if (scrollPercent < 0.16) updateTheme("purple");
+          else if (scrollPercent < 0.33) updateTheme("green");
+          else if (scrollPercent < 0.5) updateTheme("blue");
+          else if (scrollPercent < 0.66) updateTheme("orange");
+          else if (scrollPercent < 0.83) updateTheme("red");
           else updateTheme("purple");
         }
-
-        let current = "";
-        const sections = document.querySelectorAll("section");
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop - 100;
-          if (window.scrollY >= sectionTop) {
-            current = section.getAttribute("id");
-          }
-        });
-
-        document.querySelectorAll(".nav-link").forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === `#${current}`) {
-            link.classList.add("active");
-          }
-        });
       }
 
-      function initNavigation() {
-        const hamburger = document.getElementById("hamburger");
-        const mobileMenu = document.getElementById("mobileMenu");
+      // Navigation
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const iconOpen = document.getElementById("icon-open");
+      const iconClose = document.getElementById("icon-close");
 
-        hamburger.addEventListener("click", () => {
-          hamburger.classList.toggle("active");
-          mobileMenu.classList.toggle("active");
-          document.body.style.overflow = mobileMenu.classList.contains("active")
-            ? "hidden"
-            : "";
+      const toggleMenu = () => {
+        const isOpen = !mobileMenu.classList.contains("hidden");
+        mobileMenu.classList.toggle("hidden");
+        document.body.style.overflow = isOpen ? "" : "hidden";
+        iconOpen.classList.toggle("hidden", !isOpen);
+        iconClose.classList.toggle("hidden", isOpen);
+      };
+
+      hamburger.addEventListener("click", toggleMenu);
+      mobileMenu.addEventListener("click", (e) => {
+        if (e.target.id === "mobileMenu") toggleMenu();
+      });
+
+      document.querySelectorAll(".mobile-link").forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const href = a.getAttribute("href");
+          document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+          toggleMenu();
         });
+      });
 
-        document.querySelectorAll(".nav-link").forEach((link) => {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const target = document.querySelector(link.getAttribute("href"));
+      document.querySelectorAll(".nav-link").forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const href = a.getAttribute("href");
+          document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+        });
+      });
 
-            if (mobileMenu.classList.contains("active")) {
-              hamburger.classList.remove("active");
-              mobileMenu.classList.remove("active");
-              document.body.style.overflow = "";
+      // Scroll spy
+      const sections = [
+        "#home",
+        "#about",
+        "#skills",
+        "#projects",
+        "#experience",
+        "#contact",
+      ];
+      const navLinks = [...document.querySelectorAll(".nav-link")];
+      const dots = [...document.querySelectorAll(".dot-nav")];
+
+      const activate = (hash) => {
+        navLinks.forEach((l) => {
+          const isActive = l.getAttribute("href") === hash;
+          l.classList.toggle("text-white", isActive);
+          l.classList.toggle("text-gray-400", !isActive);
+        });
+        dots.forEach((d) => {
+          const target = d.getAttribute("data-target");
+          const active = target === hash;
+          d.style.background = active
+            ? "var(--accent)"
+            : "rgba(255,255,255,0.2)";
+          d.style.transform = active ? "scale(1.2)" : "scale(1)";
+        });
+      };
+
+      const spy = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              activate(`#${entry.target.id}`);
             }
-            target.scrollIntoView({ behavior: "smooth" });
           });
-        });
+        },
+        { rootMargin: "-40% 0px -50% 0px", threshold: 0.1 }
+      );
 
-        mobileMenu.addEventListener("click", (e) => {
-          if (e.target === mobileMenu) {
-            hamburger.classList.remove("active");
-            mobileMenu.classList.remove("active");
-            document.body.style.overflow = "";
-          }
-        });
-      }
+      sections.forEach((sel) => {
+        const el = document.querySelector(sel);
+        if (el) spy.observe(el);
+      });
 
+      dots.forEach((d) => {
+        d.addEventListener("click", () => {
+          const t = d.getAttribute("data-target");
+          document.querySelector(t)?.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+
+      // Contact form
       function initContactForm() {
-        document
-          .getElementById("contactForm")
-          .addEventListener("submit", (e) => {
-            e.preventDefault();
+        const form = document.getElementById("contactForm");
+        if (!form) return;
 
-            const btn = e.target.querySelector("button");
-            const originalText = btn.textContent;
-            btn.textContent = "Sending...";
-            btn.disabled = true;
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const btn = e.target.querySelector("button");
+          const originalText = btn.textContent;
+          btn.textContent = "Sending...";
+          btn.disabled = true;
 
+          setTimeout(() => {
+            btn.textContent = "Message Sent!";
             setTimeout(() => {
-              btn.textContent = "Message Sent!";
-              setTimeout(() => {
-                e.target.reset();
-                btn.textContent = originalText;
-                btn.disabled = false;
-              }, 2000);
-            }, 1500);
-          });
+              e.target.reset();
+              btn.textContent = originalText;
+              btn.disabled = false;
+            }, 2000);
+          }, 1500);
+        });
       }
 
-      function initAnimations() {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-              }
-            });
-          },
-          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-        );
+      // Initialize
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("loader").classList.add("hidden");
+        }, 400);
+        setTimeout(() => {
+          document.getElementById("loader").style.display = "none";
+        }, 900);
 
-        document
-          .querySelectorAll(
-            ".skill-card, .project-card, .experience-card, .hackathon-card, .certification-card"
-          )
-          .forEach((el) => {
-            el.style.opacity = "0";
-            el.style.transform = "translateY(50px)";
-            el.style.transition = "all 0.6s ease";
-            observer.observe(el);
-          });
-      }
+        initThree();
+        initContactForm();
+        updateTheme("purple");
+      });
+
+      window.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide?.createIcons) window.lucide.createIcons();
+      });
 
       window.addEventListener("resize", () => {
         if (camera && renderer) {
@@ -1510,38 +1197,126 @@
 
       window.addEventListener("scroll", handleScroll);
 
-      window.addEventListener("load", () => {
-        setTimeout(() => {
-          document.getElementById("loader").classList.add("hidden");
-          ["h1", "p", ".hero-buttons"].forEach((selector, i) => {
-            setTimeout(() => {
-              const el = document.querySelector(".hero " + selector);
-              if (el) {
-                el.style.opacity = "1";
-                el.style.transform = "translateY(0)";
-              }
-            }, 200 * i);
+      // Add scatter/reconstruct methods to SphereAnimation
+      SphereAnimation.prototype.startScatterAnimation = function () {
+        if (this.isAnimating) return;
+        this.isAnimating = true;
+        this.animationPhase = "scattering";
+
+        const startTime = Date.now();
+        const scatterStep = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / this.ANIMATION_DURATION, 1);
+          const easedProgress = this.easeOutCubic(progress);
+
+          const positions =
+            this.particleSystem.geometry.attributes.position.array;
+          const colors = this.particleSystem.geometry.attributes.color.array;
+
+          this.particles.forEach((particle, index) => {
+            const original = particle.originalPosition;
+            const scattered = particle.scatteredPosition;
+
+            particle.currentPosition.x =
+              original.x + (scattered.x - original.x) * easedProgress;
+            particle.currentPosition.y =
+              original.y + (scattered.y - original.y) * easedProgress;
+            particle.currentPosition.z =
+              original.z + (scattered.z - original.z) * easedProgress;
+
+            positions[index * 3] = particle.currentPosition.x;
+            positions[index * 3 + 1] = particle.currentPosition.y;
+            positions[index * 3 + 2] = particle.currentPosition.z;
+
+            const hue =
+              (0.6 + Math.sin(elapsed * 0.002 + index * 0.01) * 0.2) % 1;
+            const color = new THREE.Color().setHSL(hue, 0.8, 0.6);
+            colors[index * 3] = color.r;
+            colors[index * 3 + 1] = color.g;
+            colors[index * 3 + 2] = color.b;
           });
-        }, 1000);
 
-        initThree();
-        initNavigation();
-        initContactForm();
-        initAnimations();
-        updateTheme("blue");
-      });
+          this.particleSystem.geometry.attributes.position.needsUpdate = true;
+          this.particleSystem.geometry.attributes.color.needsUpdate = true;
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const style = document.createElement("style");
-        style.textContent = `
-        .hero h1, .hero p, .hero-buttons {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: all 0.8s ease;
-        }
-      `;
-        document.head.appendChild(style);
-      });
+          if (progress < 1) {
+            requestAnimationFrame(scatterStep);
+          } else {
+            this.isAnimating = false;
+            this.animationPhase = "scattered";
+          }
+        };
+
+        scatterStep();
+      };
+
+      SphereAnimation.prototype.startReconstructAnimation = function () {
+        if (this.isAnimating) return;
+        this.isAnimating = true;
+        this.animationPhase = "reconstructing";
+
+        const startTime = Date.now();
+        const reconstructStep = () => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / this.RECONSTRUCTION_DURATION, 1);
+          const easedProgress = this.easeInOutCubic(progress);
+
+          const positions =
+            this.particleSystem.geometry.attributes.position.array;
+          const colors = this.particleSystem.geometry.attributes.color.array;
+
+          this.particles.forEach((particle, index) => {
+            const original = particle.originalPosition;
+            const scattered = particle.scatteredPosition;
+
+            particle.currentPosition.x =
+              scattered.x + (original.x - scattered.x) * easedProgress;
+            particle.currentPosition.y =
+              scattered.y + (original.y - scattered.y) * easedProgress;
+            particle.currentPosition.z =
+              scattered.z + (original.z - scattered.z) * easedProgress;
+
+            positions[index * 3] = particle.currentPosition.x;
+            positions[index * 3 + 1] = particle.currentPosition.y;
+            positions[index * 3 + 2] = particle.currentPosition.z;
+
+            const targetColor = new THREE.Color(this.currentColor);
+            const currentColor = new THREE.Color(
+              colors[index * 3],
+              colors[index * 3 + 1],
+              colors[index * 3 + 2]
+            );
+            currentColor.lerp(targetColor, easedProgress * 0.1);
+            colors[index * 3] = currentColor.r;
+            colors[index * 3 + 1] = currentColor.g;
+            colors[index * 3 + 2] = currentColor.b;
+          });
+
+          this.particleSystem.geometry.attributes.position.needsUpdate = true;
+          this.particleSystem.geometry.attributes.color.needsUpdate = true;
+
+          if (progress < 1) {
+            requestAnimationFrame(reconstructStep);
+          } else {
+            this.isAnimating = false;
+            this.animationPhase = "complete";
+
+            this.particles.forEach((particle, index) => {
+              const original = particle.originalPosition;
+              particle.currentPosition.x = original.x;
+              particle.currentPosition.y = original.y;
+              particle.currentPosition.z = original.z;
+              positions[index * 3] = original.x;
+              positions[index * 3 + 1] = original.y;
+              positions[index * 3 + 2] = original.z;
+            });
+
+            this.particleSystem.geometry.attributes.position.needsUpdate = true;
+          }
+        };
+
+        reconstructStep();
+      };
     </script>
   </body>
 </html>
