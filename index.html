@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Aditya Andhalkar - 3D Developer Portfolio</title>
-
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://image2url.com/images/1759310178901-4bdd2e88-eed7-471f-a537-8264c9e17d26.jpeg"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -55,6 +62,7 @@
         padding: 0;
         box-sizing: border-box;
       }
+
       body {
         font-family: "Inter", sans-serif;
         background: #0d0d0d;
@@ -62,6 +70,7 @@
         overflow-x: hidden;
       }
 
+      /* Loader */
       .loader {
         position: fixed;
         inset: 0;
@@ -69,7 +78,7 @@
         align-items: center;
         justify-content: center;
         background: #0d0d0d;
-        z-index: 9999;
+        z-index: 60;
         transition: opacity 0.5s ease;
       }
       .loader.hidden {
@@ -90,676 +99,871 @@
         }
       }
 
+      /* Canvas */
       #canvas {
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
         z-index: -1;
-        width: 100%;
-        height: 100%;
         pointer-events: auto;
-        cursor: pointer;
+      }
+
+      /* Container */
+      .container-custom {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      @media (min-width: 640px) {
+        .container-custom {
+          padding: 0 2rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .container-custom {
+          padding: 0 3rem;
+        }
+      }
+
+      /* Section Padding */
+      .section-padding {
+        padding: 4rem 0;
+      }
+
+      @media (min-width: 768px) {
+        .section-padding {
+          padding: 6rem 0;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .section-padding {
+          padding: 8rem 0;
+        }
+      }
+
+      /* Typography */
+      .section-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 3rem;
+        background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .gradient-text {
-        background: linear-gradient(135deg, var(--accent), var(--accent-blue));
+        background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
         -webkit-background-clip: text;
-        background-clip: text;
         -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
-      @keyframes glow {
-        from {
-          filter: drop-shadow(0 0 20px rgba(128, 0, 255, 0.4));
-        }
-        to {
-          filter: drop-shadow(0 0 30px rgba(128, 0, 255, 0.6));
-        }
-      }
-      .animate-glow {
-        animation: glow 2s ease-in-out infinite alternate;
-      }
-
+      /* Glass Effect */
       .glass {
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.12),
-          rgba(255, 255, 255, 0.06)
-        );
+        background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
 
+      /* Cards */
+      .card {
+        border-radius: 1rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Buttons */
       .btn-hero {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 14px 28px;
-        border-radius: 9999px;
+        justify-content: center;
+        padding: 0.75rem 2rem;
+        background: linear-gradient(135deg, var(--accent) 0%, #00d4ff 100%);
+        color: #000;
         font-weight: 600;
-        background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-        color: #0d0d0d;
+        border-radius: 9999px;
         text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 25px rgba(0, 255, 136, 0.35);
         border: none;
         cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
+
       .btn-hero:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(0, 255, 136, 0.35);
+        transform: translateY(-2px);
+        box-shadow: 0 15px 35px rgba(0, 255, 136, 0.5);
       }
 
       .btn-hero-outline {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 14px 28px;
-        border-radius: 9999px;
-        font-weight: 600;
+        justify-content: center;
+        padding: 0.75rem 2rem;
         background: transparent;
         color: #fff;
-        border: 2px solid rgba(255, 255, 255, 0.2);
+        font-weight: 600;
+        border-radius: 9999px;
         text-decoration: none;
         transition: all 0.3s ease;
-      }
-      .btn-hero-outline:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--accent);
-        transform: translateY(-3px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
       }
 
+      .btn-hero-outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      /* Social Pills */
       .social-pill {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 10px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #a0a0a0;
+        width: 3rem;
+        height: 3rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        color: #fff;
+        text-decoration: none;
         transition: all 0.3s ease;
-        width: 44px;
-        height: 44px;
       }
+
       .social-pill:hover {
-        color: var(--accent);
-        border-color: var(--accent);
+        background: rgba(255, 255, 255, 0.1);
         transform: translateY(-2px);
       }
 
-      .card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        transition: all 0.3s ease;
-      }
-      .card:hover {
-        transform: translateY(-5px);
-        border-color: var(--accent);
-      }
-
-      .section-title {
-        font-size: clamp(2rem, 6vw, 3rem);
-        text-align: center;
-        margin-bottom: 60px;
-        color: var(--accent);
-        font-weight: 700;
-      }
-      .container-custom {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 clamp(15px, 4vw, 20px);
-      }
-      .section-padding {
-        padding: clamp(60px, 10vh, 120px) 0;
-      }
-
-      .nav-link.active {
-        color: #fff !important;
-      }
+      /* Form Elements */
       .input {
         width: 100%;
-        padding: 12px 16px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.75rem 1rem;
         background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.5rem;
         color: #fff;
-        font-family: inherit;
+        font-size: 1rem;
         transition: all 0.3s ease;
+        resize: vertical;
       }
+
       .input:focus {
         outline: none;
         border-color: var(--accent);
-        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
       }
 
+      .input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* Tags */
       .tag {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 15px;
-        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
         background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #a0a0a0;
+        border-radius: 0.25rem;
+        font-size: 0.75rem;
+        display: inline-block;
       }
 
-      @media (max-width: 768px) {
-        #canvas {
-          pointer-events: none;
+      /* Mobile Menu */
+      .mobile-link {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        padding: 0.5rem 0;
+        display: block;
+      }
+
+      .mobile-link:hover {
+        color: var(--accent);
+      }
+
+      /* Animations */
+      .animate-glow {
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 20px rgba(128, 0, 255, 0.5);
         }
+        to {
+          text-shadow: 0 0 30px rgba(128, 0, 255, 0.8);
+        }
+      }
+
+      /* Zoom-in transition styles */
+      .main-content {
+        transform: scale(0.8);
+        opacity: 0;
+        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 1.2s ease-out;
+      }
+
+      .main-content.zoom-in {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      /* Initially hide main content */
+      .content-hidden {
+        visibility: hidden;
+      }
+
+      .content-visible {
+        visibility: visible;
       }
     </style>
   </head>
-
   <body>
-    <div id="loader" class="loader"><div class="spinner"></div></div>
-    <canvas id="canvas"></canvas>
-
-    <aside
-      class="flex fixed right-2 sm:right-3 lg:right-6 top-1/2 -translate-y-1/2 z-[60] flex-col gap-2 sm:gap-3"
+    <!-- Greeting Screen Overlay -->
+    <div
+      id="greetingOverlay"
+      class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0d0d0d]"
     >
-      <button
-        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[var(--accent)] scale-110 transition-all hover:scale-125 active:scale-150"
-        data-target="#home"
-        aria-label="Navigate to Home"
-      ></button>
-      <button
-        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
-        data-target="#about"
-        aria-label="Navigate to About"
-      ></button>
-      <button
-        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
-        data-target="#skills"
-        aria-label="Navigate to Skills"
-      ></button>
-      <button
-        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
-        data-target="#projects"
-        aria-label="Navigate to Projects"
-      ></button>
-      <button
-        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
-        data-target="#experience"
-        aria-label="Navigate to Experience"
-      ></button>
-      <button
-        class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all hover:scale-125 active:scale-150"
-        data-target="#contact"
-        aria-label="Navigate to Contact"
-      ></button>
-    </aside>
-
-    <nav
-      id="topNav"
-      class="fixed left-1/2 -translate-x-1/2 top-4 z-50 px-4 sm:px-6 py-2 rounded-full glass max-w-[95vw]"
-    >
-      <div class="flex items-center gap-4">
-        <a href="#home" class="text-sm sm:text-base font-bold gradient-text"
-          >Aditya Andhalkar</a
-        >
-        <ul class="hidden md:flex items-center gap-4 lg:gap-6 ml-4">
-          <li>
-            <a
-              href="#home"
-              class="nav-link text-white hover:text-white transition"
-              >Home</a
-            >
-          </li>
-          <li>
-            <a
-              href="#about"
-              class="nav-link text-gray-400 hover:text-white transition"
-              >About</a
-            >
-          </li>
-          <li>
-            <a
-              href="#projects"
-              class="nav-link text-gray-400 hover:text-white transition"
-              >Projects</a
-            >
-          </li>
-          <li>
-            <a
-              href="#skills"
-              class="nav-link text-gray-400 hover:text-white transition"
-              >Skills</a
-            >
-          </li>
-          <li>
-            <a
-              href="#experience"
-              class="nav-link text-gray-400 hover:text-white transition"
-              >Experience</a
-            >
-          </li>
-          <li>
-            <a
-              href="#contact"
-              class="nav-link text-gray-400 hover:text-white transition"
-              >Contact</a
-            >
-          </li>
-        </ul>
-        <div class="ml-auto flex items-center gap-2">
-          <a href="#contact" class="hidden md:inline-flex btn-hero text-sm"
-            >Let's Talk</a
-          >
-          <button
-            id="hamburger"
-            class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 glass"
-          >
-            <svg
-              id="icon-open"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                d="M4 6h16M4 12h16M4 18h16"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-            </svg>
-            <svg
-              id="icon-close"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5 hidden"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                d="M6 18L18 6M6 6l12 12"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </nav>
-
-    <div id="mobileMenu" class="fixed inset-0 z-40 hidden">
-      <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
       <div
-        class="relative mt-20 mx-4 p-6 rounded-2xl glass border border-white/10"
-      >
-        <ul class="flex flex-col gap-4 text-lg">
-          <li><a class="mobile-link" href="#home">Home</a></li>
-          <li><a class="mobile-link" href="#about">About</a></li>
-          <li><a class="mobile-link" href="#projects">Projects</a></li>
-          <li><a class="mobile-link" href="#skills">Skills</a></li>
-          <li><a class="mobile-link" href="#experience">Experience</a></li>
-          <li><a class="mobile-link" href="#contact">Contact</a></li>
-        </ul>
-        <a
-          href="#contact"
-          class="btn-hero w-full mt-6 inline-flex justify-center"
-          >Let's Talk</a
-        >
-      </div>
+        id="greetingText"
+        class="text-5xl md:text-7xl font-bold text-white transition-opacity duration-150 opacity-0"
+      ></div>
     </div>
 
-    <section
-      id="home"
-      class="relative min-h-[100svh] flex items-center justify-center"
-    >
-      <div class="container-custom text-center">
-        <div class="mx-auto max-w-5xl">
-          <h1
-            class="text-4xl sm:text-6xl lg:text-8xl font-extrabold mb-6 gradient-text animate-glow"
+    <!-- Loader -->
+    <div id="loader" class="loader"><div class="spinner"></div></div>
+
+    <canvas id="canvas"></canvas>
+
+    <!-- Main Content Wrapper -->
+    <div id="mainContent" class="main-content content-hidden">
+      <!-- Fixed Navigation Dots -->
+      <aside
+        class="fixed right-2 sm:right-3 lg:right-6 top-1/2 -translate-y-1/2 z-[50] flex flex-col gap-2 sm:gap-3"
+      >
+        <button
+          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[var(--accent)] scale-110 transition-all duration-200 hover:scale-125 active:scale-150"
+          data-target="#home"
+          aria-label="Navigate to Home"
+        ></button>
+        <button
+          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
+          data-target="#about"
+          aria-label="Navigate to About"
+        ></button>
+        <button
+          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
+          data-target="#skills"
+          aria-label="Navigate to Skills"
+        ></button>
+        <button
+          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
+          data-target="#projects"
+          aria-label="Navigate to Projects"
+        ></button>
+        <button
+          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
+          data-target="#experience"
+          aria-label="Navigate to Experience"
+        ></button>
+        <button
+          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
+          data-target="#contact"
+          aria-label="Navigate to Contact"
+        ></button>
+      </aside>
+
+      <!-- Top Navigation Header -->
+      <nav
+        id="topNav"
+        class="fixed left-1/2 -translate-x-1/2 top-4 z-40 px-4 sm:px-6 py-2 rounded-full glass max-w-[95vw]"
+      >
+        <div class="flex items-center gap-4">
+          <a href="#home" class="text-sm sm:text-base font-bold gradient-text"
+            >Aditya Andhalkar</a
           >
-            Hi, I'm Aditya Andhalkar
-          </h1>
-          <h2 class="text-xl sm:text-2xl font-semibold mb-6 text-white">
-            Full-Stack Developer & 3D Enthusiast
-          </h2>
-          <p
-            class="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed"
-          >
-            I create stunning web experiences with cutting-edge technologies
-            like React, Three.js, and Node.js.
-          </p>
-          <div
-            class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8"
-          >
-            <a href="#projects" class="btn-hero">View My Work</a>
-            <a
-              href="https://drive.google.com/file/d/1WU-nBXUlY82vUnZKUT4hsBF4auiRKYfu/view?usp=drive_link"
-              target="_blank"
-              class="btn-hero-outline"
-              >Download CV</a
+          <ul class="hidden md:flex items-center gap-4 lg:gap-6 ml-4">
+            <li>
+              <a
+                href="#home"
+                class="nav-link text-white hover:text-white transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="#about"
+                class="nav-link text-gray-400 hover:text-white transition"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                href="#skills"
+                class="nav-link text-gray-400 hover:text-white transition"
+                >Skills</a
+              >
+            </li>
+            <li>
+              <a
+                href="#projects"
+                class="nav-link text-gray-400 hover:text-white transition"
+                >Projects</a
+              >
+            </li>
+            <li>
+              <a
+                href="#experience"
+                class="nav-link text-gray-400 hover:text-white transition"
+                >Experience</a
+              >
+            </li>
+            <li>
+              <a
+                href="#contact"
+                class="nav-link text-gray-400 hover:text-white transition"
+                >Contact</a
+              >
+            </li>
+          </ul>
+          <div class="ml-auto flex items-center gap-2">
+            <a href="#contact" class="hidden md:inline-flex btn-hero text-sm"
+              >Let's Talk</a
             >
-          </div>
-          <div class="flex items-center justify-center gap-4">
-            <a
-              href="https://github.com/Adi3182004"
-              target="_blank"
-              class="social-pill"
-              ><i data-lucide="github" class="w-4 h-4"></i
-            ></a>
-            <a
-              href="https://linkedin.com/in/adityaandhalkar"
-              target="_blank"
-              class="social-pill"
-              ><i data-lucide="linkedin" class="w-4 h-4"></i
-            ></a>
-            <a href="mailto:adi3182004@gmail.com" class="social-pill"
-              ><i data-lucide="mail" class="w-4 h-4"></i
-            ></a>
+            <button
+              id="hamburger"
+              class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 glass"
+            >
+              <svg
+                id="icon-open"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M4 6h16M4 12h16M4 18h16"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <svg
+                id="icon-close"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 hidden"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M6 18L18 6M6 6l12 12"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
           </div>
         </div>
-      </div>
-    </section>
+      </nav>
 
-    <section id="about" class="section-padding">
-      <div class="container-custom">
-        <h2 class="section-title">About Me</h2>
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-          <div class="space-y-6">
-            <h3 class="text-2xl font-bold text-white">Personal Description</h3>
-            <p class="text-gray-400 text-lg leading-relaxed">
-              I'm a passionate full-stack developer with expertise creating
-              scalable, high-performance web applications. I specialize in the
-              MERN stack and love bringing creative ideas to life through code
-              and interactive 3D experiences.
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="fixed inset-0 z-40 hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
+        <div
+          class="relative mt-20 mx-4 p-6 rounded-2xl glass border border-white/10"
+        >
+          <ul class="flex flex-col gap-4 text-lg">
+            <li><a class="mobile-link" href="#home">Home</a></li>
+            <li><a class="mobile-link" href="#about">About</a></li>
+            <li><a class="mobile-link" href="#skills">Skills</a></li>
+            <li><a class="mobile-link" href="#projects">Projects</a></li>
+            <li><a class="mobile-link" href="#experience">Experience</a></li>
+            <li><a class="mobile-link" href="#contact">Contact</a></li>
+          </ul>
+          <a
+            href="#contact"
+            class="btn-hero w-full mt-6 inline-flex justify-center"
+            >Let's Talk</a
+          >
+        </div>
+      </div>
+
+      <!-- HOME SECTION -->
+      <section
+        id="home"
+        class="relative min-h-[100svh] flex items-center justify-center"
+      >
+        <div class="container-custom text-center">
+          <div class="mx-auto max-w-5xl">
+            <h1
+              class="text-4xl sm:text-6xl lg:text-8xl font-extrabold mb-6 gradient-text animate-glow"
+            >
+              Hi, I'm Aditya Andhalkar
+            </h1>
+            <h2
+              class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-6 text-white"
+            >
+              Full-Stack Developer & 3D Enthusiast
+            </h2>
+            <p
+              class="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed"
+            >
+              I create stunning web experiences with cutting-edge technologies
+              like React, Three.js, and Node.js.
             </p>
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="card glass p-6 text-center">
-              <div class="text-3xl mb-2">🎓</div>
-              <div class="font-semibold">Education</div>
-              <div class="text-sm text-gray-400">B.E. Computer Engineering</div>
+            <div
+              class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8"
+            >
+              <a href="#projects" class="btn-hero">View My Work</a>
+              <a
+                href="https://drive.google.com/file/d/1WU-nBXUlY82vUnZKUT4hsBF4auiRKYfu/view?usp=drive_link"
+                target="_blank"
+                class="btn-hero-outline"
+                >Download CV</a
+              >
             </div>
-            <div class="card glass p-6 text-center">
-              <div class="text-3xl mb-2">📍</div>
-              <div class="font-semibold">Location</div>
-              <div class="text-sm text-gray-400">Maharashtra, India</div>
-            </div>
-            <div class="card glass p-6 text-center">
-              <div class="text-3xl mb-2">💼</div>
-              <div class="font-semibold">Experience</div>
-              <div class="text-sm text-gray-400">Multiple Projects</div>
-            </div>
-            <div class="card glass p-6 text-center">
-              <div class="text-3xl mb-2">🚀</div>
-              <div class="font-semibold">Projects</div>
-              <div class="text-sm text-gray-400">20+ Completed</div>
+            <div class="flex items-center justify-center gap-4">
+              <a
+                href="https://github.com/Adi3182004"
+                target="_blank"
+                class="social-pill"
+              >
+                <i data-lucide="github" class="w-4 h-4"></i>
+              </a>
+              <a
+                href="https://linkedin.com/in/adityaandhalkar"
+                target="_blank"
+                class="social-pill"
+              >
+                <i data-lucide="linkedin" class="w-4 h-4"></i>
+              </a>
+              <a href="mailto:adi3182004@gmail.com" class="social-pill">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+              </a>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="skills" class="section-padding">
-      <div class="container-custom">
-        <h2 class="section-title">Skills & Expertise</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="card glass p-6">
-            <div
-              class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold mb-4"
-            >
-              F
-            </div>
-            <h4 class="font-semibold mb-2">Frontend Development</h4>
-            <div class="flex flex-wrap gap-2 text-sm text-gray-400">
-              <span>React</span><span>Next.js</span><span>Three.js</span>
-            </div>
-          </div>
-          <div class="card glass p-6">
-            <div
-              class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold mb-4"
-            >
-              B
-            </div>
-            <h4 class="font-semibold mb-2">Backend Development</h4>
-            <div class="flex flex-wrap gap-2 text-sm text-gray-400">
-              <span>Node.js</span><span>Express</span><span>MongoDB</span>
-            </div>
-          </div>
-          <div class="card glass p-6">
-            <div
-              class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold mb-4"
-            >
-              U
-            </div>
-            <h4 class="font-semibold mb-2">UI/UX Design</h4>
-            <div class="flex flex-wrap gap-2 text-sm text-gray-400">
-              <span>Figma</span><span>Responsive Design</span>
-            </div>
-          </div>
-          <div class="card glass p-6">
-            <div
-              class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold mb-4"
-            >
-              3D
-            </div>
-            <h4 class="font-semibold mb-2">3D Development</h4>
-            <div class="flex flex-wrap gap-2 text-sm text-gray-400">
-              <span>Three.js</span><span>WebGL</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="section-padding">
-      <div class="container-custom">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <article
-            class="project-card glass rounded-2xl overflow-hidden border border-white/10"
-          >
-            <div
-              class="h-40 bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-5xl"
-            >
-              🤖
-            </div>
-            <div class="p-6">
-              <h3 class="text-lg font-semibold mb-2">AI Chatbot</h3>
-              <p class="text-gray-400 mb-4">
-                Conversational agent with Dialogflow integration.
+      <!-- ABOUT SECTION -->
+      <section id="about" class="section-padding">
+        <div class="container-custom">
+          <h2 class="section-title">About Me</h2>
+          <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+            <div class="space-y-6">
+              <h3 class="text-2xl font-bold text-white">
+                Personal Description
+              </h3>
+              <p class="text-gray-400 text-lg leading-relaxed">
+                I'm a passionate full-stack developer with expertise creating
+                scalable, high-performance web applications. I specialize in the
+                MERN stack and love bringing creative ideas to life through code
+                and interactive 3D experiences.
               </p>
-              <div class="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
-                <span class="tag">Dialogflow</span
-                ><span class="tag">Android</span
-                ><span class="tag">Node.js</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="card glass p-6 text-center">
+                <div class="text-3xl mb-2">🎓</div>
+                <div class="font-semibold">Education</div>
+                <div class="text-sm text-gray-400">
+                  B.E. Computer Engineering
+                </div>
+              </div>
+              <div class="card glass p-6 text-center">
+                <div class="text-3xl mb-2">📍</div>
+                <div class="font-semibold">Location</div>
+                <div class="text-sm text-gray-400">Maharashtra, India</div>
+              </div>
+              <div class="card glass p-6 text-center">
+                <div class="text-3xl mb-2">💼</div>
+                <div class="font-semibold">Experience</div>
+                <div class="text-sm text-gray-400">Multiple Projects</div>
+              </div>
+              <div class="card glass p-6 text-center">
+                <div class="text-3xl mb-2">🚀</div>
+                <div class="font-semibold">Projects</div>
+                <div class="text-sm text-gray-400">20+ Completed</div>
               </div>
             </div>
-          </article>
-          <article
-            class="project-card glass rounded-2xl overflow-hidden border border-white/10"
-          >
-            <div
-              class="h-40 bg-gradient-to-br from-sky-300 to-cyan-400 flex items-center justify-center text-5xl"
-            >
-              👋
-            </div>
-            <div class="p-6">
-              <h3 class="text-lg font-semibold mb-2">Gesture Input System</h3>
-              <p class="text-gray-400 mb-4">
-                Touchless input using OpenCV & MediaPipe.
-              </p>
-              <div class="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
-                <span class="tag">OpenCV</span><span class="tag">MediaPipe</span
-                ><span class="tag">Python</span>
-              </div>
-            </div>
-          </article>
-          <article
-            class="project-card glass rounded-2xl overflow-hidden border border-white/10"
-          >
-            <div
-              class="h-40 bg-gradient-to-br from-fuchsia-400 to-purple-500 flex items-center justify-center text-5xl"
-            >
-              🎯
-            </div>
-            <div class="p-6">
-              <h3 class="text-lg font-semibold mb-2">Object Detection</h3>
-              <p class="text-gray-400 mb-4">
-                TensorFlow Lite model for real-time detection.
-              </p>
-              <div class="flex flex-wrap gap-2 text-xs text-gray-400 mb-4">
-                <span class="tag">TensorFlow</span
-                ><span class="tag">Python</span
-                ><span class="tag">Mobile ML</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience" class="section-padding">
-      <div class="container-custom">
-        <h2 class="section-title">Experience</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="card glass p-6">
-            <div class="text-sm text-gray-400 mb-1">2025 - Present</div>
-            <div class="font-semibold">Young Thames</div>
-            <div class="text-gray-400">Backend Developer Intern</div>
-          </div>
-          <div class="card glass p-6">
-            <div class="text-sm text-gray-400 mb-1">2022 - 2027</div>
-            <div class="font-semibold">NHITM</div>
-            <div class="text-gray-400">Computer Engineering Student</div>
-          </div>
-          <div class="card glass p-6">
-            <div class="text-sm text-gray-400 mb-1">2023</div>
-            <div class="font-semibold">Freelance</div>
-            <div class="text-gray-400">Full-Stack Developer</div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="contact" class="section-padding">
-      <div class="container-custom">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="grid md:grid-cols-2 gap-8 items-start">
-          <div class="space-y-4">
-            <div class="glass rounded-2xl p-5 border border-white/10">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"
-                >
-                  ✉️
+      <!-- SKILLS SECTION -->
+      <section id="skills" class="section-padding">
+        <div class="container-custom">
+          <h2 class="section-title">Skills & Expertise</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="card glass p-6">
+              <div
+                class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold mb-4"
+              >
+                F
+              </div>
+              <h4 class="font-semibold mb-2">Frontend Development</h4>
+              <div class="flex flex-wrap gap-2 text-sm text-gray-400">
+                <span class="tag">React</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">Three.js</span>
+              </div>
+            </div>
+            <div class="card glass p-6">
+              <div
+                class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold mb-4"
+              >
+                B
+              </div>
+              <h4 class="font-semibold mb-2">Backend Development</h4>
+              <div class="flex flex-wrap gap-2 text-sm text-gray-400">
+                <span class="tag">Node.js</span>
+                <span class="tag">Express</span>
+                <span class="tag">MongoDB</span>
+              </div>
+            </div>
+            <div class="card glass p-6">
+              <div
+                class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold mb-4"
+              >
+                U
+              </div>
+              <h4 class="font-semibold mb-2">UI/UX Design</h4>
+              <div class="flex flex-wrap gap-2 text-sm text-gray-400">
+                <span class="tag">Figma</span>
+                <span class="tag">Responsive Design</span>
+              </div>
+            </div>
+            <div class="card glass p-6">
+              <div
+                class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold mb-4"
+              >
+                3D
+              </div>
+              <h4 class="font-semibold mb-2">3D Development</h4>
+              <div class="flex flex-wrap gap-2 text-sm text-gray-400">
+                <span class="tag">Three.js</span>
+                <span class="tag">WebGL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS SECTION -->
+      <section id="projects" class="section-padding">
+        <div class="container-custom">
+          <h2 class="section-title">Featured Projects</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <article
+              class="card glass rounded-2xl overflow-hidden border border-white/10"
+            >
+              <div
+                class="h-40 bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-5xl"
+              >
+                🤖
+              </div>
+              <div class="p-6">
+                <h3 class="text-lg font-semibold mb-2">AI Chatbot</h3>
+                <p class="text-gray-400 mb-4">
+                  Conversational agent with Dialogflow integration.
+                </p>
+                <div class="flex flex-wrap gap-2 text-xs text-gray-400">
+                  <span class="tag">Dialogflow</span>
+                  <span class="tag">Android</span>
+                  <span class="tag">Node.js</span>
+                </div>
+              </div>
+            </article>
+            <article
+              class="card glass rounded-2xl overflow-hidden border border-white/10"
+            >
+              <div
+                class="h-40 bg-gradient-to-br from-sky-300 to-cyan-400 flex items-center justify-center text-5xl"
+              >
+                👋
+              </div>
+              <div class="p-6">
+                <h3 class="text-lg font-semibold mb-2">Gesture Input System</h3>
+                <p class="text-gray-400 mb-4">
+                  Touchless input using OpenCV & MediaPipe.
+                </p>
+                <div class="flex flex-wrap gap-2 text-xs text-gray-400">
+                  <span class="tag">OpenCV</span>
+                  <span class="tag">MediaPipe</span>
+                  <span class="tag">Python</span>
+                </div>
+              </div>
+            </article>
+            <article
+              class="card glass rounded-2xl overflow-hidden border border-white/10"
+            >
+              <div
+                class="h-40 bg-gradient-to-br from-fuchsia-400 to-purple-500 flex items-center justify-center text-5xl"
+              >
+                🎯
+              </div>
+              <div class="p-6">
+                <h3 class="text-lg font-semibold mb-2">Object Detection</h3>
+                <p class="text-gray-400 mb-4">
+                  TensorFlow Lite model for real-time detection.
+                </p>
+                <div class="flex flex-wrap gap-2 text-xs text-gray-400">
+                  <span class="tag">TensorFlow</span>
+                  <span class="tag">Python</span>
+                  <span class="tag">Mobile ML</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE SECTION -->
+      <section id="experience" class="section-padding">
+        <div class="container-custom">
+          <h2 class="section-title">Experience</h2>
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="card glass p-6">
+              <div class="text-sm text-gray-400 mb-1">2025 - Present</div>
+              <div class="font-semibold">Young Thames</div>
+              <div class="text-gray-400">Backend Developer Intern</div>
+            </div>
+            <div class="card glass p-6">
+              <div class="text-sm text-gray-400 mb-1">2022 - 2027</div>
+              <div class="font-semibold">NHITM</div>
+              <div class="text-gray-400">Computer Engineering Student</div>
+            </div>
+            <div class="card glass p-6">
+              <div class="text-sm text-gray-400 mb-1">2023</div>
+              <div class="font-semibold">Freelance</div>
+              <div class="text-gray-400">Full-Stack Developer</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section id="contact" class="section-padding">
+        <div class="container-custom">
+          <h2 class="section-title">Get In Touch</h2>
+          <div class="grid md:grid-cols-2 gap-8 items-start">
+            <div class="space-y-4">
+              <div class="glass rounded-2xl p-5 border border-white/10">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"
+                  >
+                    ✉️
+                  </div>
+                  <div>
+                    <div class="font-semibold">Email</div>
+                    <a href="mailto:adi3182004@gmail.com" class="text-gray-400"
+                      >adi3182004@gmail.com</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="glass rounded-2xl p-5 border border-white/10">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"
+                  >
+                    📱
+                  </div>
+                  <div>
+                    <div class="font-semibold">Phone</div>
+                    <a href="tel:+917887547146" class="text-gray-400"
+                      >+91 7887547146</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form
+              id="contactForm"
+              class="glass rounded-2xl p-6 md:p-8 border border-white/10"
+            >
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm text-gray-400 mb-1">Name *</label>
+                  <input
+                    id="name"
+                    type="text"
+                    required
+                    class="input"
+                    placeholder="Your name"
+                  />
                 </div>
                 <div>
-                  <div class="font-semibold">Email</div>
-                  <a href="mailto:adi3182004@gmail.com" class="text-gray-400"
-                    >adi3182004@gmail.com</a
+                  <label class="block text-sm text-gray-400 mb-1"
+                    >Email *</label
                   >
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    class="input"
+                    placeholder="you@email.com"
+                  />
                 </div>
               </div>
-            </div>
-            <div class="glass rounded-2xl p-5 border border-white/10">
-              <div class="flex items-center gap-3">
-                <div
-                  class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"
+              <div class="mt-4">
+                <label class="block text-sm text-gray-400 mb-1"
+                  >Subject *</label
                 >
-                  📱
-                </div>
-                <div>
-                  <div class="font-semibold">Phone</div>
-                  <a href="tel:+917887547146" class="text-gray-400"
-                    >+91 7887547146</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <form
-            id="contactForm"
-            class="glass rounded-2xl p-6 md:p-8 border border-white/10"
-          >
-            <div class="grid md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm text-gray-400 mb-1">Name *</label
-                ><input
-                  id="name"
+                <input
+                  id="subject"
                   type="text"
                   required
                   class="input"
-                  placeholder="Your name"
+                  placeholder="Project inquiry"
                 />
               </div>
-              <div>
-                <label class="block text-sm text-gray-400 mb-1">Email *</label
-                ><input
-                  id="email"
-                  type="email"
+              <div class="mt-4">
+                <label class="block text-sm text-gray-400 mb-1"
+                  >Message *</label
+                >
+                <textarea
+                  id="message"
                   required
-                  class="input"
-                  placeholder="you@email.com"
-                />
+                  class="input min-h-[120px]"
+                  placeholder="Tell me about your project..."
+                ></textarea>
               </div>
-            </div>
-            <div class="mt-4">
-              <label class="block text-sm text-gray-400 mb-1">Subject *</label
-              ><input
-                id="subject"
-                type="text"
-                required
-                class="input"
-                placeholder="Project inquiry"
-              />
-            </div>
-            <div class="mt-4">
-              <label class="block text-sm text-gray-400 mb-1">Message *</label
-              ><textarea
-                id="message"
-                required
-                class="input min-h-[120px]"
-                placeholder="Tell me about your project..."
-              ></textarea>
-            </div>
-            <button type="submit" class="btn-hero w-full mt-6">
-              Send Message
-            </button>
-          </form>
+              <button type="submit" class="btn-hero w-full mt-6">
+                Send Message
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <footer class="relative overflow-hidden bg-gray-900">
-      <div class="container-custom py-12">
-        <div class="text-center">
-          <h3 class="text-2xl font-bold gradient-text mb-3">
-            Aditya Andhalkar
-          </h3>
-          <p class="text-gray-400 mb-6">
-            Full‑stack developer passionate about creating innovative web
-            experiences.
-          </p>
-          <p class="text-gray-400 text-sm">
-            © 2025 Aditya. Made with ❤️ and lots of ☕
-          </p>
+      <!-- FOOTER -->
+      <footer class="relative overflow-hidden bg-gray-900">
+        <div class="container-custom py-12">
+          <div class="text-center">
+            <h3 class="text-2xl font-bold gradient-text mb-3">
+              Aditya Andhalkar
+            </h3>
+            <p class="text-gray-400 mb-6">
+              Full‑stack developer passionate about creating innovative web
+              experiences.
+            </p>
+            <p class="text-gray-400 text-sm">
+              © 2025 Aditya. Made with ❤️ and lots of ☕
+            </p>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
     <script>
+      // Prevent browser from restoring scroll position
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+
+      // Force immediate scroll to top
+      window.scrollTo(0, 0);
+
+      // GreetingScreen with Zoom-in Transition
+      (function initGreeting() {
+        const SHOW_MS = 250;
+        const FADE_MS = 120;
+        const OVERLAY_DELAY_MS = 50;
+        const OVERLAY_FADE_MS = 220;
+        const ZOOM_DELAY_MS = 100; // Slight delay before zoom starts
+
+        const greetings = [
+          "Hello",
+          "Hola",
+          "Bonjour",
+          "Ciao",
+          "नमस्ते",
+          "こんにちは",
+          "안녕하세요",
+          "مرحبا",
+          "नमस्कार",
+        ];
+
+        const overlay = document.getElementById("greetingOverlay");
+        const text = document.getElementById("greetingText");
+        const mainContent = document.getElementById("mainContent");
+
+        if (!overlay || !text || !mainContent) return;
+
+        text.style.transition = `opacity ${FADE_MS}ms ease`;
+        text.style.willChange = "opacity";
+
+        let index = -1;
+
+        function next() {
+          index += 1;
+
+          if (index >= greetings.length) {
+            // Start the exit animation
+            setTimeout(() => {
+              // Make main content visible but keep it scaled down
+              mainContent.classList.remove("content-hidden");
+              mainContent.classList.add("content-visible");
+
+              // Ensure we're at the top
+              window.scrollTo(0, 0);
+
+              // Start overlay fade out
+              overlay.style.transition = `opacity ${OVERLAY_FADE_MS}ms ease`;
+              overlay.style.opacity = "0";
+
+              // Start zoom-in transition slightly after overlay begins fading
+              setTimeout(() => {
+                mainContent.classList.add("zoom-in");
+                // Final scroll to top after zoom animation starts
+                window.scrollTo({ top: 0, behavior: "instant" });
+              }, ZOOM_DELAY_MS);
+
+              // Remove overlay completely after fade is done
+              setTimeout(() => {
+                overlay.style.display = "none";
+              }, OVERLAY_FADE_MS + 20);
+            }, OVERLAY_DELAY_MS);
+            return;
+          }
+
+          text.textContent = greetings[index];
+          text.style.opacity = "1";
+
+          setTimeout(() => {
+            text.style.opacity = "0";
+            setTimeout(next, FADE_MS);
+          }, SHOW_MS);
+        }
+
+        text.style.opacity = "0";
+        next();
+      })();
+
       // Sphere Animation Class
       class SphereAnimation {
         constructor(scene, currentColor) {
           this.scene = scene;
           this.currentColor = currentColor;
-          this.PARTICLE_COUNT = 1500;
+          this.PARTICLE_COUNT = window.innerWidth <= 768 ? 1000 : 1500;
           this.SPHERE_RADIUS = 1.2;
           this.SCATTER_DISTANCE = 8;
           this.ANIMATION_DURATION = 3000;
           this.RECONSTRUCTION_DURATION = 4000;
-          this.AUTO_CYCLE_DELAY = 2000;
           this.isAnimating = false;
           this.animationPhase = "idle";
-          this.autoMode = false;
-          this.autoTimer = null;
           this.particles = [];
           this.originalPositions = [];
           this.particleSystem = null;
@@ -783,7 +987,6 @@
             positions[i * 3] = x;
             positions[i * 3 + 1] = y;
             positions[i * 3 + 2] = z;
-
             this.originalPositions.push({ x, y, z });
 
             const particle = {
@@ -794,8 +997,6 @@
                 z: z + (Math.random() - 0.5) * this.SCATTER_DISTANCE * 2,
               },
               currentPosition: { x, y, z },
-              velocity: { x: 0, y: 0, z: 0 },
-              phase: 0,
             };
             this.particles.push(particle);
 
@@ -815,7 +1016,7 @@
           );
 
           const particleMaterial = new THREE.PointsMaterial({
-            size: 0.04,
+            size: window.innerWidth <= 768 ? 0.035 : 0.04,
             transparent: true,
             opacity: 0.8,
             sizeAttenuation: true,
@@ -832,7 +1033,7 @@
 
         createLineSystem() {
           const lineGeometry = new THREE.BufferGeometry();
-          const maxConnections = 200;
+          const maxConnections = window.innerWidth <= 768 ? 100 : 200;
           const positions = new Float32Array(maxConnections * 6);
           lineGeometry.setAttribute(
             "position",
@@ -874,6 +1075,121 @@
         easeInOutCubic(t) {
           return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         }
+
+        startScatterAnimation() {
+          if (this.isAnimating) return;
+          this.isAnimating = true;
+          this.animationPhase = "scattering";
+
+          const startTime = Date.now();
+          const scatterStep = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / this.ANIMATION_DURATION, 1);
+            const easedProgress = this.easeOutCubic(progress);
+
+            const positions =
+              this.particleSystem.geometry.attributes.position.array;
+            const colors = this.particleSystem.geometry.attributes.color.array;
+
+            this.particles.forEach((particle, index) => {
+              const original = particle.originalPosition;
+              const scattered = particle.scatteredPosition;
+
+              particle.currentPosition.x =
+                original.x + (scattered.x - original.x) * easedProgress;
+              particle.currentPosition.y =
+                original.y + (scattered.y - original.y) * easedProgress;
+              particle.currentPosition.z =
+                original.z + (scattered.z - original.z) * easedProgress;
+
+              positions[index * 3] = particle.currentPosition.x;
+              positions[index * 3 + 1] = particle.currentPosition.y;
+              positions[index * 3 + 2] = particle.currentPosition.z;
+
+              const hue =
+                (0.6 + Math.sin(elapsed * 0.002 + index * 0.01) * 0.2) % 1;
+              const color = new THREE.Color().setHSL(hue, 0.8, 0.6);
+              colors[index * 3] = color.r;
+              colors[index * 3 + 1] = color.g;
+              colors[index * 3 + 2] = color.b;
+            });
+
+            this.particleSystem.geometry.attributes.position.needsUpdate = true;
+            this.particleSystem.geometry.attributes.color.needsUpdate = true;
+
+            if (progress < 1) requestAnimationFrame(scatterStep);
+            else {
+              this.isAnimating = false;
+              this.animationPhase = "scattered";
+            }
+          };
+          scatterStep();
+        }
+
+        startReconstructAnimation() {
+          if (this.isAnimating) return;
+          this.isAnimating = true;
+          this.animationPhase = "reconstructing";
+
+          const startTime = Date.now();
+          const reconstructStep = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(
+              elapsed / this.RECONSTRUCTION_DURATION,
+              1
+            );
+            const easedProgress = this.easeInOutCubic(progress);
+
+            const positions =
+              this.particleSystem.geometry.attributes.position.array;
+            const colors = this.particleSystem.geometry.attributes.color.array;
+
+            this.particles.forEach((particle, index) => {
+              const original = particle.originalPosition;
+              const scattered = particle.scatteredPosition;
+
+              particle.currentPosition.x =
+                scattered.x + (original.x - scattered.x) * easedProgress;
+              particle.currentPosition.y =
+                scattered.y + (original.y - scattered.y) * easedProgress;
+              particle.currentPosition.z =
+                scattered.z + (original.z - scattered.z) * easedProgress;
+
+              positions[index * 3] = particle.currentPosition.x;
+              positions[index * 3 + 1] = particle.currentPosition.y;
+              positions[index * 3 + 2] = particle.currentPosition.z;
+
+              const targetColor = new THREE.Color(this.currentColor);
+              const currentColor = new THREE.Color(
+                colors[index * 3],
+                colors[index * 3 + 1],
+                colors[index * 3 + 2]
+              );
+              currentColor.lerp(targetColor, easedProgress * 0.1);
+              colors[index * 3] = currentColor.r;
+              colors[index * 3 + 1] = currentColor.g;
+              colors[index * 3 + 2] = currentColor.b;
+            });
+
+            this.particleSystem.geometry.attributes.position.needsUpdate = true;
+            this.particleSystem.geometry.attributes.color.needsUpdate = true;
+
+            if (progress < 1) requestAnimationFrame(reconstructStep);
+            else {
+              this.isAnimating = false;
+              this.animationPhase = "complete";
+              this.particles.forEach((particle, index) => {
+                const original = particle.originalPosition;
+                particle.currentPosition = { ...original };
+                positions[index * 3] = original.x;
+                positions[index * 3 + 1] = original.y;
+                positions[index * 3 + 2] = original.z;
+              });
+              this.particleSystem.geometry.attributes.position.needsUpdate = true;
+            }
+          };
+          reconstructStep();
+        }
       }
 
       // Main Three.js Setup
@@ -887,11 +1203,11 @@
       const autoRotation = { x: 0.01, y: 0.015, z: 0.005 };
 
       const colorThemes = {
-        blue: { primary: "#0080ff", secondary: "#00d4ff" },
-        purple: { primary: "#8000ff", secondary: "#d400ff" },
-        red: { primary: "#ff4757", secondary: "#ff6b6b" },
-        green: { primary: "#00ff88", secondary: "#00d4ff" },
-        orange: { primary: "#ff9500", secondary: "#ffb347" },
+        blue: { primary: "#0080ff" },
+        purple: { primary: "#8000ff" },
+        red: { primary: "#ff4757" },
+        green: { primary: "#00ff88" },
+        orange: { primary: "#ff9500" },
       };
 
       function initThree() {
@@ -908,14 +1224,14 @@
         renderer = new THREE.WebGLRenderer({
           canvas: document.getElementById("canvas"),
           alpha: true,
-          antialias: true,
+          antialias: window.innerWidth > 768,
+          powerPreference: "high-performance",
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         raycaster = new THREE.Raycaster();
         mouse = new THREE.Vector2();
-
         sphereAnimation = new SphereAnimation(scene, currentColor);
 
         const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
@@ -926,8 +1242,7 @@
         camera.position.z = 5;
 
         document.addEventListener("dblclick", onDoubleClick);
-        document.addEventListener("mousemove", onMouseMove);
-
+        document.addEventListener("mousemove", onMouseMove, { passive: true });
         animate();
       }
 
@@ -950,12 +1265,10 @@
       function onMouseMove(event) {
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
         lastMouseX = mouseX;
         lastMouseY = mouseY;
         mouseX = event.clientX - window.innerWidth / 2;
         mouseY = event.clientY - window.innerHeight / 2;
-
         checkHover();
       }
 
@@ -973,7 +1286,6 @@
             sphereAnimation.particleSystem
           );
           if (intersects.length > 0) {
-            // Trigger scatter/reconstruct animation on double click
             if (
               sphereAnimation.animationPhase === "idle" ||
               sphereAnimation.animationPhase === "complete"
@@ -993,10 +1305,8 @@
           if (isHovering && !sphereAnimation.isAnimating) {
             const mouseDeltaX = mouseX - lastMouseX;
             const mouseDeltaY = mouseY - lastMouseY;
-
             sphereAnimation.particleSystem.rotation.y += mouseDeltaX * 0.005;
             sphereAnimation.particleSystem.rotation.x += mouseDeltaY * 0.005;
-
             if (sphereAnimation.lineSystem) {
               sphereAnimation.lineSystem.rotation.copy(
                 sphereAnimation.particleSystem.rotation
@@ -1006,7 +1316,6 @@
             sphereAnimation.particleSystem.rotation.x += autoRotation.x;
             sphereAnimation.particleSystem.rotation.y += autoRotation.y;
             sphereAnimation.particleSystem.rotation.z += autoRotation.z;
-
             if (sphereAnimation.lineSystem) {
               sphereAnimation.lineSystem.rotation.copy(
                 sphereAnimation.particleSystem.rotation
@@ -1033,30 +1342,42 @@
         if (dirLight) dirLight.color.setHex(currentColor);
       }
 
+      // Throttled scroll handler for better performance
+      let scrollTimeout;
       function handleScroll() {
-        const scrollPercent =
-          window.scrollY /
-          (document.documentElement.scrollHeight - window.innerHeight);
+        if (scrollTimeout) return;
 
-        if (sphereAnimation && sphereAnimation.particleSystem) {
-          const orbX = Math.sin(scrollPercent * Math.PI * 2) * 3;
-          sphereAnimation.particleSystem.position.x = orbX;
-          sphereAnimation.particleSystem.position.y =
-            Math.cos(scrollPercent * Math.PI) * 0.5;
+        scrollTimeout = setTimeout(() => {
+          const scrollPercent =
+            window.scrollY /
+            (document.documentElement.scrollHeight - window.innerHeight);
 
-          if (sphereAnimation.lineSystem) {
-            sphereAnimation.lineSystem.position.copy(
-              sphereAnimation.particleSystem.position
-            );
+          if (sphereAnimation && sphereAnimation.particleSystem) {
+            const orbX = Math.sin(scrollPercent * Math.PI * 2) * 0.5;
+            sphereAnimation.particleSystem.position.x = orbX;
+            sphereAnimation.particleSystem.position.y = 0;
+            sphereAnimation.particleSystem.position.z = 0;
+            sphereAnimation.particleSystem.scale.set(1, 1, 1);
+
+            if (sphereAnimation.lineSystem) {
+              sphereAnimation.lineSystem.position.copy(
+                sphereAnimation.particleSystem.position
+              );
+              sphereAnimation.lineSystem.scale.copy(
+                sphereAnimation.particleSystem.scale
+              );
+            }
+
+            if (scrollPercent < 0.16) updateTheme("purple");
+            else if (scrollPercent < 0.33) updateTheme("green");
+            else if (scrollPercent < 0.5) updateTheme("blue");
+            else if (scrollPercent < 0.66) updateTheme("orange");
+            else if (scrollPercent < 0.83) updateTheme("red");
+            else updateTheme("purple");
           }
 
-          if (scrollPercent < 0.16) updateTheme("purple");
-          else if (scrollPercent < 0.33) updateTheme("green");
-          else if (scrollPercent < 0.5) updateTheme("blue");
-          else if (scrollPercent < 0.66) updateTheme("orange");
-          else if (scrollPercent < 0.83) updateTheme("red");
-          else updateTheme("purple");
-        }
+          scrollTimeout = null;
+        }, 16);
       }
 
       // Navigation
@@ -1073,17 +1394,43 @@
         iconClose.classList.toggle("hidden", isOpen);
       };
 
-      hamburger.addEventListener("click", toggleMenu);
-      mobileMenu.addEventListener("click", (e) => {
-        if (e.target.id === "mobileMenu") toggleMenu();
-      });
+      if (hamburger) hamburger.addEventListener("click", toggleMenu);
+      if (mobileMenu) {
+        mobileMenu.addEventListener("click", (e) => {
+          if (e.target.id === "mobileMenu") toggleMenu();
+        });
+      }
 
+      // Manual navigation helper with improved stability
+      let isManualNavigation = false;
+      let manualNavigationTimer = null;
+
+      const navigateTo = (target, closeMenu = false) => {
+        isManualNavigation = true;
+        if (manualNavigationTimer) clearTimeout(manualNavigationTimer);
+
+        activate(target);
+        const targetElement = document.querySelector(target);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            inline: "nearest",
+          });
+        }
+        if (closeMenu) toggleMenu();
+
+        manualNavigationTimer = setTimeout(() => {
+          isManualNavigation = false;
+        }, 2000); // Increased timeout for stability
+      };
+
+      // Event Listeners
       document.querySelectorAll(".mobile-link").forEach((a) => {
         a.addEventListener("click", (e) => {
           e.preventDefault();
           const href = a.getAttribute("href");
-          document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-          toggleMenu();
+          navigateTo(href, true);
         });
       });
 
@@ -1091,11 +1438,11 @@
         a.addEventListener("click", (e) => {
           e.preventDefault();
           const href = a.getAttribute("href");
-          document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+          navigateTo(href);
         });
       });
 
-      // Scroll spy
+      // Improved scroll spy for more stable navigation
       const sections = [
         "#home",
         "#about",
@@ -1123,15 +1470,25 @@
         });
       };
 
+      // More stable intersection observer
       const spy = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              activate(`#${entry.target.id}`);
-            }
-          });
+          if (isManualNavigation) return;
+
+          // Find the section with the largest intersection ratio
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (visible && visible.intersectionRatio > 0.3) {
+            activate(`#${visible.target.id}`);
+          }
         },
-        { rootMargin: "-40% 0px -50% 0px", threshold: 0.1 }
+        {
+          root: null,
+          rootMargin: "-10% 0px -70% 0px", // Adjusted for better stability
+          threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        }
       );
 
       sections.forEach((sel) => {
@@ -1139,10 +1496,11 @@
         if (el) spy.observe(el);
       });
 
+      // Dots click navigation
       dots.forEach((d) => {
         d.addEventListener("click", () => {
           const t = d.getAttribute("data-target");
-          document.querySelector(t)?.scrollIntoView({ behavior: "smooth" });
+          navigateTo(t);
         });
       });
 
@@ -1169,154 +1527,61 @@
         });
       }
 
+      // Resize handler
+      function handleResize() {
+        if (camera && renderer) {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+
+          if (sphereAnimation && sphereAnimation.particleSystem) {
+            const isMobile = window.innerWidth <= 768;
+            const newParticleSize = isMobile ? 0.035 : 0.04;
+            sphereAnimation.particleSystem.material.size = newParticleSize;
+          }
+        }
+      }
+
       // Initialize
       window.addEventListener("load", () => {
+        // Force scroll to top immediately
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
         setTimeout(() => {
-          document.getElementById("loader").classList.add("hidden");
+          const loader = document.getElementById("loader");
+          if (loader) loader.classList.add("hidden");
         }, 400);
+
         setTimeout(() => {
-          document.getElementById("loader").style.display = "none";
+          const loader = document.getElementById("loader");
+          if (loader) loader.style.display = "none";
         }, 900);
 
         initThree();
         initContactForm();
         updateTheme("purple");
+
+        // Set initial active link/dot and ensure we're at home
+        const initial =
+          location.hash && sections.includes(location.hash)
+            ? location.hash
+            : sections[0];
+        activate(initial);
+
+        // Additional scroll to top after everything is loaded
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: "instant" });
+        }, 100);
       });
 
       window.addEventListener("DOMContentLoaded", () => {
         if (window.lucide?.createIcons) window.lucide.createIcons();
       });
 
-      window.addEventListener("resize", () => {
-        if (camera && renderer) {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-      });
-
-      window.addEventListener("scroll", handleScroll);
-
-      // Add scatter/reconstruct methods to SphereAnimation
-      SphereAnimation.prototype.startScatterAnimation = function () {
-        if (this.isAnimating) return;
-        this.isAnimating = true;
-        this.animationPhase = "scattering";
-
-        const startTime = Date.now();
-        const scatterStep = () => {
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min(elapsed / this.ANIMATION_DURATION, 1);
-          const easedProgress = this.easeOutCubic(progress);
-
-          const positions =
-            this.particleSystem.geometry.attributes.position.array;
-          const colors = this.particleSystem.geometry.attributes.color.array;
-
-          this.particles.forEach((particle, index) => {
-            const original = particle.originalPosition;
-            const scattered = particle.scatteredPosition;
-
-            particle.currentPosition.x =
-              original.x + (scattered.x - original.x) * easedProgress;
-            particle.currentPosition.y =
-              original.y + (scattered.y - original.y) * easedProgress;
-            particle.currentPosition.z =
-              original.z + (scattered.z - original.z) * easedProgress;
-
-            positions[index * 3] = particle.currentPosition.x;
-            positions[index * 3 + 1] = particle.currentPosition.y;
-            positions[index * 3 + 2] = particle.currentPosition.z;
-
-            const hue =
-              (0.6 + Math.sin(elapsed * 0.002 + index * 0.01) * 0.2) % 1;
-            const color = new THREE.Color().setHSL(hue, 0.8, 0.6);
-            colors[index * 3] = color.r;
-            colors[index * 3 + 1] = color.g;
-            colors[index * 3 + 2] = color.b;
-          });
-
-          this.particleSystem.geometry.attributes.position.needsUpdate = true;
-          this.particleSystem.geometry.attributes.color.needsUpdate = true;
-
-          if (progress < 1) {
-            requestAnimationFrame(scatterStep);
-          } else {
-            this.isAnimating = false;
-            this.animationPhase = "scattered";
-          }
-        };
-
-        scatterStep();
-      };
-
-      SphereAnimation.prototype.startReconstructAnimation = function () {
-        if (this.isAnimating) return;
-        this.isAnimating = true;
-        this.animationPhase = "reconstructing";
-
-        const startTime = Date.now();
-        const reconstructStep = () => {
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min(elapsed / this.RECONSTRUCTION_DURATION, 1);
-          const easedProgress = this.easeInOutCubic(progress);
-
-          const positions =
-            this.particleSystem.geometry.attributes.position.array;
-          const colors = this.particleSystem.geometry.attributes.color.array;
-
-          this.particles.forEach((particle, index) => {
-            const original = particle.originalPosition;
-            const scattered = particle.scatteredPosition;
-
-            particle.currentPosition.x =
-              scattered.x + (original.x - scattered.x) * easedProgress;
-            particle.currentPosition.y =
-              scattered.y + (original.y - scattered.y) * easedProgress;
-            particle.currentPosition.z =
-              scattered.z + (original.z - scattered.z) * easedProgress;
-
-            positions[index * 3] = particle.currentPosition.x;
-            positions[index * 3 + 1] = particle.currentPosition.y;
-            positions[index * 3 + 2] = particle.currentPosition.z;
-
-            const targetColor = new THREE.Color(this.currentColor);
-            const currentColor = new THREE.Color(
-              colors[index * 3],
-              colors[index * 3 + 1],
-              colors[index * 3 + 2]
-            );
-            currentColor.lerp(targetColor, easedProgress * 0.1);
-            colors[index * 3] = currentColor.r;
-            colors[index * 3 + 1] = currentColor.g;
-            colors[index * 3 + 2] = currentColor.b;
-          });
-
-          this.particleSystem.geometry.attributes.position.needsUpdate = true;
-          this.particleSystem.geometry.attributes.color.needsUpdate = true;
-
-          if (progress < 1) {
-            requestAnimationFrame(reconstructStep);
-          } else {
-            this.isAnimating = false;
-            this.animationPhase = "complete";
-
-            this.particles.forEach((particle, index) => {
-              const original = particle.originalPosition;
-              particle.currentPosition.x = original.x;
-              particle.currentPosition.y = original.y;
-              particle.currentPosition.z = original.z;
-              positions[index * 3] = original.x;
-              positions[index * 3 + 1] = original.y;
-              positions[index * 3 + 2] = original.z;
-            });
-
-            this.particleSystem.geometry.attributes.position.needsUpdate = true;
-          }
-        };
-
-        reconstructStep();
-      };
+      window.addEventListener("resize", handleResize, { passive: true });
+      window.addEventListener("scroll", handleScroll, { passive: true });
     </script>
   </body>
 </html>
