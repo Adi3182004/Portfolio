@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Aditya Andhalkar - 3D Developer Portfolio</title>
     <link
       rel="icon"
@@ -12,32 +15,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: { inter: ["Inter", "system-ui", "sans-serif"] },
-            colors: {
-              bg: { primary: "#0D0D0D", secondary: "#1A1A1A" },
-              text: { primary: "#FFFFFF", secondary: "#A0A0A0" },
-              brand: {
-                accent: "#00FF88",
-                blue: "#0080FF",
-                purple: "#8000FF",
-                red: "#FF4757",
-                orange: "#FF9500",
-                pink: "#FF006E",
-              },
-            },
-            boxShadow: {
-              glass: "0 8px 32px rgba(0,0,0,.30)",
-              btn: "0 10px 25px rgba(0, 255, 136, 0.35)",
-            },
-          },
-        },
-      };
-    </script>
+
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
 
     <link rel="stylesheet" href="styles.css" />
     <script
@@ -45,409 +28,77 @@
       defer
     ></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
-
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-
-      :root {
-        --accent: #00ff88;
-        --accent-blue: #0080ff;
-        --accent-purple: #8000ff;
-        --accent-red: #ff4757;
-        --accent-orange: #ff9500;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Inter", sans-serif;
-        background: #0d0d0d;
-        color: #fff;
-        overflow-x: hidden;
-      }
-
-      /* Loader */
-      .loader {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0d0d0d;
-        z-index: 60;
-        transition: opacity 0.5s ease;
-      }
-      .loader.hidden {
-        opacity: 0;
-        pointer-events: none;
-      }
-      .spinner {
-        width: 60px;
-        height: 60px;
-        border: 2px solid rgba(0, 255, 136, 0.3);
-        border-top: 2px solid var(--accent);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Canvas */
-      #canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-        pointer-events: auto;
-      }
-
-      /* Container */
-      .container-custom {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem;
-      }
-
-      @media (min-width: 640px) {
-        .container-custom {
-          padding: 0 2rem;
-        }
-      }
-
-      @media (min-width: 1024px) {
-        .container-custom {
-          padding: 0 3rem;
-        }
-      }
-
-      /* Section Padding */
-      .section-padding {
-        padding: 4rem 0;
-      }
-
-      @media (min-width: 768px) {
-        .section-padding {
-          padding: 6rem 0;
-        }
-      }
-
-      @media (min-width: 1024px) {
-        .section-padding {
-          padding: 8rem 0;
-        }
-      }
-
-      /* Typography */
-      .section-title {
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 3rem;
-        background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .gradient-text {
-        background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      /* Glass Effect */
-      .glass {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      /* Cards */
-      .card {
-        border-radius: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Buttons */
-      .btn-hero {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.75rem 2rem;
-        background: linear-gradient(135deg, var(--accent) 0%, #00d4ff 100%);
-        color: #000;
-        font-weight: 600;
-        border-radius: 9999px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 25px rgba(0, 255, 136, 0.35);
-        border: none;
-        cursor: pointer;
-      }
-
-      .btn-hero:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 35px rgba(0, 255, 136, 0.5);
-      }
-
-      .btn-hero-outline {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.75rem 2rem;
-        background: transparent;
-        color: #fff;
-        font-weight: 600;
-        border-radius: 9999px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .btn-hero-outline:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-      }
-
-      /* Social Pills */
-      .social-pill {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 3rem;
-        height: 3rem;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 9999px;
-        color: #fff;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .social-pill:hover {
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateY(-2px);
-      }
-
-      /* Form Elements */
-      .input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 0.5rem;
-        color: #fff;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        resize: vertical;
-      }
-
-      .input:focus {
-        outline: none;
-        border-color: var(--accent);
-        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
-      }
-
-      .input::placeholder {
-        color: rgba(255, 255, 255, 0.4);
-      }
-
-      /* Tags */
-      .tag {
-        padding: 0.25rem 0.5rem;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 0.25rem;
-        font-size: 0.75rem;
-        display: inline-block;
-      }
-
-      /* Mobile Menu */
-      .mobile-link {
-        color: #fff;
-        text-decoration: none;
-        transition: color 0.3s ease;
-        padding: 0.5rem 0;
-        display: block;
-      }
-
-      .mobile-link:hover {
-        color: var(--accent);
-      }
-
-      /* Animations */
-      .animate-glow {
-        animation: glow 2s ease-in-out infinite alternate;
-      }
-
-      @keyframes glow {
-        from {
-          text-shadow: 0 0 20px rgba(128, 0, 255, 0.5);
-        }
-        to {
-          text-shadow: 0 0 30px rgba(128, 0, 255, 0.8);
-        }
-      }
-
-      /* Zoom-in transition styles */
-      .main-content {
-        transform: scale(0.8);
-        opacity: 0;
-        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-          opacity 1.2s ease-out;
-      }
-
-      .main-content.zoom-in {
-        transform: scale(1);
-        opacity: 1;
-      }
-
-      /* Initially hide main content */
-      .content-hidden {
-        visibility: hidden;
-      }
-
-      .content-visible {
-        visibility: visible;
-      }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <!-- Greeting Screen Overlay -->
-    <div
-      id="greetingOverlay"
-      class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0d0d0d]"
-    >
-      <div
-        id="greetingText"
-        class="text-5xl md:text-7xl font-bold text-white transition-opacity duration-150 opacity-0"
-      ></div>
+    <div id="greetingOverlay" class="greeting-overlay">
+      <div id="greetingText" class="greeting-text"></div>
     </div>
 
     <!-- Loader -->
     <div id="loader" class="loader"><div class="spinner"></div></div>
 
-    <canvas id="canvas"></canvas>
+    <!-- Canvas -->
+    <canvas id="canvas" class="initially-hidden"></canvas>
 
-    <!-- Main Content Wrapper -->
-    <div id="mainContent" class="main-content content-hidden">
-      <!-- Fixed Navigation Dots -->
-      <aside
-        class="fixed right-2 sm:right-3 lg:right-6 top-1/2 -translate-y-1/2 z-[50] flex flex-col gap-2 sm:gap-3"
-      >
-        <button
-          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[var(--accent)] scale-110 transition-all duration-200 hover:scale-125 active:scale-150"
-          data-target="#home"
-          aria-label="Navigate to Home"
-        ></button>
-        <button
-          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
-          data-target="#about"
-          aria-label="Navigate to About"
-        ></button>
-        <button
-          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
-          data-target="#skills"
-          aria-label="Navigate to Skills"
-        ></button>
-        <button
-          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
-          data-target="#projects"
-          aria-label="Navigate to Projects"
-        ></button>
-        <button
-          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
-          data-target="#experience"
-          aria-label="Navigate to Experience"
-        ></button>
-        <button
-          class="dot-nav w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 hover:scale-125 active:scale-150"
-          data-target="#contact"
-          aria-label="Navigate to Contact"
-        ></button>
-      </aside>
+    <!-- SCROLL DOTS NAVIGATION -->
+    <nav class="dots initially-hidden" id="dotsNav">
+      <a
+        class="scroll scroll-home tooltip tooltip-left active"
+        href="#home"
+        data-tooltip="Home"
+      ></a>
+      <a
+        class="scroll scroll-about tooltip tooltip-left"
+        href="#about"
+        data-tooltip="About"
+      ></a>
+      <a
+        class="scroll scroll-skills tooltip tooltip-left"
+        href="#skills"
+        data-tooltip="Skills"
+      ></a>
+      <a
+        class="scroll scroll-projects tooltip tooltip-left"
+        href="#projects"
+        data-tooltip="Projects"
+      ></a>
+      <a
+        class="scroll scroll-achievements tooltip tooltip-left"
+        href="#achievements"
+        data-tooltip="Achievements"
+      ></a>
+      <a
+        class="scroll scroll-contact tooltip tooltip-left"
+        href="#contact"
+        data-tooltip="Contact"
+      ></a>
+    </nav>
 
-      <!-- Top Navigation Header -->
-      <nav
-        id="topNav"
-        class="fixed left-1/2 -translate-x-1/2 top-4 z-40 px-4 sm:px-6 py-2 rounded-full glass max-w-[95vw]"
-      >
-        <div class="flex items-center gap-4">
-          <a href="#home" class="text-sm sm:text-base font-bold gradient-text"
-            >Aditya Andhalkar</a
-          >
-          <ul class="hidden md:flex items-center gap-4 lg:gap-6 ml-4">
+    <!-- FIXED TOP NAVIGATION -->
+    <nav id="topNav" class="top-navigation initially-hidden">
+      <div class="nav-wrapper">
+        <div class="nav-container">
+          <a href="#home" class="nav-brand scroll">Aditya Andhalkar</a>
+          <ul class="nav-links-desktop">
+            <li><a href="#home" class="nav-link scroll active">Home</a></li>
+            <li><a href="#about" class="nav-link scroll">About</a></li>
+            <li><a href="#skills" class="nav-link scroll">Skills</a></li>
+            <li><a href="#projects" class="nav-link scroll">Projects</a></li>
             <li>
-              <a
-                href="#home"
-                class="nav-link text-white hover:text-white transition"
-                >Home</a
-              >
+              <a href="#achievements" class="nav-link scroll">Achievements</a>
             </li>
-            <li>
-              <a
-                href="#about"
-                class="nav-link text-gray-400 hover:text-white transition"
-                >About</a
-              >
-            </li>
-            <li>
-              <a
-                href="#skills"
-                class="nav-link text-gray-400 hover:text-white transition"
-                >Skills</a
-              >
-            </li>
-            <li>
-              <a
-                href="#projects"
-                class="nav-link text-gray-400 hover:text-white transition"
-                >Projects</a
-              >
-            </li>
-            <li>
-              <a
-                href="#experience"
-                class="nav-link text-gray-400 hover:text-white transition"
-                >Experience</a
-              >
-            </li>
-            <li>
-              <a
-                href="#contact"
-                class="nav-link text-gray-400 hover:text-white transition"
-                >Contact</a
-              >
-            </li>
+            <li><a href="#contact" class="nav-link scroll">Contact</a></li>
           </ul>
-          <div class="ml-auto flex items-center gap-2">
-            <a href="#contact" class="hidden md:inline-flex btn-hero text-sm"
-              >Let's Talk</a
-            >
-            <button
-              id="hamburger"
-              class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 glass"
-            >
+          <div class="nav-actions">
+            <a href="#contact" class="nav-cta scroll">Let's Talk</a>
+            <button id="hamburger" class="hamburger" aria-label="Toggle menu">
               <svg
                 id="icon-open"
                 xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5"
+                class="hamburger-icon"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -461,7 +112,7 @@
               <svg
                 id="icon-close"
                 xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 hidden"
+                class="hamburger-icon hidden"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -475,1113 +126,774 @@
             </button>
           </div>
         </div>
-      </nav>
-
-      <!-- Mobile Menu -->
-      <div id="mobileMenu" class="fixed inset-0 z-40 hidden">
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
-        <div
-          class="relative mt-20 mx-4 p-6 rounded-2xl glass border border-white/10"
-        >
-          <ul class="flex flex-col gap-4 text-lg">
-            <li><a class="mobile-link" href="#home">Home</a></li>
-            <li><a class="mobile-link" href="#about">About</a></li>
-            <li><a class="mobile-link" href="#skills">Skills</a></li>
-            <li><a class="mobile-link" href="#projects">Projects</a></li>
-            <li><a class="mobile-link" href="#experience">Experience</a></li>
-            <li><a class="mobile-link" href="#contact">Contact</a></li>
-          </ul>
-          <a
-            href="#contact"
-            class="btn-hero w-full mt-6 inline-flex justify-center"
-            >Let's Talk</a
-          >
-        </div>
       </div>
+    </nav>
 
-      <!-- HOME SECTION -->
-      <section
-        id="home"
-        class="relative min-h-[100svh] flex items-center justify-center"
-      >
-        <div class="container-custom text-center">
-          <div class="mx-auto max-w-5xl">
-            <h1
-              class="text-4xl sm:text-6xl lg:text-8xl font-extrabold mb-6 gradient-text animate-glow"
-            >
-              Hi, I'm Aditya Andhalkar
-            </h1>
-            <h2
-              class="text-xl sm:text-2xl lg:text-3xl font-semibold mb-6 text-white"
-            >
-              Full-Stack Developer & 3D Enthusiast
-            </h2>
-            <p
-              class="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed"
-            >
-              I create stunning web experiences with cutting-edge technologies
-              like React, Three.js, and Node.js.
-            </p>
-            <div
-              class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8"
-            >
-              <a href="#projects" class="btn-hero">View My Work</a>
-              <a
-                href="https://drive.google.com/file/d/1WU-nBXUlY82vUnZKUT4hsBF4auiRKYfu/view?usp=drive_link"
-                target="_blank"
-                class="btn-hero-outline"
-                >Download CV</a
-              >
-            </div>
-            <div class="flex items-center justify-center gap-4">
-              <a
-                href="https://github.com/Adi3182004"
-                target="_blank"
-                class="social-pill"
-              >
-                <i data-lucide="github" class="w-4 h-4"></i>
-              </a>
-              <a
-                href="https://linkedin.com/in/adityaandhalkar"
-                target="_blank"
-                class="social-pill"
-              >
-                <i data-lucide="linkedin" class="w-4 h-4"></i>
-              </a>
-              <a href="mailto:adi3182004@gmail.com" class="social-pill">
-                <i data-lucide="mail" class="w-4 h-4"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ABOUT SECTION -->
-      <section id="about" class="section-padding">
-        <div class="container-custom">
-          <h2 class="section-title">About Me</h2>
-          <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-            <div class="space-y-6">
-              <h3 class="text-2xl font-bold text-white">
-                Personal Description
-              </h3>
-              <p class="text-gray-400 text-lg leading-relaxed">
-                I'm a passionate full-stack developer with expertise creating
-                scalable, high-performance web applications. I specialize in the
-                MERN stack and love bringing creative ideas to life through code
-                and interactive 3D experiences.
-              </p>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="card glass p-6 text-center">
-                <div class="text-3xl mb-2">🎓</div>
-                <div class="font-semibold">Education</div>
-                <div class="text-sm text-gray-400">
-                  B.E. Computer Engineering
-                </div>
-              </div>
-              <div class="card glass p-6 text-center">
-                <div class="text-3xl mb-2">📍</div>
-                <div class="font-semibold">Location</div>
-                <div class="text-sm text-gray-400">Maharashtra, India</div>
-              </div>
-              <div class="card glass p-6 text-center">
-                <div class="text-3xl mb-2">💼</div>
-                <div class="font-semibold">Experience</div>
-                <div class="text-sm text-gray-400">Multiple Projects</div>
-              </div>
-              <div class="card glass p-6 text-center">
-                <div class="text-3xl mb-2">🚀</div>
-                <div class="font-semibold">Projects</div>
-                <div class="text-sm text-gray-400">20+ Completed</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SKILLS SECTION -->
-      <section id="skills" class="section-padding">
-        <div class="container-custom">
-          <h2 class="section-title">Skills & Expertise</h2>
-          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="card glass p-6">
-              <div
-                class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold mb-4"
-              >
-                F
-              </div>
-              <h4 class="font-semibold mb-2">Frontend Development</h4>
-              <div class="flex flex-wrap gap-2 text-sm text-gray-400">
-                <span class="tag">React</span>
-                <span class="tag">Next.js</span>
-                <span class="tag">Three.js</span>
-              </div>
-            </div>
-            <div class="card glass p-6">
-              <div
-                class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold mb-4"
-              >
-                B
-              </div>
-              <h4 class="font-semibold mb-2">Backend Development</h4>
-              <div class="flex flex-wrap gap-2 text-sm text-gray-400">
-                <span class="tag">Node.js</span>
-                <span class="tag">Express</span>
-                <span class="tag">MongoDB</span>
-              </div>
-            </div>
-            <div class="card glass p-6">
-              <div
-                class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold mb-4"
-              >
-                U
-              </div>
-              <h4 class="font-semibold mb-2">UI/UX Design</h4>
-              <div class="flex flex-wrap gap-2 text-sm text-gray-400">
-                <span class="tag">Figma</span>
-                <span class="tag">Responsive Design</span>
-              </div>
-            </div>
-            <div class="card glass p-6">
-              <div
-                class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold mb-4"
-              >
-                3D
-              </div>
-              <h4 class="font-semibold mb-2">3D Development</h4>
-              <div class="flex flex-wrap gap-2 text-sm text-gray-400">
-                <span class="tag">Three.js</span>
-                <span class="tag">WebGL</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROJECTS SECTION -->
-      <section id="projects" class="section-padding">
-        <div class="container-custom">
-          <h2 class="section-title">Featured Projects</h2>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <article
-              class="card glass rounded-2xl overflow-hidden border border-white/10"
-            >
-              <div
-                class="h-40 bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-5xl"
-              >
-                🤖
-              </div>
-              <div class="p-6">
-                <h3 class="text-lg font-semibold mb-2">AI Chatbot</h3>
-                <p class="text-gray-400 mb-4">
-                  Conversational agent with Dialogflow integration.
-                </p>
-                <div class="flex flex-wrap gap-2 text-xs text-gray-400">
-                  <span class="tag">Dialogflow</span>
-                  <span class="tag">Android</span>
-                  <span class="tag">Node.js</span>
-                </div>
-              </div>
-            </article>
-            <article
-              class="card glass rounded-2xl overflow-hidden border border-white/10"
-            >
-              <div
-                class="h-40 bg-gradient-to-br from-sky-300 to-cyan-400 flex items-center justify-center text-5xl"
-              >
-                👋
-              </div>
-              <div class="p-6">
-                <h3 class="text-lg font-semibold mb-2">Gesture Input System</h3>
-                <p class="text-gray-400 mb-4">
-                  Touchless input using OpenCV & MediaPipe.
-                </p>
-                <div class="flex flex-wrap gap-2 text-xs text-gray-400">
-                  <span class="tag">OpenCV</span>
-                  <span class="tag">MediaPipe</span>
-                  <span class="tag">Python</span>
-                </div>
-              </div>
-            </article>
-            <article
-              class="card glass rounded-2xl overflow-hidden border border-white/10"
-            >
-              <div
-                class="h-40 bg-gradient-to-br from-fuchsia-400 to-purple-500 flex items-center justify-center text-5xl"
-              >
-                🎯
-              </div>
-              <div class="p-6">
-                <h3 class="text-lg font-semibold mb-2">Object Detection</h3>
-                <p class="text-gray-400 mb-4">
-                  TensorFlow Lite model for real-time detection.
-                </p>
-                <div class="flex flex-wrap gap-2 text-xs text-gray-400">
-                  <span class="tag">TensorFlow</span>
-                  <span class="tag">Python</span>
-                  <span class="tag">Mobile ML</span>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- EXPERIENCE SECTION -->
-      <section id="experience" class="section-padding">
-        <div class="container-custom">
-          <h2 class="section-title">Experience</h2>
-          <div class="grid md:grid-cols-3 gap-6">
-            <div class="card glass p-6">
-              <div class="text-sm text-gray-400 mb-1">2025 - Present</div>
-              <div class="font-semibold">Young Thames</div>
-              <div class="text-gray-400">Backend Developer Intern</div>
-            </div>
-            <div class="card glass p-6">
-              <div class="text-sm text-gray-400 mb-1">2022 - 2027</div>
-              <div class="font-semibold">NHITM</div>
-              <div class="text-gray-400">Computer Engineering Student</div>
-            </div>
-            <div class="card glass p-6">
-              <div class="text-sm text-gray-400 mb-1">2023</div>
-              <div class="font-semibold">Freelance</div>
-              <div class="text-gray-400">Full-Stack Developer</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CONTACT SECTION -->
-      <section id="contact" class="section-padding">
-        <div class="container-custom">
-          <h2 class="section-title">Get In Touch</h2>
-          <div class="grid md:grid-cols-2 gap-8 items-start">
-            <div class="space-y-4">
-              <div class="glass rounded-2xl p-5 border border-white/10">
-                <div class="flex items-center gap-3">
-                  <div
-                    class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"
-                  >
-                    ✉️
-                  </div>
-                  <div>
-                    <div class="font-semibold">Email</div>
-                    <a href="mailto:adi3182004@gmail.com" class="text-gray-400"
-                      >adi3182004@gmail.com</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="glass rounded-2xl p-5 border border-white/10">
-                <div class="flex items-center gap-3">
-                  <div
-                    class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center"
-                  >
-                    📱
-                  </div>
-                  <div>
-                    <div class="font-semibold">Phone</div>
-                    <a href="tel:+917887547146" class="text-gray-400"
-                      >+91 7887547146</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-            <form
-              id="contactForm"
-              class="glass rounded-2xl p-6 md:p-8 border border-white/10"
-            >
-              <div class="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm text-gray-400 mb-1">Name *</label>
-                  <input
-                    id="name"
-                    type="text"
-                    required
-                    class="input"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm text-gray-400 mb-1"
-                    >Email *</label
-                  >
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    class="input"
-                    placeholder="you@email.com"
-                  />
-                </div>
-              </div>
-              <div class="mt-4">
-                <label class="block text-sm text-gray-400 mb-1"
-                  >Subject *</label
-                >
-                <input
-                  id="subject"
-                  type="text"
-                  required
-                  class="input"
-                  placeholder="Project inquiry"
-                />
-              </div>
-              <div class="mt-4">
-                <label class="block text-sm text-gray-400 mb-1"
-                  >Message *</label
-                >
-                <textarea
-                  id="message"
-                  required
-                  class="input min-h-[120px]"
-                  placeholder="Tell me about your project..."
-                ></textarea>
-              </div>
-              <button type="submit" class="btn-hero w-full mt-6">
-                Send Message
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <!-- FOOTER -->
-      <footer class="relative overflow-hidden bg-gray-900">
-        <div class="container-custom py-12">
-          <div class="text-center">
-            <h3 class="text-2xl font-bold gradient-text mb-3">
-              Aditya Andhalkar
-            </h3>
-            <p class="text-gray-400 mb-6">
-              Full‑stack developer passionate about creating innovative web
-              experiences.
-            </p>
-            <p class="text-gray-400 text-sm">
-              © 2025 Aditya. Made with ❤️ and lots of ☕
-            </p>
-          </div>
-        </div>
-      </footer>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu hidden">
+      <div class="mobile-menu-backdrop"></div>
+      <div class="mobile-menu-content">
+        <ul class="mobile-nav-links">
+          <li><a class="mobile-link scroll" href="#home">Home</a></li>
+          <li><a class="mobile-link scroll" href="#about">About</a></li>
+          <li><a class="mobile-link scroll" href="#skills">Skills</a></li>
+          <li><a class="mobile-link scroll" href="#projects">Projects</a></li>
+          <li>
+            <a class="mobile-link scroll" href="#achievements">Achievements</a>
+          </li>
+          <li><a class="mobile-link scroll" href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="mobile-cta scroll">Let's Talk</a>
+      </div>
     </div>
 
-    <script>
-      // Prevent browser from restoring scroll position
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
-      }
-
-      // Force immediate scroll to top
-      window.scrollTo(0, 0);
-
-      // GreetingScreen with Zoom-in Transition
-      (function initGreeting() {
-        const SHOW_MS = 250;
-        const FADE_MS = 120;
-        const OVERLAY_DELAY_MS = 50;
-        const OVERLAY_FADE_MS = 220;
-        const ZOOM_DELAY_MS = 100; // Slight delay before zoom starts
-
-        const greetings = [
-          "Hello",
-          "Hola",
-          "Bonjour",
-          "Ciao",
-          "नमस्ते",
-          "こんにちは",
-          "안녕하세요",
-          "مرحبا",
-          "नमस्कार",
-        ];
-
-        const overlay = document.getElementById("greetingOverlay");
-        const text = document.getElementById("greetingText");
-        const mainContent = document.getElementById("mainContent");
-
-        if (!overlay || !text || !mainContent) return;
-
-        text.style.transition = `opacity ${FADE_MS}ms ease`;
-        text.style.willChange = "opacity";
-
-        let index = -1;
-
-        function next() {
-          index += 1;
-
-          if (index >= greetings.length) {
-            // Start the exit animation
-            setTimeout(() => {
-              // Make main content visible but keep it scaled down
-              mainContent.classList.remove("content-hidden");
-              mainContent.classList.add("content-visible");
-
-              // Ensure we're at the top
-              window.scrollTo(0, 0);
-
-              // Start overlay fade out
-              overlay.style.transition = `opacity ${OVERLAY_FADE_MS}ms ease`;
-              overlay.style.opacity = "0";
-
-              // Start zoom-in transition slightly after overlay begins fading
-              setTimeout(() => {
-                mainContent.classList.add("zoom-in");
-                // Final scroll to top after zoom animation starts
-                window.scrollTo({ top: 0, behavior: "instant" });
-              }, ZOOM_DELAY_MS);
-
-              // Remove overlay completely after fade is done
-              setTimeout(() => {
-                overlay.style.display = "none";
-              }, OVERLAY_FADE_MS + 20);
-            }, OVERLAY_DELAY_MS);
-            return;
-          }
-
-          text.textContent = greetings[index];
-          text.style.opacity = "1";
-
-          setTimeout(() => {
-            text.style.opacity = "0";
-            setTimeout(next, FADE_MS);
-          }, SHOW_MS);
-        }
-
-        text.style.opacity = "0";
-        next();
-      })();
-
-      // Sphere Animation Class
-      class SphereAnimation {
-        constructor(scene, currentColor) {
-          this.scene = scene;
-          this.currentColor = currentColor;
-          this.PARTICLE_COUNT = window.innerWidth <= 768 ? 1000 : 1500;
-          this.SPHERE_RADIUS = 1.2;
-          this.SCATTER_DISTANCE = 8;
-          this.ANIMATION_DURATION = 3000;
-          this.RECONSTRUCTION_DURATION = 4000;
-          this.isAnimating = false;
-          this.animationPhase = "idle";
-          this.particles = [];
-          this.originalPositions = [];
-          this.particleSystem = null;
-          this.lineSystem = null;
-          this.initializeParticles();
-          this.createLineSystem();
-        }
-
-        initializeParticles() {
-          const particleGeometry = new THREE.BufferGeometry();
-          const positions = new Float32Array(this.PARTICLE_COUNT * 3);
-          const colors = new Float32Array(this.PARTICLE_COUNT * 3);
-
-          for (let i = 0; i < this.PARTICLE_COUNT; i++) {
-            const phi = Math.acos(-1 + (2 * i) / this.PARTICLE_COUNT);
-            const theta = Math.sqrt(this.PARTICLE_COUNT * Math.PI) * phi;
-            const x = this.SPHERE_RADIUS * Math.cos(theta) * Math.sin(phi);
-            const y = this.SPHERE_RADIUS * Math.sin(theta) * Math.sin(phi);
-            const z = this.SPHERE_RADIUS * Math.cos(phi);
-
-            positions[i * 3] = x;
-            positions[i * 3 + 1] = y;
-            positions[i * 3 + 2] = z;
-            this.originalPositions.push({ x, y, z });
-
-            const particle = {
-              originalPosition: { x, y, z },
-              scatteredPosition: {
-                x: x + (Math.random() - 0.5) * this.SCATTER_DISTANCE * 2,
-                y: y + (Math.random() - 0.5) * this.SCATTER_DISTANCE * 2,
-                z: z + (Math.random() - 0.5) * this.SCATTER_DISTANCE * 2,
-              },
-              currentPosition: { x, y, z },
-            };
-            this.particles.push(particle);
-
-            const color = new THREE.Color(this.currentColor);
-            colors[i * 3] = color.r;
-            colors[i * 3 + 1] = color.g;
-            colors[i * 3 + 2] = color.b;
-          }
-
-          particleGeometry.setAttribute(
-            "position",
-            new THREE.BufferAttribute(positions, 3)
-          );
-          particleGeometry.setAttribute(
-            "color",
-            new THREE.BufferAttribute(colors, 3)
-          );
-
-          const particleMaterial = new THREE.PointsMaterial({
-            size: window.innerWidth <= 768 ? 0.035 : 0.04,
-            transparent: true,
-            opacity: 0.8,
-            sizeAttenuation: true,
-            vertexColors: true,
-            blending: THREE.AdditiveBlending,
-          });
-
-          this.particleSystem = new THREE.Points(
-            particleGeometry,
-            particleMaterial
-          );
-          this.scene.add(this.particleSystem);
-        }
-
-        createLineSystem() {
-          const lineGeometry = new THREE.BufferGeometry();
-          const maxConnections = window.innerWidth <= 768 ? 100 : 200;
-          const positions = new Float32Array(maxConnections * 6);
-          lineGeometry.setAttribute(
-            "position",
-            new THREE.BufferAttribute(positions, 3)
-          );
-
-          const lineMaterial = new THREE.LineBasicMaterial({
-            color: this.currentColor,
-            transparent: true,
-            opacity: 0,
-            linewidth: 1,
-          });
-
-          this.lineSystem = new THREE.LineSegments(lineGeometry, lineMaterial);
-          this.lineSystem.visible = false;
-          this.scene.add(this.lineSystem);
-        }
-
-        updateColor(newColor) {
-          this.currentColor = newColor;
-          if (this.particleSystem) {
-            const colors = this.particleSystem.geometry.attributes.color.array;
-            const color = new THREE.Color(newColor);
-            for (let i = 0; i < colors.length; i += 3) {
-              colors[i] = color.r;
-              colors[i + 1] = color.g;
-              colors[i + 2] = color.b;
-            }
-            this.particleSystem.geometry.attributes.color.needsUpdate = true;
-          }
-          if (this.lineSystem) {
-            this.lineSystem.material.color.setHex(newColor);
-          }
-        }
-
-        easeOutCubic(t) {
-          return 1 - Math.pow(1 - t, 3);
-        }
-        easeInOutCubic(t) {
-          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-
-        startScatterAnimation() {
-          if (this.isAnimating) return;
-          this.isAnimating = true;
-          this.animationPhase = "scattering";
-
-          const startTime = Date.now();
-          const scatterStep = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / this.ANIMATION_DURATION, 1);
-            const easedProgress = this.easeOutCubic(progress);
-
-            const positions =
-              this.particleSystem.geometry.attributes.position.array;
-            const colors = this.particleSystem.geometry.attributes.color.array;
-
-            this.particles.forEach((particle, index) => {
-              const original = particle.originalPosition;
-              const scattered = particle.scatteredPosition;
-
-              particle.currentPosition.x =
-                original.x + (scattered.x - original.x) * easedProgress;
-              particle.currentPosition.y =
-                original.y + (scattered.y - original.y) * easedProgress;
-              particle.currentPosition.z =
-                original.z + (scattered.z - original.z) * easedProgress;
-
-              positions[index * 3] = particle.currentPosition.x;
-              positions[index * 3 + 1] = particle.currentPosition.y;
-              positions[index * 3 + 2] = particle.currentPosition.z;
-
-              const hue =
-                (0.6 + Math.sin(elapsed * 0.002 + index * 0.01) * 0.2) % 1;
-              const color = new THREE.Color().setHSL(hue, 0.8, 0.6);
-              colors[index * 3] = color.r;
-              colors[index * 3 + 1] = color.g;
-              colors[index * 3 + 2] = color.b;
-            });
-
-            this.particleSystem.geometry.attributes.position.needsUpdate = true;
-            this.particleSystem.geometry.attributes.color.needsUpdate = true;
-
-            if (progress < 1) requestAnimationFrame(scatterStep);
-            else {
-              this.isAnimating = false;
-              this.animationPhase = "scattered";
-            }
-          };
-          scatterStep();
-        }
-
-        startReconstructAnimation() {
-          if (this.isAnimating) return;
-          this.isAnimating = true;
-          this.animationPhase = "reconstructing";
-
-          const startTime = Date.now();
-          const reconstructStep = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(
-              elapsed / this.RECONSTRUCTION_DURATION,
-              1
-            );
-            const easedProgress = this.easeInOutCubic(progress);
-
-            const positions =
-              this.particleSystem.geometry.attributes.position.array;
-            const colors = this.particleSystem.geometry.attributes.color.array;
-
-            this.particles.forEach((particle, index) => {
-              const original = particle.originalPosition;
-              const scattered = particle.scatteredPosition;
-
-              particle.currentPosition.x =
-                scattered.x + (original.x - scattered.x) * easedProgress;
-              particle.currentPosition.y =
-                scattered.y + (original.y - scattered.y) * easedProgress;
-              particle.currentPosition.z =
-                scattered.z + (original.z - scattered.z) * easedProgress;
-
-              positions[index * 3] = particle.currentPosition.x;
-              positions[index * 3 + 1] = particle.currentPosition.y;
-              positions[index * 3 + 2] = particle.currentPosition.z;
-
-              const targetColor = new THREE.Color(this.currentColor);
-              const currentColor = new THREE.Color(
-                colors[index * 3],
-                colors[index * 3 + 1],
-                colors[index * 3 + 2]
-              );
-              currentColor.lerp(targetColor, easedProgress * 0.1);
-              colors[index * 3] = currentColor.r;
-              colors[index * 3 + 1] = currentColor.g;
-              colors[index * 3 + 2] = currentColor.b;
-            });
-
-            this.particleSystem.geometry.attributes.position.needsUpdate = true;
-            this.particleSystem.geometry.attributes.color.needsUpdate = true;
-
-            if (progress < 1) requestAnimationFrame(reconstructStep);
-            else {
-              this.isAnimating = false;
-              this.animationPhase = "complete";
-              this.particles.forEach((particle, index) => {
-                const original = particle.originalPosition;
-                particle.currentPosition = { ...original };
-                positions[index * 3] = original.x;
-                positions[index * 3 + 1] = original.y;
-                positions[index * 3 + 2] = original.z;
-              });
-              this.particleSystem.geometry.attributes.position.needsUpdate = true;
-            }
-          };
-          reconstructStep();
-        }
-      }
-
-      // Main Three.js Setup
-      let scene, camera, renderer, sphereAnimation, raycaster, mouse;
-      let mouseX = 0,
-        mouseY = 0,
-        lastMouseX = 0,
-        lastMouseY = 0,
-        isHovering = false;
-      let currentColor = 0x8000ff;
-      const autoRotation = { x: 0.01, y: 0.015, z: 0.005 };
-
-      const colorThemes = {
-        blue: { primary: "#0080ff" },
-        purple: { primary: "#8000ff" },
-        red: { primary: "#ff4757" },
-        green: { primary: "#00ff88" },
-        orange: { primary: "#ff9500" },
-      };
-
-      function initThree() {
-        if (!window.THREE) return;
-
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(
-          75,
-          window.innerWidth / window.innerHeight,
-          0.1,
-          1000
-        );
-
-        renderer = new THREE.WebGLRenderer({
-          canvas: document.getElementById("canvas"),
-          alpha: true,
-          antialias: window.innerWidth > 768,
-          powerPreference: "high-performance",
-        });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        raycaster = new THREE.Raycaster();
-        mouse = new THREE.Vector2();
-        sphereAnimation = new SphereAnimation(scene, currentColor);
-
-        const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
-        const directionalLight = new THREE.DirectionalLight(currentColor, 1);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(ambientLight, directionalLight);
-
-        camera.position.z = 5;
-
-        document.addEventListener("dblclick", onDoubleClick);
-        document.addEventListener("mousemove", onMouseMove, { passive: true });
-        animate();
-      }
-
-      function checkHover() {
-        if (
-          sphereAnimation &&
-          sphereAnimation.particleSystem &&
-          !sphereAnimation.isAnimating
-        ) {
-          raycaster.setFromCamera(mouse, camera);
-          const intersects = raycaster.intersectObject(
-            sphereAnimation.particleSystem
-          );
-          isHovering = intersects.length > 0;
-          const canvas = document.getElementById("canvas");
-          if (canvas) canvas.style.cursor = isHovering ? "grab" : "pointer";
-        }
-      }
-
-      function onMouseMove(event) {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        lastMouseX = mouseX;
-        lastMouseY = mouseY;
-        mouseX = event.clientX - window.innerWidth / 2;
-        mouseY = event.clientY - window.innerHeight / 2;
-        checkHover();
-      }
-
-      function onDoubleClick(event) {
-        if (
-          sphereAnimation &&
-          !sphereAnimation.isAnimating &&
-          sphereAnimation.particleSystem
-        ) {
-          mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-          mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-          raycaster.setFromCamera(mouse, camera);
-
-          const intersects = raycaster.intersectObject(
-            sphereAnimation.particleSystem
-          );
-          if (intersects.length > 0) {
-            if (
-              sphereAnimation.animationPhase === "idle" ||
-              sphereAnimation.animationPhase === "complete"
-            ) {
-              sphereAnimation.startScatterAnimation();
-            } else if (sphereAnimation.animationPhase === "scattered") {
-              sphereAnimation.startReconstructAnimation();
-            }
-          }
-        }
-      }
-
-      function animate() {
-        requestAnimationFrame(animate);
-
-        if (sphereAnimation && sphereAnimation.particleSystem) {
-          if (isHovering && !sphereAnimation.isAnimating) {
-            const mouseDeltaX = mouseX - lastMouseX;
-            const mouseDeltaY = mouseY - lastMouseY;
-            sphereAnimation.particleSystem.rotation.y += mouseDeltaX * 0.005;
-            sphereAnimation.particleSystem.rotation.x += mouseDeltaY * 0.005;
-            if (sphereAnimation.lineSystem) {
-              sphereAnimation.lineSystem.rotation.copy(
-                sphereAnimation.particleSystem.rotation
-              );
-            }
-          } else if (!sphereAnimation.isAnimating) {
-            sphereAnimation.particleSystem.rotation.x += autoRotation.x;
-            sphereAnimation.particleSystem.rotation.y += autoRotation.y;
-            sphereAnimation.particleSystem.rotation.z += autoRotation.z;
-            if (sphereAnimation.lineSystem) {
-              sphereAnimation.lineSystem.rotation.copy(
-                sphereAnimation.particleSystem.rotation
-              );
-            }
-          }
-        }
-
-        renderer.render(scene, camera);
-      }
-
-      function updateTheme(theme) {
-        const colors = colorThemes[theme];
-        currentColor = parseInt(colors.primary.replace("#", "0x"));
-        document.documentElement.style.setProperty("--accent", colors.primary);
-
-        if (sphereAnimation) {
-          sphereAnimation.updateColor(currentColor);
-        }
-
-        const dirLight = scene.children.find(
-          (child) => child.type === "DirectionalLight"
-        );
-        if (dirLight) dirLight.color.setHex(currentColor);
-      }
-
-      // Throttled scroll handler for better performance
-      let scrollTimeout;
-      function handleScroll() {
-        if (scrollTimeout) return;
-
-        scrollTimeout = setTimeout(() => {
-          const scrollPercent =
-            window.scrollY /
-            (document.documentElement.scrollHeight - window.innerHeight);
-
-          if (sphereAnimation && sphereAnimation.particleSystem) {
-            const orbX = Math.sin(scrollPercent * Math.PI * 2) * 0.5;
-            sphereAnimation.particleSystem.position.x = orbX;
-            sphereAnimation.particleSystem.position.y = 0;
-            sphereAnimation.particleSystem.position.z = 0;
-            sphereAnimation.particleSystem.scale.set(1, 1, 1);
-
-            if (sphereAnimation.lineSystem) {
-              sphereAnimation.lineSystem.position.copy(
-                sphereAnimation.particleSystem.position
-              );
-              sphereAnimation.lineSystem.scale.copy(
-                sphereAnimation.particleSystem.scale
-              );
-            }
-
-            if (scrollPercent < 0.16) updateTheme("purple");
-            else if (scrollPercent < 0.33) updateTheme("green");
-            else if (scrollPercent < 0.5) updateTheme("blue");
-            else if (scrollPercent < 0.66) updateTheme("orange");
-            else if (scrollPercent < 0.83) updateTheme("red");
-            else updateTheme("purple");
-          }
-
-          scrollTimeout = null;
-        }, 16);
-      }
-
-      // Navigation
-      const hamburger = document.getElementById("hamburger");
-      const mobileMenu = document.getElementById("mobileMenu");
-      const iconOpen = document.getElementById("icon-open");
-      const iconClose = document.getElementById("icon-close");
-
-      const toggleMenu = () => {
-        const isOpen = !mobileMenu.classList.contains("hidden");
-        mobileMenu.classList.toggle("hidden");
-        document.body.style.overflow = isOpen ? "" : "hidden";
-        iconOpen.classList.toggle("hidden", !isOpen);
-        iconClose.classList.toggle("hidden", isOpen);
-      };
-
-      if (hamburger) hamburger.addEventListener("click", toggleMenu);
-      if (mobileMenu) {
-        mobileMenu.addEventListener("click", (e) => {
-          if (e.target.id === "mobileMenu") toggleMenu();
-        });
-      }
-
-      // Manual navigation helper with improved stability
-      let isManualNavigation = false;
-      let manualNavigationTimer = null;
-
-      const navigateTo = (target, closeMenu = false) => {
-        isManualNavigation = true;
-        if (manualNavigationTimer) clearTimeout(manualNavigationTimer);
-
-        activate(target);
-        const targetElement = document.querySelector(target);
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-            inline: "nearest",
-          });
-        }
-        if (closeMenu) toggleMenu();
-
-        manualNavigationTimer = setTimeout(() => {
-          isManualNavigation = false;
-        }, 2000); // Increased timeout for stability
-      };
-
-      // Event Listeners
-      document.querySelectorAll(".mobile-link").forEach((a) => {
-        a.addEventListener("click", (e) => {
-          e.preventDefault();
-          const href = a.getAttribute("href");
-          navigateTo(href, true);
-        });
-      });
-
-      document.querySelectorAll(".nav-link").forEach((a) => {
-        a.addEventListener("click", (e) => {
-          e.preventDefault();
-          const href = a.getAttribute("href");
-          navigateTo(href);
-        });
-      });
-
-      // Improved scroll spy for more stable navigation
-      const sections = [
-        "#home",
-        "#about",
-        "#skills",
-        "#projects",
-        "#experience",
-        "#contact",
-      ];
-      const navLinks = [...document.querySelectorAll(".nav-link")];
-      const dots = [...document.querySelectorAll(".dot-nav")];
-
-      const activate = (hash) => {
-        navLinks.forEach((l) => {
-          const isActive = l.getAttribute("href") === hash;
-          l.classList.toggle("text-white", isActive);
-          l.classList.toggle("text-gray-400", !isActive);
-        });
-        dots.forEach((d) => {
-          const target = d.getAttribute("data-target");
-          const active = target === hash;
-          d.style.background = active
-            ? "var(--accent)"
-            : "rgba(255,255,255,0.2)";
-          d.style.transform = active ? "scale(1.2)" : "scale(1)";
-        });
-      };
-
-      // More stable intersection observer
-      const spy = new IntersectionObserver(
-        (entries) => {
-          if (isManualNavigation) return;
-
-          // Find the section with the largest intersection ratio
-          const visible = entries
-            .filter((e) => e.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-          if (visible && visible.intersectionRatio > 0.3) {
-            activate(`#${visible.target.id}`);
-          }
-        },
-        {
-          root: null,
-          rootMargin: "-10% 0px -70% 0px", // Adjusted for better stability
-          threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-        }
-      );
-
-      sections.forEach((sel) => {
-        const el = document.querySelector(sel);
-        if (el) spy.observe(el);
-      });
-
-      // Dots click navigation
-      dots.forEach((d) => {
-        d.addEventListener("click", () => {
-          const t = d.getAttribute("data-target");
-          navigateTo(t);
-        });
-      });
-
-      // Contact form
-      function initContactForm() {
-        const form = document.getElementById("contactForm");
-        if (!form) return;
-
-        form.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const btn = e.target.querySelector("button");
-          const originalText = btn.textContent;
-          btn.textContent = "Sending...";
-          btn.disabled = true;
-
-          setTimeout(() => {
-            btn.textContent = "Message Sent!";
-            setTimeout(() => {
-              e.target.reset();
-              btn.textContent = originalText;
-              btn.disabled = false;
-            }, 2000);
-          }, 1500);
-        });
-      }
-
-      // Resize handler
-      function handleResize() {
-        if (camera && renderer) {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-
-          if (sphereAnimation && sphereAnimation.particleSystem) {
-            const isMobile = window.innerWidth <= 768;
-            const newParticleSize = isMobile ? 0.035 : 0.04;
-            sphereAnimation.particleSystem.material.size = newParticleSize;
-          }
-        }
-      }
-
-      // Initialize
-      window.addEventListener("load", () => {
-        // Force scroll to top immediately
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-
-        setTimeout(() => {
-          const loader = document.getElementById("loader");
-          if (loader) loader.classList.add("hidden");
-        }, 400);
-
-        setTimeout(() => {
-          const loader = document.getElementById("loader");
-          if (loader) loader.style.display = "none";
-        }, 900);
-
-        initThree();
-        initContactForm();
-        updateTheme("purple");
-
-        // Set initial active link/dot and ensure we're at home
-        const initial =
-          location.hash && sections.includes(location.hash)
-            ? location.hash
-            : sections[0];
-        activate(initial);
-
-        // Additional scroll to top after everything is loaded
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: "instant" });
-        }, 100);
-      });
-
-      window.addEventListener("DOMContentLoaded", () => {
-        if (window.lucide?.createIcons) window.lucide.createIcons();
-      });
-
-      window.addEventListener("resize", handleResize, { passive: true });
-      window.addEventListener("scroll", handleScroll, { passive: true });
-    </script>
+    <!-- Main Content Wrapper -->
+    <div id="mainContent" class="main-content content-hidden">
+      <div class="content-with-padding">
+        <!-- SECTION 1: HOME -->
+        <section id="home" class="section section-home">
+          <div class="container-custom text-center">
+            <div class="hero-content">
+              <div class="hero-flex">
+                <div class="hero-text">
+                  <h1 class="hero-title">
+                    Hi, I'm <span class="gradient-text">Aditya Andhalkar</span>
+                  </h1>
+                  <h2 class="hero-subtitle">
+                    I'm a
+                    <span class="text-accent typing-container">
+                      <span id="changing-title">Full Stack Developer</span>
+                      <span class="typing-cursor">|</span>
+                    </span>
+                  </h2>
+                  <p class="hero-description">
+                    I create innovative solutions combining full-stack
+                    development, AI/ML, DevOps, and cutting-edge 3D experiences
+                    to bring ideas to life.
+                  </p>
+                  <div class="hero-buttons">
+                    <a href="#projects" class="btn-hero scroll">View My Work</a>
+                    <a
+                      href="https://drive.google.com/file/d/1WU-nBXUlY82vUnZKUT4hsBF4auiRKYfu/view?usp=drive_link"
+                      target="_blank"
+                      class="btn-hero-outline"
+                      >Download CV</a
+                    >
+                  </div>
+                  <div class="social-links">
+                    <a
+                      href="https://github.com/Adi3182004"
+                      target="_blank"
+                      class="social-pill"
+                      aria-label="GitHub"
+                    >
+                      <i data-lucide="github" class="icon"></i>
+                    </a>
+                    <a
+                      href="https://linkedin.com/in/adityaandhalkar"
+                      target="_blank"
+                      class="social-pill"
+                      aria-label="LinkedIn"
+                    >
+                      <i data-lucide="linkedin" class="icon"></i>
+                    </a>
+                    <a
+                      href="mailto:adi3182004@gmail.com"
+                      class="social-pill"
+                      aria-label="Email"
+                    >
+                      <i data-lucide="mail" class="icon"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="hero-image">
+                  <div class="character-container" id="model-container">
+                    <img
+                      src="https://image2url.com/images/1759383895269-641c62b0-5583-4a46-9876-5e6fe105dcd9.png"
+                      class="character-image"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Rest of the sections remain the same -->
+        <!-- SECTION 2: ABOUT -->
+        <section id="about" class="section section-padding">
+          <div class="container-custom">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+              <div class="about-text">
+                <h3 class="about-subtitle">Personal Description</h3>
+                <p class="about-description">
+                  I'm a passionate full-stack developer with expertise in
+                  creating scalable, high-performance web applications. I
+                  specialize in the MERN stack, AI/ML integration, DevOps
+                  practices, and love bringing creative ideas to life through
+                  code and interactive experiences.
+                </p>
+              </div>
+              <div class="about-cards">
+                <div class="card glass card-center">
+                  <div class="card-icon">🎓</div>
+                  <div class="card-title">Education</div>
+                  <div class="card-subtitle">B.E. Computer Engineering</div>
+                </div>
+                <div class="card glass card-center">
+                  <div class="card-icon">📍</div>
+                  <div class="card-title">Location</div>
+                  <div class="card-subtitle">Maharashtra, India</div>
+                </div>
+                <div class="card glass card-center">
+                  <div class="card-icon">💼</div>
+                  <div class="card-title">Experience</div>
+                  <div class="card-subtitle">Multiple Projects</div>
+                </div>
+                <div class="card glass card-center">
+                  <div class="card-icon">🚀</div>
+                  <div class="card-title">Projects</div>
+                  <div class="card-subtitle">20+ Completed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: SKILLS -->
+        <section id="skills" class="section section-padding">
+          <div class="container-custom">
+            <h2 class="section-title">My Skills</h2>
+            <p class="section-subtitle">
+              I've acquired and refined these skills through years of practical
+              experience and continuous learning in full-stack development,
+              AI/ML, and DevOps.
+            </p>
+
+            <div class="skills-layout">
+              <div class="skills-left">
+                <div class="technical-skills mb-8">
+                  <h3 class="skills-category-title">Technical Skills</h3>
+                  <div class="skill-bars">
+                    <div class="skill-bar">
+                      <div class="skill-info">
+                        <span class="skill-name">Python / Django / Flask</span>
+                        <span class="skill-percentage">90%</span>
+                      </div>
+                      <div class="skill-progress">
+                        <div class="skill-fill" style="width: 90%"></div>
+                      </div>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-info">
+                        <span class="skill-name"
+                          >JavaScript / TypeScript / React</span
+                        >
+                        <span class="skill-percentage">85%</span>
+                      </div>
+                      <div class="skill-progress">
+                        <div class="skill-fill" style="width: 85%"></div>
+                      </div>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-info">
+                        <span class="skill-name"
+                          >Machine Learning / TensorFlow / PyTorch</span
+                        >
+                        <span class="skill-percentage">80%</span>
+                      </div>
+                      <div class="skill-progress">
+                        <div class="skill-fill" style="width: 80%"></div>
+                      </div>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-info">
+                        <span class="skill-name"
+                          >Docker / Kubernetes / AWS</span
+                        >
+                        <span class="skill-percentage">85%</span>
+                      </div>
+                      <div class="skill-progress">
+                        <div class="skill-fill" style="width: 85%"></div>
+                      </div>
+                    </div>
+                    <div class="skill-bar">
+                      <div class="skill-info">
+                        <span class="skill-name"
+                          >Data Science / Pandas / NumPy</span
+                        >
+                        <span class="skill-percentage">82%</span>
+                      </div>
+                      <div class="skill-progress">
+                        <div class="skill-fill" style="width: 82%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="soft-skills">
+                  <h3 class="skills-category-title">Soft Skills</h3>
+                  <div class="soft-skills-grid">
+                    <div class="soft-skill-item glass">
+                      <div class="soft-skill-icon">
+                        <i class="fas fa-brain"></i>
+                      </div>
+                      <h4 class="soft-skill-name">AI Problem Solving</h4>
+                    </div>
+                    <div class="soft-skill-item glass">
+                      <div class="soft-skill-icon">
+                        <i class="fas fa-users"></i>
+                      </div>
+                      <h4 class="soft-skill-name">Team Leadership</h4>
+                    </div>
+                    <div class="soft-skill-item glass">
+                      <div class="soft-skill-icon">
+                        <i class="fas fa-cogs"></i>
+                      </div>
+                      <h4 class="soft-skill-name">System Architecture</h4>
+                    </div>
+                    <div class="soft-skill-item glass">
+                      <div class="soft-skill-icon">
+                        <i class="fas fa-rocket"></i>
+                      </div>
+                      <h4 class="soft-skill-name">Innovation</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skills-right">
+                <h3 class="skills-category-title">Tools & Technologies</h3>
+                <div class="tools-grid">
+                  <div class="tool-item glass">
+                    <i class="fab fa-python"></i>
+                    <p>Python</p>
+                  </div>
+                  <div class="tool-item glass">
+                    <i class="fab fa-react"></i>
+                    <p>React</p>
+                  </div>
+                  <div class="tool-item glass">
+                    <i class="fab fa-docker"></i>
+                    <p>Docker</p>
+                  </div>
+                  <div class="tool-item glass">
+                    <i class="fab fa-aws"></i>
+                    <p>AWS</p>
+                  </div>
+                  <div class="tool-item glass">
+                    <i class="fas fa-database"></i>
+                    <p>MongoDB</p>
+                  </div>
+                  <div class="tool-item glass">
+                    <i class="fab fa-js"></i>
+                    <p>JavaScript</p>
+                  </div>
+                  <div class="tool-item glass">
+                    <i class="fas fa-brain"></i>
+                    <p>TensorFlow</p>
+                  </div>
+                  <div class="tool-item glass">
+                    <i class="fab fa-github"></i>
+                    <p>GitHub</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: PROJECTS -->
+        <section id="projects" class="section section-padding">
+          <div class="container-custom">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+              <article class="project-card glass">
+                <div class="project-image">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=AI%20chatbot%20interface%20with%20modern%20design%20showing%20conversation%20bubbles%20and%20AI%20responses&width=600&height=400&seq=1&orientation=landscape"
+                    alt="AI Chatbot"
+                  />
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">AI-Powered Chatbot</h3>
+                  <p class="project-description">
+                    Intelligent conversational AI built with NLP and machine
+                    learning, featuring context awareness and multi-language
+                    support.
+                  </p>
+                  <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">TensorFlow</span>
+                    <span class="tag">Flask</span>
+                    <span class="tag">NLP</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="btn-project">Live Demo</a>
+                    <a href="#" class="btn-project-outline"
+                      ><i class="fab fa-github"></i> Source</a
+                    >
+                  </div>
+                </div>
+              </article>
+
+              <article class="project-card glass">
+                <div class="project-image">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Machine%20learning%20data%20visualization%20dashboard%20with%20charts%20and%20predictive%20analytics&width=600&height=400&seq=2&orientation=landscape"
+                    alt="ML Prediction System"
+                  />
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">ML Prediction System</h3>
+                  <p class="project-description">
+                    Advanced machine learning system for predictive analytics
+                    with real-time data processing and visualization dashboard.
+                  </p>
+                  <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Scikit-learn</span>
+                    <span class="tag">React</span>
+                    <span class="tag">FastAPI</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="btn-project">Live Demo</a>
+                    <a href="#" class="btn-project-outline"
+                      ><i class="fab fa-github"></i> Source</a
+                    >
+                  </div>
+                </div>
+              </article>
+
+              <article class="project-card glass">
+                <div class="project-image">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Microservices%20architecture%20diagram%20with%20containers%20and%20cloud%20deployment&width=600&height=400&seq=3&orientation=landscape"
+                    alt="Microservices Platform"
+                  />
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">Microservices Platform</h3>
+                  <p class="project-description">
+                    Scalable microservices architecture deployed on Kubernetes
+                    with CI/CD pipeline and monitoring.
+                  </p>
+                  <div class="project-tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">Kubernetes</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">AWS</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="btn-project">Live Demo</a>
+                    <a href="#" class="btn-project-outline"
+                      ><i class="fab fa-github"></i> Source</a
+                    >
+                  </div>
+                </div>
+              </article>
+
+              <article class="project-card glass">
+                <div class="project-image">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Modern%20e-commerce%20website%20interface%20with%20elegant%20product%20showcase%2C%20shopping%20cart%2C%20and%20payment%20integration&width=600&height=400&seq=4&orientation=landscape"
+                    alt="E-Commerce Platform"
+                  />
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">E-Commerce Platform</h3>
+                  <p class="project-description">
+                    Full-featured e-commerce solution with product management,
+                    user authentication, and secure payment processing.
+                  </p>
+                  <div class="project-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">MongoDB</span>
+                    <span class="tag">Stripe</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="btn-project">Live Demo</a>
+                    <a href="#" class="btn-project-outline"
+                      ><i class="fab fa-github"></i> Source</a
+                    >
+                  </div>
+                </div>
+              </article>
+
+              <article class="project-card glass">
+                <div class="project-image">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Data%20visualization%20dashboard%20with%20interactive%20charts%20and%20business%20analytics&width=600&height=400&seq=5&orientation=landscape"
+                    alt="Data Analytics Dashboard"
+                  />
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">Data Analytics Dashboard</h3>
+                  <p class="project-description">
+                    Interactive dashboard for business intelligence with
+                    real-time data visualization and advanced analytics.
+                  </p>
+                  <div class="project-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Pandas</span>
+                    <span class="tag">D3.js</span>
+                    <span class="tag">PostgreSQL</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="btn-project">Live Demo</a>
+                    <a href="#" class="btn-project-outline"
+                      ><i class="fab fa-github"></i> Source</a
+                    >
+                  </div>
+                </div>
+              </article>
+
+              <article class="project-card glass">
+                <div class="project-image">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=DevOps%20CI%2FCD%20pipeline%20visualization%20with%20automation%20tools%20and%20deployment%20stages&width=600&height=400&seq=6&orientation=landscape"
+                    alt="DevOps Pipeline"
+                  />
+                </div>
+                <div class="project-content">
+                  <h3 class="project-title">DevOps Automation Pipeline</h3>
+                  <p class="project-description">
+                    Comprehensive CI/CD pipeline with automated testing,
+                    deployment, and monitoring for enterprise applications.
+                  </p>
+                  <div class="project-tags">
+                    <span class="tag">Jenkins</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Terraform</span>
+                    <span class="tag">AWS</span>
+                  </div>
+                  <div class="project-links">
+                    <a href="#" class="btn-project">Live Demo</a>
+                    <a href="#" class="btn-project-outline"
+                      ><i class="fab fa-github"></i> Source</a
+                    >
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: ACHIEVEMENTS -->
+        <section id="achievements" class="section section-padding">
+          <div class="container-custom">
+            <h2 class="section-title">Achievements & Certificates</h2>
+            <p class="section-subtitle">
+              Recognition of my skills and expertise in full-stack development,
+              AI/ML, and DevOps.
+            </p>
+
+            <div class="achievements-timeline mb-16">
+              <h3 class="timeline-title">Professional Timeline</h3>
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-year">2024</div>
+                    <h4 class="timeline-role">Full Stack Developer</h4>
+                    <p class="timeline-description">
+                      Specialized in MERN stack development with AI/ML
+                      integration and cloud deployment.
+                    </p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-year">2023</div>
+                    <h4 class="timeline-role">AI/ML Engineer</h4>
+                    <p class="timeline-description">
+                      Developed machine learning models and AI solutions for
+                      various business applications.
+                    </p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-content">
+                    <div class="timeline-year">2022</div>
+                    <h4 class="timeline-role">DevOps Engineer</h4>
+                    <p class="timeline-description">
+                      Implemented CI/CD pipelines, containerization, and cloud
+                      infrastructure automation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="certificates-section">
+              <h3 class="certificates-title">Certificates</h3>
+              <div class="certificates-grid">
+                <div class="certificate-card glass">
+                  <div class="certificate-image">
+                    <img
+                      src="https://readdy.ai/api/search-image?query=Professional%20certificate%20design%20for%20data%20analytics%20with%20modern%20layout&width=400&height=300&seq=1&orientation=landscape"
+                      alt="Data Analytics Certificate"
+                    />
+                  </div>
+                  <div class="certificate-content">
+                    <h4 class="certificate-title">Data Analytics</h4>
+                    <p class="certificate-issuer">Google Career Certificates</p>
+                    <p class="certificate-year">2024</p>
+                    <div class="certificate-actions">
+                      <a href="#" class="btn-certificate">View</a>
+                      <a href="#" class="btn-certificate-outline"
+                        ><i class="fas fa-download"></i> Download</a
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="certificate-card glass">
+                  <div class="certificate-image">
+                    <img
+                      src="https://readdy.ai/api/search-image?query=Professional%20certificate%20design%20for%20machine%20learning%20with%20modern%20layout&width=400&height=300&seq=2&orientation=landscape"
+                      alt="Machine Learning Certificate"
+                    />
+                  </div>
+                  <div class="certificate-content">
+                    <h4 class="certificate-title">Machine Learning</h4>
+                    <p class="certificate-issuer">Stanford University</p>
+                    <p class="certificate-year">2024</p>
+                    <div class="certificate-actions">
+                      <a href="#" class="btn-certificate">View</a>
+                      <a href="#" class="btn-certificate-outline"
+                        ><i class="fas fa-download"></i> Download</a
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="certificate-card glass">
+                  <div class="certificate-image">
+                    <img
+                      src="https://readdy.ai/api/search-image?query=Professional%20certificate%20design%20for%20AWS%20cloud%20computing%20with%20modern%20layout&width=400&height=300&seq=3&orientation=landscape"
+                      alt="AWS Certificate"
+                    />
+                  </div>
+                  <div class="certificate-content">
+                    <h4 class="certificate-title">AWS Solutions Architect</h4>
+                    <p class="certificate-issuer">Amazon Web Services</p>
+                    <p class="certificate-year">2023</p>
+                    <div class="certificate-actions">
+                      <a href="#" class="btn-certificate">View</a>
+                      <a href="#" class="btn-certificate-outline"
+                        ><i class="fas fa-download"></i> Download</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonials Section -->
+            <div class="testimonials-section">
+              <h3 class="testimonials-title">What Clients Say</h3>
+              <div class="testimonials-grid">
+                <div class="testimonial-card glass">
+                  <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <p class="testimonial-text">
+                    "Aditya was exceptional to work with. He understood our
+                    requirements perfectly and delivered a solution that
+                    exceeded our expectations. His skills in both frontend and
+                    backend development are top-notch."
+                  </p>
+                  <div class="testimonial-author">
+                    <strong>Tech Startup CEO</strong>
+                  </div>
+                </div>
+
+                <div class="testimonial-card glass">
+                  <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <p class="testimonial-text">
+                    "I can't say enough good things about Aditya. He was able to
+                    take our complex project requirements and turn them into a
+                    seamless, functional platform. His problem-solving abilities
+                    are outstanding."
+                  </p>
+                  <div class="testimonial-author">
+                    <strong>E-commerce Director</strong>
+                  </div>
+                </div>
+
+                <div class="testimonial-card glass">
+                  <div class="testimonial-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <p class="testimonial-text">
+                    "Aditya transformed our outdated system into a modern,
+                    intuitive platform that's both powerful and easy to use. His
+                    attention to detail and innovative approach made all the
+                    difference."
+                  </p>
+                  <div class="testimonial-author">
+                    <strong>Enterprise Client</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: CONTACT -->
+        <section id="contact" class="section section-padding">
+          <div class="container-custom">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">
+              Let's discuss your next project or collaboration opportunity.
+            </p>
+
+            <div class="contact-layout">
+              <div class="contact-form-section">
+                <h3 class="contact-section-title">Contact Me</h3>
+                <form id="contactForm" class="contact-form glass">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Name *</label>
+                      <input
+                        id="name"
+                        type="text"
+                        required
+                        class="input"
+                        placeholder="Your Name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Email *</label>
+                      <input
+                        id="email"
+                        type="email"
+                        required
+                        class="input"
+                        placeholder="Your Email"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Subject</label>
+                    <input
+                      id="subject"
+                      type="text"
+                      class="input"
+                      placeholder="Subject"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Message *</label>
+                    <textarea
+                      id="message"
+                      required
+                      class="input textarea"
+                      placeholder="Your Message"
+                    ></textarea>
+                  </div>
+                  <button type="submit" class="btn-hero form-submit">
+                    Send Message
+                  </button>
+                </form>
+              </div>
+
+              <div class="contact-info-section">
+                <h3 class="contact-section-title">Contact Information</h3>
+                <div class="contact-info">
+                  <div class="contact-item glass">
+                    <div class="contact-icon">
+                      <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                      <h4 class="contact-label">Location</h4>
+                      <p class="contact-text">Mumbai, Maharashtra, INDIA</p>
+                    </div>
+                  </div>
+
+                  <div class="contact-item glass">
+                    <div class="contact-icon">
+                      <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                      <h4 class="contact-label">Email</h4>
+                      <a href="mailto:adi3182004@gmail.com" class="contact-link"
+                        >adi3182004@gmail.com</a
+                      >
+                    </div>
+                  </div>
+
+                  <div class="contact-item glass">
+                    <div class="contact-icon">
+                      <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                      <h4 class="contact-label">Phone</h4>
+                      <a href="tel:+917887547146" class="contact-link"
+                        >+91 7887547146</a
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="social-section">
+                  <h3 class="contact-section-title">Follow Me</h3>
+                  <div class="social-links-large">
+                    <a
+                      href="https://github.com/Adi3182004"
+                      class="social-link-large glass"
+                    >
+                      <i class="fab fa-github"></i>
+                    </a>
+                    <a
+                      href="https://linkedin.com/in/adityaandhalkar"
+                      class="social-link-large glass"
+                    >
+                      <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a
+                      href="mailto:adi3182004@gmail.com"
+                      class="social-link-large glass"
+                    >
+                      <i class="fas fa-envelope"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+          <div class="container-custom footer-content">
+            <h3 class="footer-title">Aditya Andhalkar</h3>
+            <p class="footer-description">
+              Full‑stack developer passionate about creating innovative
+              solutions with AI/ML, DevOps, and cutting-edge technologies.
+            </p>
+            <p class="footer-copyright">
+              © 2025 Aditya Andhalkar. Made with ❤️ and lots of ☕
+            </p>
+          </div>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>
