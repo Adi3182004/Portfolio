@@ -27,6 +27,10 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
       defer
     ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"
+      defer
+    ></script>
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
     <script src="script.js" defer></script>
@@ -66,6 +70,11 @@
         data-tooltip="Projects"
       ></a>
       <a
+        class="scroll scroll-hackathons tooltip tooltip-left"
+        href="#hackathons"
+        data-tooltip="Hackathons"
+      ></a>
+      <a
         class="scroll scroll-achievements tooltip tooltip-left"
         href="#achievements"
         data-tooltip="Achievements"
@@ -87,6 +96,9 @@
             <li><a href="#about" class="nav-link scroll">About</a></li>
             <li><a href="#skills" class="nav-link scroll">Skills</a></li>
             <li><a href="#projects" class="nav-link scroll">Projects</a></li>
+            <li>
+              <a href="#hackathons" class="nav-link scroll">Hackathons</a>
+            </li>
             <li>
               <a href="#achievements" class="nav-link scroll">Achievements</a>
             </li>
@@ -139,6 +151,9 @@
           <li><a class="mobile-link scroll" href="#skills">Skills</a></li>
           <li><a class="mobile-link scroll" href="#projects">Projects</a></li>
           <li>
+            <a class="mobile-link scroll" href="#hackathons">Hackathons</a>
+          </li>
+          <li>
             <a class="mobile-link scroll" href="#achievements">Achievements</a>
           </li>
           <li><a class="mobile-link scroll" href="#contact">Contact</a></li>
@@ -163,7 +178,6 @@
                     I'm a
                     <span class="text-accent typing-container">
                       <span id="changing-title">Full Stack Developer</span>
-                      <span class="typing-cursor">|</span>
                     </span>
                   </h2>
                   <p class="hero-description">
@@ -219,7 +233,6 @@
           </div>
         </section>
 
-        <!-- Rest of the sections remain the same -->
         <!-- SECTION 2: ABOUT -->
         <section id="about" class="section section-padding">
           <div class="container-custom">
@@ -364,6 +377,12 @@
               </div>
 
               <div class="skills-right">
+                <!-- Skills Chart -->
+                <div class="skills-chart-container glass">
+                  <h3 class="skills-category-title">Skills Distribution</h3>
+                  <div id="skillsChart" class="skills-chart"></div>
+                </div>
+
                 <h3 class="skills-category-title">Tools & Technologies</h3>
                 <div class="tools-grid">
                   <div class="tool-item glass">
@@ -581,7 +600,186 @@
           </div>
         </section>
 
-        <!-- SECTION 5: ACHIEVEMENTS -->
+        <!-- SECTION 5: HACKATHONS -->
+        <section id="hackathons" class="section section-padding">
+          <div class="container-custom">
+            <h2 class="section-title">Hackathons & Competitions</h2>
+            <p class="section-subtitle">
+              Showcasing my competitive spirit and problem-solving abilities
+              through various hackathons and coding competitions.
+            </p>
+
+            <div class="hackathons-grid">
+              <!-- Hackathon 1 -->
+              <article class="hackathon-card glass">
+                <div class="hackathon-badge winner">
+                  <i class="fas fa-trophy"></i>
+                  <span>4th Place</span>
+                </div>
+                <div class="hackathon-icon">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <div class="hackathon-content">
+                  <h3 class="hackathon-title">AI Agents Hackathon</h3>
+                  <p class="hackathon-organization">
+                    <i class="fas fa-building"></i>
+                    Swafinix Technologies Pvt. Ltd.
+                  </p>
+                  <p class="hackathon-description">
+                    Developed an intelligent AI agent system with advanced
+                    natural language processing and autonomous decision-making
+                    capabilities.
+                  </p>
+                  <div class="hackathon-tags">
+                    <span class="tag">
+                      <i class="fas fa-brain"></i> AI/ML
+                    </span>
+                    <span class="tag">
+                      <i class="fab fa-python"></i> Python
+                    </span>
+                    <span class="tag">
+                      <i class="fas fa-project-diagram"></i> Agent Framework
+                    </span>
+                    <span class="tag">
+                      <i class="fas fa-plug"></i> API Integration
+                    </span>
+                  </div>
+                  <div class="hackathon-links">
+                    <a href="#" class="btn-hackathon">
+                      <i class="fas fa-play-circle"></i> Project Demo
+                    </a>
+                    <a href="#" class="btn-hackathon-outline">
+                      <i class="fas fa-certificate"></i> Certificate
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Hackathon 2 -->
+              <article class="hackathon-card glass">
+                <div class="hackathon-badge participant">
+                  <i class="fas fa-code"></i>
+                  <span>Participant</span>
+                </div>
+                <div class="hackathon-icon">
+                  <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="hackathon-content">
+                  <h3 class="hackathon-title">Web Development Hackathon</h3>
+                  <p class="hackathon-organization">
+                    <i class="fas fa-building"></i>
+                    TuteDude
+                  </p>
+                  <p class="hackathon-description">
+                    Built a full-stack web application with modern UI/UX design
+                    principles, focusing on performance and user experience.
+                  </p>
+                  <div class="hackathon-tags">
+                    <span class="tag">
+                      <i class="fab fa-react"></i> React
+                    </span>
+                    <span class="tag">
+                      <i class="fab fa-node-js"></i> Node.js
+                    </span>
+                    <span class="tag">
+                      <i class="fas fa-layer-group"></i> Full Stack
+                    </span>
+                    <span class="tag">
+                      <i class="fas fa-palette"></i> UI/UX
+                    </span>
+                  </div>
+                  <div class="hackathon-links">
+                    <a href="#" class="btn-hackathon">
+                      <i class="fas fa-play-circle"></i> Project Demo
+                    </a>
+                    <a href="#" class="btn-hackathon-outline">
+                      <i class="fas fa-certificate"></i> Certificate
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Hackathon 3 -->
+              <article class="hackathon-card glass">
+                <div class="hackathon-badge participant">
+                  <i class="fas fa-users"></i>
+                  <span>Participant</span>
+                </div>
+                <div class="hackathon-icon">
+                  <i class="fas fa-rocket"></i>
+                </div>
+                <div class="hackathon-content">
+                  <h3 class="hackathon-title">DE3CODE 2025 India Edition</h3>
+                  <p class="hackathon-organization">
+                    <i class="fas fa-building"></i>
+                    DE3CODE
+                  </p>
+                  <p class="hackathon-description">
+                    Competed in algorithmic challenges and data structure
+                    problems, demonstrating strong problem-solving and
+                    competitive programming skills.
+                  </p>
+                  <div class="hackathon-tags">
+                    <span class="tag">
+                      <i class="fas fa-lightbulb"></i> Problem Solving
+                    </span>
+                    <span class="tag">
+                      <i class="fas fa-code-branch"></i> Algorithms
+                    </span>
+                    <span class="tag">
+                      <i class="fas fa-database"></i> Data Structures
+                    </span>
+                    <span class="tag">
+                      <i class="fas fa-trophy"></i> Competitive Programming
+                    </span>
+                  </div>
+                  <div class="hackathon-links">
+                    <a href="#" class="btn-hackathon">
+                      <i class="fas fa-play-circle"></i> Project Demo
+                    </a>
+                    <a href="#" class="btn-hackathon-outline">
+                      <i class="fas fa-certificate"></i> Certificate
+                    </a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Hackathon Stats -->
+            <div class="hackathon-stats">
+              <div class="stat-item glass">
+                <div class="stat-icon">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-number">3+</div>
+                <div class="stat-label">Hackathons</div>
+              </div>
+              <div class="stat-item glass">
+                <div class="stat-icon">
+                  <i class="fas fa-medal"></i>
+                </div>
+                <div class="stat-number">1</div>
+                <div class="stat-label">Top Placement</div>
+              </div>
+              <div class="stat-item glass">
+                <div class="stat-icon">
+                  <i class="fas fa-code"></i>
+                </div>
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Technologies Used</div>
+              </div>
+              <div class="stat-item glass">
+                <div class="stat-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Competitors</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: ACHIEVEMENTS -->
         <section id="achievements" class="section section-padding">
           <div class="container-custom">
             <h2 class="section-title">Achievements & Certificates</h2>
@@ -732,31 +930,12 @@
                     <strong>E-commerce Director</strong>
                   </div>
                 </div>
-
-                <div class="testimonial-card glass">
-                  <div class="testimonial-stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <p class="testimonial-text">
-                    "Aditya transformed our outdated system into a modern,
-                    intuitive platform that's both powerful and easy to use. His
-                    attention to detail and innovative approach made all the
-                    difference."
-                  </p>
-                  <div class="testimonial-author">
-                    <strong>Enterprise Client</strong>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- SECTION 6: CONTACT -->
+        <!-- SECTION 7: CONTACT -->
         <section id="contact" class="section section-padding">
           <div class="container-custom">
             <h2 class="section-title">Get In Touch</h2>
