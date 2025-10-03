@@ -7,7 +7,7 @@ if ("scrollRestoration" in history) {
 window.scrollTo(0, 0);
 
 // ============================================
-// TYPING ANIMATION - SMOOTH & RELIABLE
+// TYPING ANIMATION - CURSOR MOVES WITH TEXT
 // ============================================
 
 const titles = [
@@ -37,23 +37,29 @@ function initTitleAnimation() {
     const currentTitle = titles[titleIndex];
 
     if (isDeleting) {
-      titleElement.textContent = currentTitle.substring(0, charIndex - 1);
       charIndex--;
+      // Show text + cursor while deleting
+      titleElement.innerHTML =
+        currentTitle.substring(0, charIndex) +
+        '<span class="typing-cursor">|</span>';
       typingDelay = 50;
 
       if (charIndex === 0) {
         isDeleting = false;
         titleIndex = (titleIndex + 1) % titles.length;
-        typingDelay = 500;
+        typingDelay = 100; // Small pause before next title
       }
     } else {
-      titleElement.textContent = currentTitle.substring(0, charIndex + 1);
       charIndex++;
+      // Show text + cursor while typing
+      titleElement.innerHTML =
+        currentTitle.substring(0, charIndex) +
+        '<span class="typing-cursor">|</span>';
       typingDelay = 100;
 
       if (charIndex === currentTitle.length) {
         isDeleting = true;
-        typingDelay = 2000;
+        typingDelay = 2000; // Pause when complete
       }
     }
 
@@ -62,7 +68,6 @@ function initTitleAnimation() {
 
   typeWriter();
 }
-
 // ============================================
 // 3D CHARACTER TILT - ULTRA SMOOTH & OPTIMIZED
 // ============================================
@@ -1170,6 +1175,119 @@ function updateTheme(theme) {
 }
 
 // ============================================
+// ECHARTS SKILLS VISUALIZATION
+// ============================================
+
+function initSkillsChart() {
+  if (typeof echarts === "undefined") {
+    console.warn("ECharts not loaded");
+    return;
+  }
+
+  const chartDom = document.getElementById("skillsChart");
+  if (!chartDom) {
+    console.warn("Skills chart container not found");
+    return;
+  }
+
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    backgroundColor: "transparent",
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "shadow",
+      },
+      backgroundColor: "rgba(0, 0, 0, 0.8)",
+      borderColor: "rgba(0, 255, 136, 0.5)",
+      borderWidth: 1,
+      textStyle: {
+        color: "#fff",
+        fontSize: 12,
+      },
+    },
+    legend: {
+      data: ["Proficiency"],
+      textStyle: {
+        color: "#a0a0a0",
+        fontSize: 12,
+      },
+      top: 0,
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      top: "15%",
+      containLabel: true,
+    },
+    xAxis: {
+      type: "value",
+      max: 100,
+      axisLine: {
+        lineStyle: {
+          color: "rgba(255, 255, 255, 0.2)",
+        },
+      },
+      splitLine: {
+        lineStyle: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+      },
+      axisLabel: {
+        color: "#a0a0a0",
+        fontSize: 10,
+      },
+    },
+    yAxis: {
+      type: "category",
+      data: ["Python", "React", "AI/ML", "DevOps", "Data Science"],
+      axisLine: {
+        lineStyle: {
+          color: "rgba(255, 255, 255, 0.2)",
+        },
+      },
+      axisLabel: {
+        color: "#a0a0a0",
+        fontSize: 11,
+      },
+    },
+    series: [
+      {
+        name: "Proficiency",
+        type: "bar",
+        data: [90, 85, 80, 85, 82],
+        itemStyle: {
+          borderRadius: [0, 10, 10, 0],
+          color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+            { offset: 0, color: "#00ff88" },
+            { offset: 1, color: "#0080ff" },
+          ]),
+        },
+        label: {
+          show: true,
+          position: "right",
+          color: "#fff",
+          fontSize: 11,
+          formatter: "{c}%",
+        },
+        barWidth: "60%",
+      },
+    ],
+  };
+
+  myChart.setOption(option);
+
+  // Responsive resize
+  window.addEventListener("resize", function () {
+    myChart.resize();
+  });
+
+  console.log("✅ Skills chart initialized");
+}
+
+// ============================================
 // SCROLL & NAVIGATION
 // ============================================
 
@@ -1187,12 +1305,13 @@ function handleScroll() {
         sphereAnimation.updatePosition(scrollPercent);
       }
 
-      if (scrollPercent < 0.16) updateTheme("purple");
-      else if (scrollPercent < 0.33) updateTheme("green");
-      else if (scrollPercent < 0.5) updateTheme("blue");
-      else if (scrollPercent < 0.66) updateTheme("orange");
-      else if (scrollPercent < 0.83) updateTheme("red");
-      else updateTheme("purple");
+      if (scrollPercent < 0.14) updateTheme("purple");
+      else if (scrollPercent < 0.28) updateTheme("green");
+      else if (scrollPercent < 0.42) updateTheme("blue");
+      else if (scrollPercent < 0.57) updateTheme("orange");
+      else if (scrollPercent < 0.71) updateTheme("red");
+      else if (scrollPercent < 0.85) updateTheme("purple");
+      else updateTheme("green");
 
       updateDotsNavigation();
       scrollRaf = null;
@@ -1206,6 +1325,7 @@ function updateDotsNavigation() {
     "about",
     "skills",
     "projects",
+    "hackathons",
     "achievements",
     "contact",
   ];
@@ -1403,6 +1523,9 @@ window.addEventListener("load", () => {
 
   setTimeout(() => initThree(), 1000);
   setTimeout(() => initCharacterTilt(), 2500);
+
+  // Initialize skills chart
+  setTimeout(() => initSkillsChart(), 3000);
 
   initContactForm();
   updateTheme("purple");
