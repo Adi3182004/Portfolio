@@ -38,7 +38,6 @@ function initTitleAnimation() {
 
     if (isDeleting) {
       charIndex--;
-      // Show text + cursor while deleting
       titleElement.innerHTML =
         currentTitle.substring(0, charIndex) +
         '<span class="typing-cursor">|</span>';
@@ -47,11 +46,10 @@ function initTitleAnimation() {
       if (charIndex === 0) {
         isDeleting = false;
         titleIndex = (titleIndex + 1) % titles.length;
-        typingDelay = 100; // Small pause before next title
+        typingDelay = 100;
       }
     } else {
       charIndex++;
-      // Show text + cursor while typing
       titleElement.innerHTML =
         currentTitle.substring(0, charIndex) +
         '<span class="typing-cursor">|</span>';
@@ -59,7 +57,7 @@ function initTitleAnimation() {
 
       if (charIndex === currentTitle.length) {
         isDeleting = true;
-        typingDelay = 2000; // Pause when complete
+        typingDelay = 2000;
       }
     }
 
@@ -68,6 +66,7 @@ function initTitleAnimation() {
 
   typeWriter();
 }
+
 // ============================================
 // 3D CHARACTER TILT - ULTRA SMOOTH & OPTIMIZED
 // ============================================
@@ -84,7 +83,6 @@ function initCharacterTilt() {
   const isMobile = window.innerWidth <= 768;
   const maxTilt = isMobile ? 15 : 20;
 
-  // Smooth interpolation values
   let currentRotateX = 0;
   let currentRotateY = 0;
   let targetRotateX = 0;
@@ -92,38 +90,30 @@ function initCharacterTilt() {
   let isHovering = false;
   let animationFrameId = null;
 
-  // GPU acceleration
   characterContainer.style.transformStyle = "preserve-3d";
   characterContainer.style.backfaceVisibility = "hidden";
   characterContainer.style.willChange = "transform";
 
-  // Smooth interpolation function
   function lerp(start, end, factor) {
     return start + (end - start) * factor;
   }
 
-  // Main animation loop for smooth transitions
   function updateLoop() {
-    // Smooth interpolation (60fps butter smooth)
     currentRotateX = lerp(currentRotateX, targetRotateX, 0.1);
     currentRotateY = lerp(currentRotateY, targetRotateY, 0.1);
 
-    // Apply transform
     characterContainer.style.transform = `
       perspective(1000px) 
       rotateY(${currentRotateY}deg) 
       rotateX(${currentRotateX}deg)
     `;
 
-    // Continue animation loop
     animationFrameId = requestAnimationFrame(updateLoop);
   }
 
-  // Start animation loop
   updateLoop();
 
   if (!isMobile) {
-    // Desktop: Mouse tracking
     let mouseUpdateScheduled = false;
 
     function handleMouseMove(event) {
@@ -168,7 +158,6 @@ function initCharacterTilt() {
       passive: true,
     });
 
-    // Cleanup function
     return () => {
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
@@ -178,7 +167,6 @@ function initCharacterTilt() {
       characterContainer.removeEventListener("mousemove", handleMouseMove);
     };
   } else {
-    // Mobile: Touch-based interaction
     let touchUpdateScheduled = false;
 
     function handleTouchStart() {
@@ -224,7 +212,6 @@ function initCharacterTilt() {
       passive: true,
     });
 
-    // Cleanup function
     return () => {
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
@@ -621,7 +608,6 @@ class SphereAnimation {
   updateRotation(mouseX, mouseY, lastMouseX, lastMouseY, autoRotation) {
     if (!this.particleSystem) return;
 
-    // ALWAYS ROTATE - regardless of hover state
     if (this.animationPhase === "scattered") {
       this.particleSystem.rotation.x += autoRotation.x * 2;
       this.particleSystem.rotation.y += autoRotation.y * 2;
@@ -630,7 +616,6 @@ class SphereAnimation {
         this.lineSystem.rotation.copy(this.particleSystem.rotation);
       }
     } else if (!this.isAnimating) {
-      // Auto-rotate constantly
       this.particleSystem.rotation.x += autoRotation.x;
       this.particleSystem.rotation.y += autoRotation.y;
       this.particleSystem.rotation.z += autoRotation.z;
@@ -967,7 +952,6 @@ class InteractiveSphere {
   updateRotation(mouseX, mouseY, lastMouseX, lastMouseY, autoRotation) {
     if (!this.mesh || !this.mesh.visible || this.isAnimating) return;
 
-    // ALWAYS ROTATE
     this.mesh.rotation.x += autoRotation.x;
     this.mesh.rotation.y += autoRotation.y;
     this.mesh.rotation.z += autoRotation.z;
@@ -1137,7 +1121,6 @@ function onDoubleClick(event) {
 function animate() {
   requestAnimationFrame(animate);
 
-  // Update rotations - ALWAYS rotate
   if (currentMode === "wireframe" && interactiveSphere) {
     interactiveSphere.updateRotation(
       mouseX,
@@ -1279,7 +1262,6 @@ function initSkillsChart() {
 
   myChart.setOption(option);
 
-  // Responsive resize
   window.addEventListener("resize", function () {
     myChart.resize();
   });
@@ -1288,7 +1270,7 @@ function initSkillsChart() {
 }
 
 // ============================================
-// SCROLL & NAVIGATION
+// SCROLL & NAVIGATION - FIXED
 // ============================================
 
 let scrollRaf = null;
@@ -1305,12 +1287,12 @@ function handleScroll() {
         sphereAnimation.updatePosition(scrollPercent);
       }
 
-      if (scrollPercent < 0.14) updateTheme("purple");
-      else if (scrollPercent < 0.28) updateTheme("green");
-      else if (scrollPercent < 0.42) updateTheme("blue");
-      else if (scrollPercent < 0.57) updateTheme("orange");
-      else if (scrollPercent < 0.71) updateTheme("red");
-      else if (scrollPercent < 0.85) updateTheme("purple");
+      if (scrollPercent < 0.12) updateTheme("purple");
+      else if (scrollPercent < 0.25) updateTheme("green");
+      else if (scrollPercent < 0.38) updateTheme("blue");
+      else if (scrollPercent < 0.52) updateTheme("orange");
+      else if (scrollPercent < 0.66) updateTheme("red");
+      else if (scrollPercent < 0.8) updateTheme("purple");
       else updateTheme("green");
 
       updateDotsNavigation();
@@ -1329,13 +1311,20 @@ function updateDotsNavigation() {
     "achievements",
     "contact",
   ];
-  const scrollPosition = window.scrollY + 100;
+
+  const scrollPosition = window.scrollY + window.innerHeight / 2;
   let currentSection = "home";
 
   sections.forEach((sectionId) => {
     const section = document.getElementById(sectionId);
-    if (section && scrollPosition >= section.offsetTop) {
-      currentSection = sectionId;
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      const sectionTop = window.scrollY + rect.top;
+      const sectionBottom = sectionTop + section.offsetHeight;
+
+      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+        currentSection = sectionId;
+      }
     }
   });
 
@@ -1387,65 +1376,73 @@ function smoothScrollTo(targetId, closeMenu = false) {
     const navHeight = 80;
     const targetPosition = targetElement.offsetTop - navHeight;
 
-    $("html, body").animate({ scrollTop: targetPosition }, 500);
+    window.scrollTo({
+      top: targetPosition,
+      behavior: "smooth",
+    });
+
     if (closeMenu) toggleMenu();
   }
 }
 
 // ============================================
-// JQUERY NAVIGATION
+// NAVIGATION - FIXED CLICK HANDLERS
 // ============================================
 
-$(document).ready(function () {
-  $(".scroll").click(function (e) {
-    e.preventDefault();
-    const href = $(this).attr("href");
-
-    $(".scroll").removeClass("active");
-    $(".nav-link").removeClass("active");
-    $(`nav.dots a[href="${href}"]`).addClass("active");
-    $(`.nav-link[href="${href}"]`).addClass("active");
-
-    smoothScrollTo(href);
-  });
-
-  $(".mobile-link").click(function () {
-    toggleMenu();
-  });
-});
-
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("📄 DOM loaded - Initializing navigation");
+
+  // Add scroll class to all nav links
   document
-    .querySelectorAll(".nav-link, .mobile-link, .nav-brand, .nav-cta")
+    .querySelectorAll(
+      ".nav-link, .mobile-link, .nav-brand, .nav-cta, nav.dots a"
+    )
     .forEach((link) => {
       if (!link.classList.contains("scroll")) {
         link.classList.add("scroll");
       }
     });
 
+  // Handle all scroll links
   document.querySelectorAll(".scroll").forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
+      e.stopPropagation();
+
       const href = link.getAttribute("href");
+      console.log("Clicked:", href);
 
       if (href && href.startsWith("#")) {
+        // Remove active from all
         document
-          .querySelectorAll(".scroll")
+          .querySelectorAll("nav.dots a, .nav-link")
           .forEach((el) => el.classList.remove("active"));
+
+        // Add active to clicked items
         document
-          .querySelectorAll(".nav-link")
-          .forEach((el) => el.classList.remove("active"));
-        document
-          .querySelectorAll(`nav.dots a[href="${href}"]`)
-          .forEach((el) => el.classList.add("active"));
-        document
-          .querySelectorAll(`.nav-link[href="${href}"]`)
+          .querySelectorAll(
+            `nav.dots a[href="${href}"], .nav-link[href="${href}"]`
+          )
           .forEach((el) => el.classList.add("active"));
 
+        // Scroll to section
         smoothScrollTo(href, link.classList.contains("mobile-link"));
       }
     });
   });
+
+  // Initialize Lucide icons
+  if (window.lucide?.createIcons) {
+    window.lucide.createIcons();
+  }
+
+  // Initialize title animation
+  setTimeout(() => {
+    const titleElement = document.getElementById("changing-title");
+    if (titleElement) {
+      initTitleAnimation();
+    }
+  }, 4000);
 });
 
 // ============================================
@@ -1523,29 +1520,12 @@ window.addEventListener("load", () => {
 
   setTimeout(() => initThree(), 1000);
   setTimeout(() => initCharacterTilt(), 2500);
-
-  // Initialize skills chart
   setTimeout(() => initSkillsChart(), 3000);
 
   initContactForm();
   updateTheme("purple");
 
   setTimeout(() => window.scrollTo({ top: 0, behavior: "instant" }), 100);
-});
-
-window.addEventListener("DOMContentLoaded", () => {
-  console.log("📄 DOM loaded");
-
-  if (window.lucide?.createIcons) {
-    window.lucide.createIcons();
-  }
-
-  setTimeout(() => {
-    const titleElement = document.getElementById("changing-title");
-    if (titleElement) {
-      initTitleAnimation();
-    }
-  }, 4000);
 });
 
 window.addEventListener("resize", handleResize, { passive: true });
