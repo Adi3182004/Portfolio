@@ -587,23 +587,7 @@ class SphereAnimation {
     reconstructStep();
   }
 
-  updatePosition(scrollPercent) {
-    if (this.particleSystem) {
-      const aspectRatio = window.innerWidth / window.innerHeight;
-      const cameraDistance = 5;
-      const edgeDistance = aspectRatio * cameraDistance * 0.8;
-
-      const orbX = Math.sin(scrollPercent * Math.PI * 2) * edgeDistance;
-      this.particleSystem.position.x = orbX;
-      this.particleSystem.position.y =
-        Math.cos(scrollPercent * Math.PI * 0.5) * 0.8;
-      this.particleSystem.position.z = 0;
-
-      if (this.lineSystem) {
-        this.lineSystem.position.copy(this.particleSystem.position);
-      }
-    }
-  }
+  updatePosition() {}
 
   updateRotation(mouseX, mouseY, lastMouseX, lastMouseY, autoRotation) {
     if (!this.particleSystem) return;
@@ -958,25 +942,7 @@ class InteractiveSphere {
     this.mesh.updateMatrixWorld();
   }
 
-  updatePosition(scrollPercent) {
-    if (this.mesh) {
-      const aspectRatio = window.innerWidth / window.innerHeight;
-      const cameraDistance = 5;
-      const edgeDistance = aspectRatio * cameraDistance * 0.8;
-
-      const orbX = Math.sin(scrollPercent * Math.PI * 2) * edgeDistance;
-      this.mesh.position.x = orbX;
-      this.mesh.position.y = Math.cos(scrollPercent * Math.PI * 0.5) * 0.8;
-      this.mesh.updateMatrixWorld();
-    }
-
-    if (this.particleSystem) {
-      this.particleSystem.position.copy(this.mesh.position);
-    }
-    if (this.lineSystem) {
-      this.lineSystem.position.copy(this.mesh.position);
-    }
-  }
+  updatePosition() {}
 
   dispose() {
     if (this.animationFrameId) {
@@ -1272,6 +1238,17 @@ function initSkillsChart() {
 // ============================================
 // SCROLL & NAVIGATION - FIXED
 // ============================================
+function updateCameraPosition(scrollPercent) {
+  const aspect = window.innerWidth / window.innerHeight;
+  const baseDistance = 5;
+  const maxX = aspect * baseDistance * 0.8;
+
+  camera.position.x = Math.sin(scrollPercent * Math.PI * 2) * maxX;
+  camera.position.y = Math.cos(scrollPercent * Math.PI * 0.5) * 0.8;
+  camera.position.z = baseDistance;
+  camera.lookAt(0, 0, 0);
+  renderer.render(scene, camera);
+}
 
 let scrollRaf = null;
 function handleScroll() {
@@ -1281,11 +1258,7 @@ function handleScroll() {
         window.scrollY /
         (document.documentElement.scrollHeight - window.innerHeight);
 
-      if (currentMode === "wireframe" && interactiveSphere) {
-        interactiveSphere.updatePosition(scrollPercent);
-      } else if (currentMode === "particles" && sphereAnimation) {
-        sphereAnimation.updatePosition(scrollPercent);
-      }
+      updateCameraPosition(scrollPercent);
 
       if (scrollPercent < 0.12) updateTheme("purple");
       else if (scrollPercent < 0.25) updateTheme("green");
